@@ -69,6 +69,7 @@ namespace MyTool
                 .Bind(btn_batchReplaceSrcDirPath, x => x.Visibility)
                 .Bind(btn_batchReplaceDestDirPath, x => x.Visibility)
                 .Bind(btn_addDirPath, x => x.Visibility)
+                .Bind(btn_configFilePath, x => x.Visibility)
                 .Sync();
         }
 
@@ -768,7 +769,7 @@ namespace MyTool
         {
             FileDialogUtils.SelectFolderByFileDialog(dialog =>
             {
-                CacheMgr.DataCache.ConfigFileListDirPath = dialog.FileName;
+                CacheMgr.ViewCache.ConfigDirPath = dialog.FileName;
                 ReloadConfigFileList();
             });
         }
