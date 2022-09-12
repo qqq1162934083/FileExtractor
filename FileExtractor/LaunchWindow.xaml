@@ -5,39 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExtractor"
         mc:Ignorable="d" 
-        WindowStartupLocation="CenterScreen" AllowsTransparency="True"
-        WindowStyle="None" Height="699" Width="1039">
-    <Window.Template>
-        <ControlTemplate TargetType="Window">
-            <Border Padding="8" CornerRadius="15" Opacity="1">
-                <Grid Background="#252526" >
-                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
-                        <Button x:Name="btn_closeWindow" Click="btn_closeWindow_Click">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
-                                        <Image IsHitTestVisible="False" Margin="10" Stretch="Uniform" Source="PrjResources/closeWindow.png"></Image>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="true">
-                                            <Setter TargetName="grid" Property="Background" Value="#ffe81123"></Setter>
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="true">
-                                            <Setter TargetName="grid" Property="Background" Value="#ff007acc"></Setter>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-                    </StackPanel>
-                    <ContentPresenter/>
-                </Grid>
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="3" ShadowDepth="0" Color="#FFAFE4FD"/>
-                </Border.Effect>
-            </Border>
-        </ControlTemplate>
-    </Window.Template>
+        WindowStartupLocation="CenterScreen"
+        Style="{StaticResource style_baseWindow}"
+        Height="699" Width="1039">
     <Window.Resources>
         <ControlTemplate x:Key="controlTemplate_btnFunction" TargetType="Button">
             <Grid x:Name="grid_controlTemplate_btnFunction" Height="77" Background="#FF333337">
@@ -66,8 +36,8 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Button Margin="0,2,0,2" Grid.Row="0" Template="{StaticResource controlTemplate_btnFunction}" Content="打开现有配置"></Button>
-                <Button Margin="0,2,0,2" Grid.Row="1" Template="{StaticResource controlTemplate_btnFunction}" Content="创建新配置"></Button>
+                <Button x:Name="btn_openConfig" Click="btn_openConfig_Click" Margin="0,2,0,2" Grid.Row="0" Template="{StaticResource controlTemplate_btnFunction}" Content="打开现有配置"></Button>
+                <Button x:Name="btn_createConfig" Click="btn_createConfig_Click" Margin="0,2,0,2" Grid.Row="1" Template="{StaticResource controlTemplate_btnFunction}" Content="创建新配置"></Button>
             </Grid>
             <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="21,120,0,0" TextWrapping="Wrap" Text="开始使用" VerticalAlignment="Top" FontSize="20"/>
         </Grid>

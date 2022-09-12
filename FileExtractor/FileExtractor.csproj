@@ -91,6 +91,9 @@
       <DependentUpon>VariableBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Libs\Components\ViewCacheMgr.cs" />
+    <Compile Include="WpfStyles\CommonStyle.xaml.cs">
+      <DependentUpon>CommonStyle.xaml</DependentUpon>
+    </Compile>
     <Page Include="FileExtractor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,6 +108,9 @@
     </Compile>
     <Compile Include="Libs\Utils\FileUtils.cs" />
     <Compile Include="Libs\Win32.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\FileExtractConfig.cs" />
     <Compile Include="FileExtractor.xaml.cs">
       <DependentUpon>FileExtractor.xaml</DependentUpon>
@@ -130,8 +136,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfStyles\CommonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewConfigWindow.xaml.cs">
+      <DependentUpon>NewConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PrjConfig\GlobalConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -159,7 +180,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="PrjResources\maximizeWindow.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="PrjResources\closeWindow.png" />
   </ItemGroup>

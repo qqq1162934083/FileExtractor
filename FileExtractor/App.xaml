@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:FileExtractor"
              StartupUri="LaunchWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="WpfStyles/CommonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

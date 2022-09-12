@@ -1,6 +1,10 @@
 using FileExtractor.Libs;
+using MyTool.Modules.Module_FileExtractor;
+using NetCore5WpfToolsApp.Utils.Controls;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,10 +41,18 @@ namespace FileExtractor
             }
         }
 
-        private void btn_closeWindow_Click(object sender, RoutedEventArgs e)
+        private void btn_openConfig_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            Environment.Exit(0);
+            FileDialogUtils.SelectOpenFile(x=>x.Filter= "配置文件|*.cfg;*.json", x=>
+            {
+                var data = JsonConvert.DeserializeObject<FileExtractorDataCache>(File.ReadAllText(x.FileName));
+                Console.WriteLine();
+            });
+        }
+
+        private void btn_createConfig_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

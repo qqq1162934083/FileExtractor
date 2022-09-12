@@ -1,0 +1,60 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Class="FileExtractor.WpfStyles.CommonStyle">
+    <Style TargetType="Window" x:Key="style_baseWindow">
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border Padding="8" CornerRadius="15" Opacity="1">
+                        <Grid Background="#252526" >
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                                <Button x:Name="btn_maximizeNormalizeWindow" Click="btn_maximizeNormalizeWindow_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
+                                                <Image IsHitTestVisible="False" Margin="13,8,13,8" Stretch="Fill" Source="pack://application:,,,/PrjResources/maximizeWindow.png"></Image>
+                                                <Path Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0L20,20M0,20L20,0" StrokeThickness="1"/>
+
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter TargetName="grid" Property="Background" Value="#ffe81123"></Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Setter TargetName="grid" Property="Background" Value="#ff007acc"></Setter>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                                <Button x:Name="btn_closeWindow" Click="btn_closeWindow_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
+                                                <Path Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0L20,20M0,20L20,0" StrokeThickness="1"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter TargetName="grid" Property="Background" Value="#ffe81123"></Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="true">
+                                                    <Setter TargetName="grid" Property="Background" Value="#ff007acc"></Setter>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
+                            <ContentPresenter/>
+                        </Grid>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="3" ShadowDepth="0" Color="#FFAFE4FD"/>
+                        </Border.Effect>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
