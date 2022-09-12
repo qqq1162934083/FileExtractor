@@ -17,33 +17,6 @@
     <Window.Resources>
         <!--<Brush x:Key="transparencyControlDesignViewColor">Transparent</Brush>-->
         <Brush x:Key="transparencyControlDesignViewColor">SkyBlue</Brush>
-        <ControlTemplate TargetType="Button" x:Key="circleBtnStyle">
-            <Border x:Name="border" CornerRadius="20" Background="#23000000">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}"></TextBlock>
-                <!--<Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0 0 8 8M0 8 8 0" Stroke="Gray" StrokeThickness="3"/>-->
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="border" Property="Background" Value="#36000000"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter TargetName="border" Property="Background" Value="#60000000"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <ControlTemplate TargetType="Button" x:Key="btnStyle">
-            <Border x:Name="border" CornerRadius="8" Background="#23000000">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}"></TextBlock>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="border" Property="Background" Value="#36000000"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter TargetName="border" Property="Background" Value="#60000000"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
         <Style x:Key="fileInfoLstItemStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -62,8 +35,8 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
-                                        <Button Grid.Row="0" Template="{StaticResource btnStyle}" Click="btn_lstItemRemove_Click">移除</Button>
-                                        <Button Grid.Row="3" Template="{StaticResource btnStyle}" Click="btn_lstItemEditDestPath_Click">编辑</Button>
+                                        <Button Grid.Row="0" Click="btn_lstItemRemove_Click">移除</Button>
+                                        <Button Grid.Row="3" Click="btn_lstItemEditDestPath_Click">编辑</Button>
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Grid.ColumnDefinitions>
@@ -176,10 +149,10 @@
             <Grid>
                 <Label Content="打包目录:" Margin="102,53,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="60"/>
                 <TextBox x:Name="tbx_destDirPath" Margin="170,57,283,0" Text="" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="False" VerticalAlignment="Top"/>
-                <Button x:Name="btn_destDirPath" Template="{StaticResource btnStyle}" Content="选择文件夹" Margin="0,57,197,0" VerticalAlignment="Top" Click="btn_destDirPath_Click" HorizontalAlignment="Right" Width="77"/>
+                <Button x:Name="btn_destDirPath" Content="选择文件夹" Margin="0,57,197,0" VerticalAlignment="Top" Click="btn_destDirPath_Click" HorizontalAlignment="Right" Width="77"/>
                 <TextBox x:Name="tbx_destFolderName" ToolTip="键入路径" IsReadOnly="True" Margin="170,90,333,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 <Label Content="打包文件夹名称:" Margin="67,86,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="96"/>
-                <Button x:Name="btn_modifyDestinationFolderName" Template="{StaticResource btnStyle}" Content="修改" HorizontalAlignment="Right" Margin="0,90,260,0" VerticalAlignment="Top" Click="btn_modifyDestFolderName_Click" Width="60"/>
+                <Button x:Name="btn_modifyDestinationFolderName" Content="修改" HorizontalAlignment="Right" Margin="0,90,260,0" VerticalAlignment="Top" Click="btn_modifyDestFolderName_Click" Width="60"/>
                 <CheckBox x:Name="cb_enableTimeExpression" Content="启用日期时间表达式" Margin="0,91,116,0" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="128"/>
                 <CheckBox x:Name="cb_compress" Content="启用压缩" Margin="0,90,30,0" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Width="73"/>
                 <Grid Margin="10,128,10,10">
@@ -194,37 +167,37 @@
                             <ColumnDefinition Width="265*"/>
                         </Grid.ColumnDefinitions>
                         <ListBox x:Name="lstBox_srcFileInfo" BorderBrush="Gray" BorderThickness="2" ItemContainerStyle="{StaticResource fileInfoLstItemStyle}" Margin="10,32,10,0" Grid.ColumnSpan="2"/>
-                        <Button x:Name="btn_selectFiles" Template="{StaticResource btnStyle}" Content="添加文件" Margin="272,10,0,0" VerticalAlignment="Top" Click="btn_selectFiles_Click" HorizontalAlignment="Left" Width="60"/>
+                        <Button x:Name="btn_selectFiles" Content="添加文件" Margin="272,10,0,0" VerticalAlignment="Top" Click="btn_selectFiles_Click" HorizontalAlignment="Left" Width="60"/>
                         <TextBlock Margin="129,11,0,0" VerticalAlignment="Top" Background="{StaticResource transparencyControlDesignViewColor}" TextAlignment="Center" Text="{Binding ItemsSource.Count, ElementName=lstBox_srcFileInfo, StringFormat=共 \{0\} 个}" TextWrapping="Wrap" HorizontalAlignment="Left" Width="96"/>
-                        <Button x:Name="btn_batchReplaceSrcFilePath" Template="{StaticResource btnStyle}" Content="批量替换源路径" Margin="348,7,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="122"/>
+                        <Button x:Name="btn_batchReplaceSrcFilePath" Content="批量替换源路径" Margin="348,7,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="122"/>
                         <Label Content="文件映射配置:" Margin="10,6,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="96"/>
-                        <Button x:Name="btn_batchReplaceDestFilePath" Template="{StaticResource btnStyle}" Content="批量替换目的路径" Margin="488,7,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="122"/>
+                        <Button x:Name="btn_batchReplaceDestFilePath" Content="批量替换目的路径" Margin="488,7,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="122"/>
                     </Grid>
                     <Grid Grid.Row="1">
                         <ListBox x:Name="lstBox_srcDirInfo" BorderBrush="Gray" BorderThickness="2" ItemContainerStyle="{StaticResource fileInfoLstItemStyle}" Margin="10,28,10,0"/>
-                        <Button x:Name="btn_selectDir" Template="{StaticResource btnStyle}" Content="选择目录以添加" Margin="272,6,0,0" VerticalAlignment="Top" Click="btn_selectDir_Click" HorizontalAlignment="Left" Width="94"/>
+                        <Button x:Name="btn_selectDir" Content="选择目录以添加" Margin="272,6,0,0" VerticalAlignment="Top" Click="btn_selectDir_Click" HorizontalAlignment="Left" Width="94"/>
                         <TextBlock Margin="129,8,0,0" VerticalAlignment="Top" Background="{StaticResource transparencyControlDesignViewColor}" TextAlignment="Center" Text="{Binding ItemsSource.Count, ElementName=lstBox_srcDirInfo, StringFormat=共 \{0\} 个}" TextWrapping="Wrap" HorizontalAlignment="Left" Width="96"/>
-                        <Button x:Name="btn_batchReplaceSrcDirPath" Template="{StaticResource btnStyle}" Content="批量替换源路径" Margin="480,4,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="123"/>
+                        <Button x:Name="btn_batchReplaceSrcDirPath" Content="批量替换源路径" Margin="480,4,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="123"/>
                         <Label Content="目录映射配置:" Margin="10,3,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="96"/>
-                        <Button x:Name="btn_addDirPath" Template="{StaticResource btnStyle}" Content="添加目录路径" Margin="378,6,0,0" VerticalAlignment="Top" Click="btn_addDirPath_Click" HorizontalAlignment="Left" Width="88"/>
-                        <Button x:Name="btn_batchReplaceDestDirPath" Template="{StaticResource btnStyle}" Content="批量替换目的路径" Margin="614,4,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="123"/>
+                        <Button x:Name="btn_addDirPath" Content="添加目录路径" Margin="378,6,0,0" VerticalAlignment="Top" Click="btn_addDirPath_Click" HorizontalAlignment="Left" Width="88"/>
+                        <Button x:Name="btn_batchReplaceDestDirPath" Content="批量替换目的路径" Margin="614,4,0,0" Click="btn_batchReplacePath_Click" Height="19" VerticalAlignment="Top" HorizontalAlignment="Left" Width="123"/>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <Button x:Name="btn_pack" Template="{StaticResource btnStyle}" Content="打包" Margin="0,0,23,43" Click="btn_pack_Click" RenderTransformOrigin="-1.217,20.474" HorizontalAlignment="Right" Width="83" Height="49" VerticalAlignment="Bottom"/>
+                        <Button x:Name="btn_pack" Content="打包" Margin="0,0,23,43" Click="btn_pack_Click" RenderTransformOrigin="-1.217,20.474" HorizontalAlignment="Right" Width="83" Height="49" VerticalAlignment="Bottom"/>
                         <TextBox x:Name="tbx_appMsg" IsReadOnly="True" Margin="10,27,136,10" VerticalScrollBarVisibility="Auto"/>
                         <Label Content="应用程序消息:" Margin="10,2,0,0" HorizontalAlignment="Left" Width="96" Height="25" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
                 <Label Content="快速加载配置:" Margin="81,14,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90"/>
                 <ComboBox x:Name="cbx_configFileList" Margin="171,17,283,0" VerticalAlignment="Top"/>
-                <Button x:Name="btn_loadSelectedConfig" Template="{StaticResource btnStyle}" Content="加载选中配置" Margin="0,18,185,0" VerticalAlignment="Top" Click="btn_loadSelectedConfig_Click" HorizontalAlignment="Right" Width="87"/>
-                <Button x:Name="btn_configFilePath" Template="{StaticResource btnStyle}" Content="选择文件夹" Margin="0,27,24,0" VerticalAlignment="Top" Click="btn_configFilePath_Click" HorizontalAlignment="Right" Width="87"/>
-                <Button x:Name="btn_reloadConfigFileList" Template="{StaticResource btnStyle}" Content="刷新列表" Margin="0,10,38,0" VerticalAlignment="Top" Click="btn_reloadConfigFileList_Click" HorizontalAlignment="Right" Width="65"/>
-                <Button x:Name="btn_openPackDir" Template="{StaticResource btnStyle}" Content="打开位置" Margin="0,57,116,0" VerticalAlignment="Top" Click="btn_openPackDir_Click" HorizontalAlignment="Right" Width="60"/>
-                <Button x:Name="btn_modifyPackDir" Template="{StaticResource btnStyle}" Content="编辑路径" HorizontalAlignment="Right" Margin="0,57,43,0" VerticalAlignment="Top" Click="btn_modifyPackDir_Click" Width="60"/>
-                <Button x:Name="btn_openConfigFileListDir" Template="{StaticResource btnStyle}" Content="打开位置" Margin="0,17,116,0" VerticalAlignment="Top" Click="btn_openConfigFileListDir_Click" HorizontalAlignment="Right" Width="60"/>
+                <Button x:Name="btn_loadSelectedConfig" Content="加载选中配置" Margin="0,18,185,0" VerticalAlignment="Top" Click="btn_loadSelectedConfig_Click" HorizontalAlignment="Right" Width="87"/>
+                <Button x:Name="btn_configFilePath" Content="选择文件夹" Margin="0,27,24,0" VerticalAlignment="Top" Click="btn_configFilePath_Click" HorizontalAlignment="Right" Width="87"/>
+                <Button x:Name="btn_reloadConfigFileList" Content="刷新列表" Margin="0,10,38,0" VerticalAlignment="Top" Click="btn_reloadConfigFileList_Click" HorizontalAlignment="Right" Width="65"/>
+                <Button x:Name="btn_openPackDir" Content="打开位置" Margin="0,57,116,0" VerticalAlignment="Top" Click="btn_openPackDir_Click" HorizontalAlignment="Right" Width="60"/>
+                <Button x:Name="btn_modifyPackDir" Content="编辑路径" HorizontalAlignment="Right" Margin="0,57,43,0" VerticalAlignment="Top" Click="btn_modifyPackDir_Click" Width="60"/>
+                <Button x:Name="btn_openConfigFileListDir" Content="打开位置" Margin="0,17,116,0" VerticalAlignment="Top" Click="btn_openConfigFileListDir_Click" HorizontalAlignment="Right" Width="60"/>
             </Grid>
         </DockPanel>
-        <!--<Button x:Name="btn_Test" Template="{StaticResource btnStyle}" Content="测试" Margin="0,51,204,0" Click="btn_Test_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"/>-->
+        <!--<Button x:Name="btn_Test" Content="测试" Margin="0,51,204,0" Click="btn_Test_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"/>-->
     </Grid>
 </Window>

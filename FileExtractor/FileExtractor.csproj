@@ -66,6 +66,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="LaunchWindow.xaml.cs">
+      <DependentUpon>LaunchWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Libs\Components\Binder.cs" />
     <Compile Include="Libs\Components\CollectionLocker.cs" />
     <Compile Include="Libs\Components\PrjLogger\ILog.cs" />
@@ -101,6 +104,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Libs\Utils\FileUtils.cs" />
+    <Compile Include="Libs\Win32.cs" />
     <Compile Include="Models\FileExtractConfig.cs" />
     <Compile Include="FileExtractor.xaml.cs">
       <DependentUpon>FileExtractor.xaml</DependentUpon>
@@ -110,6 +114,10 @@
     <Compile Include="FileExtractor_Setting.xaml.cs">
       <DependentUpon>FileExtractor_Setting.xaml</DependentUpon>
     </Compile>
+    <Page Include="LaunchWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Libs\Ui\MsgBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -150,6 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PrjResources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
