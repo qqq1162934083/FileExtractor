@@ -5,65 +5,71 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExtractor"
         mc:Ignorable="d" 
-        WindowStartupLocation="CenterScreen"
-        BorderThickness="7" AllowsTransparency="True"
-        WindowStyle="None" Height="680" Width="1024">
+        WindowStartupLocation="CenterScreen" AllowsTransparency="True"
+        WindowStyle="None" Height="699" Width="1039">
     <Window.Template>
         <ControlTemplate TargetType="Window">
             <Border Padding="8" CornerRadius="15" Opacity="1">
                 <Grid Background="#252526" >
                     <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
                         <Button x:Name="btn_closeWindow" Click="btn_closeWindow_Click">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Style.Triggers>
-                                    </Style.Triggers>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="Button">
-                                                <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
-                                                    <Image IsHitTestVisible="False" Margin="10" Stretch="Uniform" Source="PrjResources/closeWindow.png"></Image>
-                                                </Grid>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="true">
-                                                        <Setter TargetName="grid" Property="Background" Value="#ffe81123"></Setter>
-                                                    </Trigger>
-                                                    <Trigger Property="IsPressed" Value="true">
-                                                        <Setter TargetName="grid" Property="Background" Value="#ff007acc"></Setter>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Button.Style>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
+                                        <Image IsHitTestVisible="False" Margin="10" Stretch="Uniform" Source="PrjResources/closeWindow.png"></Image>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="grid" Property="Background" Value="#ffe81123"></Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="true">
+                                            <Setter TargetName="grid" Property="Background" Value="#ff007acc"></Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
                         </Button>
                     </StackPanel>
                     <ContentPresenter/>
                 </Grid>
                 <Border.Effect>
-                    <DropShadowEffect BlurRadius="8" ShadowDepth="0"  Color="#FFAFE4FD"/>
+                    <DropShadowEffect BlurRadius="3" ShadowDepth="0" Color="#FFAFE4FD"/>
                 </Border.Effect>
             </Border>
         </ControlTemplate>
     </Window.Template>
+    <Window.Resources>
+        <ControlTemplate x:Key="controlTemplate_btnFunction" TargetType="Button">
+            <Grid x:Name="grid_controlTemplate_btnFunction" Height="77" Background="#FF333337">
+                <TextBlock Text="{TemplateBinding Content}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#f1f1f1" FontSize="20"></TextBlock>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="grid_controlTemplate_btnFunction" Property="Background" Value="#FF393937"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="109,40,0,0" TextWrapping="Wrap" Text="你希望做什么？" VerticalAlignment="Top" FontSize="36"/>
-        <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="109,120,0,0" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
-        <ListBox BorderThickness="0" Background="Transparent" HorizontalAlignment="Left" Height="404" Margin="109,188,0,0" VerticalAlignment="Top" Width="519"/>
-        <Grid HorizontalAlignment="Left" Height="173" Margin="702,200,0,0" VerticalAlignment="Top" Width="202">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Margin="0,2,0,2" Background="#333337" Grid.Row="0">
-                <TextBlock Text="打开现有配置" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#f1f1f1" FontSize="20"></TextBlock>
-            </Grid>
-            <Grid Margin="0,2,0,2" Background="#333337" Grid.Row="1">
-                <TextBlock Text="创建新配置" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#f1f1f1" FontSize="20"></TextBlock>
-            </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="42,40,0,0" TextWrapping="Wrap" Text="你希望做什么？" VerticalAlignment="Top" FontSize="36"/>
+            <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="48,120,0,0" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
+            <ListBox BorderThickness="0" Background="Transparent" Height="404" Margin="109,188,27,0" VerticalAlignment="Top"/>
         </Grid>
-        <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="702,168,0,0" TextWrapping="Wrap" Text="开始使用" VerticalAlignment="Top" FontSize="20"/>
-
+        <Grid Grid.Column="1">
+            <Grid HorizontalAlignment="Left" Margin="21,155,0,0" VerticalAlignment="Top" Width="342">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Margin="0,2,0,2" Grid.Row="0" Template="{StaticResource controlTemplate_btnFunction}" Content="打开现有配置"></Button>
+                <Button Margin="0,2,0,2" Grid.Row="1" Template="{StaticResource controlTemplate_btnFunction}" Content="创建新配置"></Button>
+            </Grid>
+            <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="21,120,0,0" TextWrapping="Wrap" Text="开始使用" VerticalAlignment="Top" FontSize="20"/>
+        </Grid>
     </Grid>
 </Window>
