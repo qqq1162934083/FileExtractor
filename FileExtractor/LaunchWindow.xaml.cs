@@ -1,4 +1,4 @@
-﻿using FileExtractor.Libs;
+using FileExtractor.Libs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace FileExtractor
     {
         public LaunchWindow()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
         }
 
@@ -35,6 +35,12 @@ namespace FileExtractor
                 Win32.SendMessage(wih.Handle, Win32.WM_NCLBUTTONDOWN, (int)Win32.HitTest.HTCAPTION, 0);
                 return;
             }
+        }
+
+        private void btn_closeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            Environment.Exit(0);
         }
     }
 }
