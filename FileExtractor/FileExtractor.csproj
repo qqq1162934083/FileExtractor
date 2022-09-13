@@ -195,10 +195,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="PrjResources\maximizeWindow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="PrjResources\closeWindow.png" />
+    <Folder Include="PrjResources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

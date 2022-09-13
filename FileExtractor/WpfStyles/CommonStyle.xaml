@@ -9,50 +9,92 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border Padding="8" CornerRadius="15" Opacity="1">
-                        <Grid Background="#252526" >
-                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
-                                <Button x:Name="btn_maximizeNormalizeWindow" Click="btn_maximizeNormalizeWindow_Click">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
-                                                <Image IsHitTestVisible="False" Margin="13,8,13,8" Stretch="Fill" Source="pack://application:,,,/PrjResources/maximizeWindow.png"></Image>
-                                                <Path Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0L20,20M0,20L20,0" StrokeThickness="1"/>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter TargetName="grid" Property="Background" Value="#ffe81123"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter TargetName="grid" Property="Background" Value="#ff007acc"></Setter>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
-                                <Button x:Name="btn_closeWindow" Click="btn_closeWindow_Click">
-                                    <Button.Template>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
-                                                <Path Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0L20,20M0,20L20,0" StrokeThickness="1"/>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter TargetName="grid" Property="Background" Value="#ffe81123"></Setter>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="true">
-                                                    <Setter TargetName="grid" Property="Background" Value="#ff007acc"></Setter>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Button.Template>
-                                </Button>
-                            </StackPanel>
+                        <Grid Background="#252526">
+                            <Grid x:Name="grid_title" Background="Transparent" VerticalAlignment="Top" Height="33" MouseLeftButtonDown="grid_title_MouseLeftButtonDown">
+                                <Grid Height="33" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="46"/>
+                                        <ColumnDefinition Width="46"/>
+                                        <ColumnDefinition Width="46"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" x:Name="btn_minimizeWindow" Click="btn_minimizeWindow_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid x:Name="grid" Background="Transparent">
+                                                    <Path Stroke="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,3L10,3" StrokeThickness="1"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter TargetName="grid" Property="Background" Value="#3e3e40"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter TargetName="grid" Property="Background" Value="#007acc"></Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Grid.Column="1" x:Name="btn_maximizeNormalizeWindow" Click="btn_maximizeNormalizeWindow_Click">
+                                        <Button.Tag>
+                                            <Geometry>M2,2L8,2L8,8L8,10L0,10L0,2L2,2L2,0L10,0L10,8L8,8</Geometry>
+                                        </Button.Tag>
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid x:Name="grid" Background="Transparent">
+                                                    <Path x:Name="path" Stroke="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}" StrokeThickness="1"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter TargetName="grid" Property="Background" Value="#3e3e40"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter TargetName="grid" Property="Background" Value="#007acc"></Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                    <Button Grid.Column="2" x:Name="btn_closeWindow" Click="btn_closeWindow_Click">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <Grid x:Name="grid" Background="Transparent">
+                                                    <Path Stroke="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0L10,10M0,10L10,0" StrokeThickness="1"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter TargetName="grid" Property="Background" Value="#e81123"></Setter>
+                                                    </Trigger>
+                                                    <Trigger Property="IsPressed" Value="true">
+                                                        <Setter TargetName="grid" Property="Background" Value="#007acc"></Setter>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Grid>
+                            </Grid>
                             <ContentPresenter/>
                         </Grid>
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="3" ShadowDepth="0" Color="#FFAFE4FD"/>
                         </Border.Effect>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="btn_maximizeNormalizeWindow" Property="Tag">
+                                <Setter.Value>
+                                    <Geometry>M2,2L8,2L8,8L8,10L0,10L0,2L2,2L2,0L10,0L10,8L8,8</Geometry>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="WindowState" Value="Normal">
+                            <Setter TargetName="btn_maximizeNormalizeWindow" Property="Tag">
+                                <Setter.Value>
+                                    <Geometry>M0,0L9,0L9,9L0,9L0,0</Geometry>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
