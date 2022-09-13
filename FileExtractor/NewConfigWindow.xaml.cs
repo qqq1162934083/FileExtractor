@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +19,12 @@ namespace FileExtractor
     /// </summary>
     public partial class NewConfigWindow : Window
     {
+        public Window PreviousWindow { get; set; }
+        public NewConfigWindow(Window previousWindow)
+        {
+            InitializeComponent();
+            PreviousWindow = previousWindow;
+        }
         public NewConfigWindow()
         {
             InitializeComponent();

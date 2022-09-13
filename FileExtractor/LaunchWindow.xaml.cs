@@ -52,7 +52,8 @@ namespace FileExtractor
 
         private void btn_createConfig_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Hide();
+            new NewConfigWindow().ShowDialog();
         }
     }
 }
