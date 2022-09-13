@@ -91,6 +91,12 @@
       <DependentUpon>VariableBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Libs\Components\ViewCacheMgr.cs" />
+    <Compile Include="Pages\LaunchPage.xaml.cs">
+      <DependentUpon>LaunchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewConfigPage.xaml.cs">
+      <DependentUpon>NewConfigPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfStyles\CommonStyle.xaml.cs">
       <DependentUpon>CommonStyle.xaml</DependentUpon>
     </Compile>
@@ -141,6 +147,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\LaunchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
