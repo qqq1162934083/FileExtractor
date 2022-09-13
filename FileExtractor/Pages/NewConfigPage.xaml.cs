@@ -1,5 +1,8 @@
+using MyTool;
+using NetCore5WpfToolsApp.Utils.Controls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FileExtractor.Pages
 {
@@ -28,6 +30,51 @@ namespace FileExtractor.Pages
         private void btn_previoutStep_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("pack://application:,,,/Pages/LaunchPage.xaml"));
+        }
+
+        private void btn_selectConfigDirPath_Click(object sender, RoutedEventArgs e)
+        {
+            FileDialogUtils.SelectFolder(x => tbx_configDirPath.Text = x.SelectedPath);
+        }
+
+        private void btn_createConfig_Click(object sender, RoutedEventArgs e)
+        {
+            //验证
+            var dirPath = tbx_configDirPath.Text.Trim();
+            var configName = tbx_configName.Text.Trim();
+            if (!Directory.Exists(dirPath))
+            {
+                MessageBox.Show("选择的位置不存在，请重新设置");
+                return;
+            }
+            if (configName.Length < 1)
+            {
+                MessageBox.Show("请输入配置名");
+                return;
+            }
+            var filePath = Path.Combine(dirPath, configName + ".cfg");
+            try
+            {
+                File.Create(filePath).Dispose();
+            }
+            catch(Exception exp)
+            {
+                if (!Directory.Exists(dirPath))
+                {
+                    MessageBox.Show("选择的位置不存在，请重新设置");
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("无效的配置名");
+                    return;
+                }
+            }
+            //进入主页面
+            var window = Window.GetWindow(this);
+            window.Hide();
+            new FileExtractorWindow().Show();
+            window.Close();
         }
     }
 }

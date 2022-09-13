@@ -100,7 +100,7 @@
     <Compile Include="WpfStyles\CommonStyle.xaml.cs">
       <DependentUpon>CommonStyle.xaml</DependentUpon>
     </Compile>
-    <Page Include="FileExtractor.xaml">
+    <Page Include="FileExtractorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -118,8 +118,8 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\FileExtractConfig.cs" />
-    <Compile Include="FileExtractor.xaml.cs">
-      <DependentUpon>FileExtractor.xaml</DependentUpon>
+    <Compile Include="FileExtractorWindow.xaml.cs">
+      <DependentUpon>FileExtractorWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\FileExtractorDataCache.cs" />
     <Compile Include="Models\FileExtractorViewCache.cs" />
