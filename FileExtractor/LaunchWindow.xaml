@@ -10,12 +10,12 @@
         Height="699" Width="1039">
     <Window.Resources>
         <ControlTemplate x:Key="controlTemplate_btnFunction" TargetType="Button">
-            <Grid x:Name="grid_controlTemplate_btnFunction" Height="77" Background="#FF333337">
+            <Grid x:Name="grid" Height="77" Background="#333337">
                 <TextBlock Text="{TemplateBinding Content}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#f1f1f1" FontSize="20"></TextBlock>
             </Grid>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="grid_controlTemplate_btnFunction" Property="Background" Value="#FF393937"/>
+                    <Setter TargetName="grid" Property="Background" Value="#3f3f40"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>

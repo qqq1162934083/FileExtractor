@@ -4,6 +4,7 @@
     <Style TargetType="Window" x:Key="style_baseWindow">
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="AllowsTransparency" Value="True"/>
+        <EventSetter Event="MouseLeftButtonDown" Handler="MainWindow_MouseLeftButtonDown"></EventSetter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
@@ -16,7 +17,6 @@
                                             <Grid x:Name="grid" Background="Transparent" Width="46" Height="33">
                                                 <Image IsHitTestVisible="False" Margin="13,8,13,8" Stretch="Fill" Source="pack://application:,,,/PrjResources/maximizeWindow.png"></Image>
                                                 <Path Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Data="M0,0L20,20M0,20L20,0" StrokeThickness="1"/>
-
                                             </Grid>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="true">

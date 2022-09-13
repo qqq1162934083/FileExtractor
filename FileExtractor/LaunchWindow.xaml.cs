@@ -28,17 +28,6 @@ namespace FileExtractor
         public LaunchWindow()
         {
             InitializeComponent();
-            this.MouseLeftButtonDown += MainWindow_MouseLeftButtonDown;
-        }
-
-        void MainWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.OriginalSource is Grid || e.OriginalSource is Border || e.OriginalSource is Window)
-            {
-                WindowInteropHelper wih = new WindowInteropHelper(this);
-                Win32.SendMessage(wih.Handle, Win32.WM_NCLBUTTONDOWN, (int)Win32.HitTest.HTCAPTION, 0);
-                return;
-            }
         }
 
         private void btn_openConfig_Click(object sender, RoutedEventArgs e)
