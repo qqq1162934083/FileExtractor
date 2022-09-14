@@ -3,7 +3,8 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:FileExtractor.Pages"
+      xmlns:local="clr-namespace:FileExtractor.Pages" 
+      xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NewConfigPage">
@@ -25,26 +26,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="CaretBrush" Value="White"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Cursor" Value="IBeam"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border Width="auto" Height="auto" x:Name="border" Background="#333337" BorderBrush="#3f3f46" BorderThickness="1" Padding="6">
-                            <ScrollViewer Margin="0" BorderThickness="1" BorderBrush="White" x:Name="PART_ContentHost" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#007acc"/>
-                                <Setter TargetName="border" Property="Background" Value="#3f3f46"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
     <Grid>
         <TextBlock Text="创建新配置" Foreground="White" Margin="48,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="33"></TextBlock>
@@ -54,7 +35,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Height="39" Width="550" BorderThickness="1" Background="#FF333337" FontSize="14"></TextBox>
+            <wpfcontrols:MyTextBox Grid.Column="0" Height="39" Width="550" BorderThickness="1" Background="#FF333337" FontSize="14"></wpfcontrols:MyTextBox>
             <Button Grid.Column="1" Content="..." FontSize="12" Width="36" Height="auto" Margin="16,0,2,0"/>
         </Grid>
         <TextBlock Text="配置名称" Foreground="White" Margin="50,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12"></TextBlock>
@@ -63,7 +44,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Height="39" Width="550" BorderThickness="1" Background="#FF333337" FontSize="14"></TextBox>
+            <wpfcontrols:MyTextBox Grid.Column="0" Height="39" Width="550"></wpfcontrols:MyTextBox>
         </Grid>
         <Grid Margin="0,0,60,40" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
