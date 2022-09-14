@@ -28,6 +28,7 @@
         <Style TargetType="TextBox">
             <Setter Property="CaretBrush" Value="White"/>
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="IBeam"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
