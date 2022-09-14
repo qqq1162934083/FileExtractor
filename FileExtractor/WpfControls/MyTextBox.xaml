@@ -12,12 +12,11 @@
             <Setter Property="Background" Value="#FF333337"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Cursor" Value="IBeam"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Border Width="auto" Height="auto" x:Name="border" Background="#333337" BorderBrush="#3f3f46" BorderThickness="1" Padding="6">
-                            <ScrollViewer Margin="0" BorderThickness="1" BorderBrush="White" x:Name="PART_ContentHost" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <ScrollViewer Margin="0" BorderThickness="1" BorderBrush="White" x:Name="PART_ContentHost" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
