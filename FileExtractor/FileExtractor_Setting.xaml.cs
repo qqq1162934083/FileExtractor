@@ -1,4 +1,4 @@
-﻿using NetCore5WpfToolsApp.Utils.Controls;
+using NetCore5WpfToolsApp.Utils.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,9 +22,9 @@ namespace MyTool.Modules.Module_FileExtractor
     public partial class FileExtractor_Setting : Window
     {
         public event EventHandler ApplyedConfig;
-        public ViewCacheMgr<FileExtractor, FileExtractorDataCache, FileExtractorViewCache> CacheMgr { get; set; }
+        public ViewCacheMgr<FileExtractorWindow, FileExtractorDataCache, FileExtractorViewCache> CacheMgr { get; set; }
 
-        public FileExtractor_Setting(ViewCacheMgr<FileExtractor, FileExtractorDataCache, FileExtractorViewCache> cacheMgr)
+        public FileExtractor_Setting(ViewCacheMgr<FileExtractorWindow, FileExtractorDataCache, FileExtractorViewCache> cacheMgr)
         {
             CacheMgr = cacheMgr;
             InitializeComponent();

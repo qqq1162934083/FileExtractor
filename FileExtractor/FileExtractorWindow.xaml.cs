@@ -25,9 +25,9 @@ namespace MyTool
     /// <summary>
     /// FileExtractor.xaml 的交互逻辑
     /// </summary>
-    public partial class FileExtractor : IConfigControlCache
+    public partial class FileExtractorWindow : IConfigControlCache
     {
-        private ViewCacheMgr<FileExtractor, FileExtractorDataCache, FileExtractorViewCache> CacheMgr { get; set; }
+        private ViewCacheMgr<FileExtractorWindow, FileExtractorDataCache, FileExtractorViewCache> CacheMgr { get; set; }
 
         private ObservableCollection<ExtractedFileViewModel> extractedFileInfos = new ObservableCollection<ExtractedFileViewModel>();
         private CollectionLocker<ExtractedFileViewModel> extractedFileInfosLocker = new CollectionLocker<ExtractedFileViewModel>();
@@ -47,9 +47,9 @@ namespace MyTool
         }
         private Visibility MoreOptionVisibility { get; set; } = Visibility.Hidden;
         private Binder MoreOptionVisibilityBinder { get; set; } = new Binder();
-        public FileExtractor()
+        public FileExtractorWindow()
         {
-            CacheMgr = new ViewCacheMgr<FileExtractor, FileExtractorDataCache, FileExtractorViewCache>(this, "文件提取", "FileExtractorConfig", "FileExtractorCache");
+            CacheMgr = new ViewCacheMgr<FileExtractorWindow, FileExtractorDataCache, FileExtractorViewCache>(this, "文件提取", "FileExtractorConfig", "FileExtractorCache");
             Closing += (s, e) => CacheMgr.NotifySave();
             Loaded += (s, e) => CacheMgr.NotifyLoad();
 
