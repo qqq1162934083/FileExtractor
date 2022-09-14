@@ -35,7 +35,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="tbx_configDirPath" Grid.Column="0" Height="39" Width="550" BorderThickness="1" Background="#FF333337" FontSize="14"></TextBox>
+            <wpfcontrols:MyTextBox x:Name="tbx_configDirPath" Grid.Column="0" Height="39" Width="550"></wpfcontrols:MyTextBox>
             <Button x:Name="btn_selectConfigDirPath" Grid.Column="1" Content="..." FontSize="12" Width="36" Height="auto" Margin="16,0,2,0" Click="btn_selectConfigDirPath_Click"/>
         </Grid>
         <TextBlock Text="配置名称" Foreground="White" Margin="50,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12"></TextBlock>
@@ -44,7 +44,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="tbx_configName" Grid.Column="0" Height="39" Width="550" BorderThickness="1" Background="#FF333337" FontSize="14"></TextBox>
+            <wpfcontrols:MyTextBox x:Name="tbx_configName" Grid.Column="0" Height="39" Width="550"></wpfcontrols:MyTextBox>
         </Grid>
         <Grid Margin="0,0,60,40" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>

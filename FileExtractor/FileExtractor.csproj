@@ -100,9 +100,6 @@
     <Compile Include="WpfControls\MyTextBox.xaml.cs">
       <DependentUpon>MyTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WpfControls\MyWindow.xaml.cs">
-      <DependentUpon>MyWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="WpfStyles\CommonStyle.xaml.cs">
       <DependentUpon>CommonStyle.xaml</DependentUpon>
     </Compile>
@@ -152,10 +149,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewConfigWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\LaunchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,19 +161,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfControls\MyWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="WpfStyles\CommonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewConfigWindow.xaml.cs">
-      <DependentUpon>NewConfigWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="PrjConfig\GlobalConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
