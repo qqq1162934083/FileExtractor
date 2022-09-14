@@ -29,22 +29,35 @@
     </Page.Resources>
     <Grid>
         <TextBlock Text="创建新配置" Foreground="White" Margin="48,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="33"></TextBlock>
-        <TextBlock Text="位置" Foreground="White" Margin="50,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12"></TextBlock>
-        <Grid Margin="50,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <wpfcontrols:MyTextBox x:Name="tbx_configDirPath" Grid.Column="0" Height="39" Width="550"></wpfcontrols:MyTextBox>
-            <Button x:Name="btn_selectConfigDirPath" Grid.Column="1" Content="..." FontSize="12" Width="36" Height="auto" Margin="16,0,2,0" Click="btn_selectConfigDirPath_Click"/>
-        </Grid>
-        <TextBlock Text="配置名称" Foreground="White" Margin="50,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12"></TextBlock>
-        <Grid Margin="50,205,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <wpfcontrols:MyTextBox x:Name="tbx_configName" Grid.Column="0" Height="39" Width="550"></wpfcontrols:MyTextBox>
+        <Grid Margin="50,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Margin="0,5,0,10" Text="位置" Foreground="White" FontSize="12"></TextBlock>
+            <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <wpfcontrols:MyTextBox x:Name="tbx_configDirPath" HintText="请输入位置信息" HintVisibility="Collapsed" Grid.Column="0" Height="39" Width="550"></wpfcontrols:MyTextBox>
+                <Button x:Name="btn_selectConfigDirPath" Grid.Column="1" Content="..." FontSize="12" Width="36" Height="auto" Margin="16,0,2,0" Click="btn_selectConfigDirPath_Click"/>
+            </Grid>
+            <TextBlock Grid.Row="2" Margin="2,5,0,5" Foreground="#e76050" Text="{Binding ElementName=tbx_configDirPath, Path=HintText}" Visibility="{Binding ElementName=tbx_configDirPath,Path=HintVisibility}"></TextBlock>
+            <TextBlock Grid.Row="3" Margin="0,20,0,10" Text="配置名称" Foreground="White" FontSize="12"></TextBlock>
+            <Grid Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <wpfcontrols:MyTextBox x:Name="tbx_configName" HintText="请输入配置名称信息" HintVisibility="Collapsed" Grid.Column="0" Height="39" Width="550"></wpfcontrols:MyTextBox>
+            </Grid>
+            <TextBlock Grid.Row="5" Margin="2,5,0,5" Foreground="#e76050" Text="{Binding ElementName=tbx_configName, Path=HintText}" Visibility="{Binding ElementName=tbx_configName,Path=HintVisibility}"></TextBlock>
         </Grid>
         <Grid Margin="0,0,60,40" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>

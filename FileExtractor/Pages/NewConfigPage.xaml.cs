@@ -25,6 +25,24 @@ namespace FileExtractor.Pages
         public NewConfigPage()
         {
             InitializeComponent();
+            InitDefaultUI();
+        }
+
+        private void InitDefaultUI()
+        {
+            var configDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            tbx_configDirPath.Text = configDirPath;
+            var defatultConfigName = "文件提取配置";
+            var configIndex = 1;
+            var configName = (string)null;
+            while (true)
+            {
+                configName = defatultConfigName + "(" + configIndex + ")";
+                var configPath = Path.Combine(configDirPath, configName + ".cfg");
+                if (!File.Exists(configPath)) break;
+                configIndex++;
+            }
+            tbx_configName.Text = configName;
         }
 
         private void btn_previoutStep_Click(object sender, RoutedEventArgs e)
