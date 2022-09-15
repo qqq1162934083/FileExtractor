@@ -97,6 +97,7 @@
     <Compile Include="Pages\NewConfigPage.xaml.cs">
       <DependentUpon>NewConfigPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\RecentAccessItem.cs" />
     <Compile Include="WpfControls\MyTextBox.xaml.cs">
       <DependentUpon>MyTextBox.xaml</DependentUpon>
     </Compile>

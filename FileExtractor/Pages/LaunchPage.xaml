@@ -3,9 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:FileExtractor.Pages"
+      xmlns:local="clr-namespace:FileExtractor.Pages" 
+      xmlns:vm="clr-namespace:FileExtractor.ViewModels"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="699" d:DesignWidth="1039"
       Title="LaunchPage">
     <Page.Resources>
         <ControlTemplate x:Key="controlTemplate_btnFunction" TargetType="Button">
@@ -26,21 +27,44 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="42,40,0,0" TextWrapping="Wrap" Text="你希望做什么？" VerticalAlignment="Top" FontSize="36"/>
-            <Grid Margin="48,120,10,10" Background="#55FFFFFF">
+            <!--<Grid Margin="48,120,40,40" Background="#55FFFFFF">-->
+            <Grid Margin="48,120,40,40">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20" Foreground="#f1f1f1" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
-                <ListBox Grid.Row="1" BorderThickness="0" Background="Transparent">
+                <ListBox Grid.Row="1" Margin="0,0,0,0" BorderThickness="0" Background="Transparent">
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
                     <ListBox.Style>
                         <Style TargetType="ListBox">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBox">
-                                        <Border BorderBrush="AliceBlue" BorderThickness="1">
-                                            <ContentPresenter/>
-                                        </Border>
+                                        <ScrollViewer>
+                                            <ItemsPresenter/>
+                                            <ScrollViewer.Template>
+                                                <ControlTemplate TargetType="ScrollViewer">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <ContentPresenter Grid.Column="0"/>
+                                                        <Button Margin="13,0,0,0" Width="16" Grid.Column="1"/>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </ScrollViewer.Template>
+                                        </ScrollViewer>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -50,7 +74,27 @@
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="ListBoxItem">
-
+                                                    <Grid x:Name="grid" Background="{TemplateBinding Background}">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid Grid.Row="0">
+                                                            <TextBlock Margin="10,10,10,0" Text="{Binding FileName}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
+                                                            <TextBlock Margin="10,10,10,0" Text="{Binding AccessTime,StringFormat='yyyy/MM/dd HH:mm'}" Foreground="#b7b9c5" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Row="1">
+                                                            <TextBlock Margin="10,5,5,5" Text="{Binding DirPath}" Foreground="#b7b9c5" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="grid" Property="Background" Value="#3f3f40"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="grid" Property="Background" Value="#007acc"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
