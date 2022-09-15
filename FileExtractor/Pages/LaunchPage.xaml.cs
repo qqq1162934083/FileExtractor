@@ -1,3 +1,4 @@
+using MyTool;
 using MyTool.Modules.Module_FileExtractor;
 using NetCore5WpfToolsApp.Utils.Controls;
 using Newtonsoft.Json;
@@ -22,10 +23,14 @@ namespace FileExtractor.Pages
     /// <summary>
     /// LaunchPage.xaml 的交互逻辑
     /// </summary>
-    public partial class LaunchPage : Page
+    public partial class LaunchPage : Page, IConfigControlCache
     {
+        public ViewCacheMgr<LaunchPage, object, object> CacheMgr { get; set; }
         public LaunchPage()
         {
+            CacheMgr = new ViewCacheMgr<LaunchPage, object, object>(this);
+            Loaded += (s, e) => CacheMgr.NotifyLoad();
+            Unloaded += (s, e) => CacheMgr.NotifySave();
             InitializeComponent();
         }
 
@@ -41,6 +46,26 @@ namespace FileExtractor.Pages
         private void btn_createConfig_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("pack://application:,,,/Pages/NewConfigPage.xaml"));
+        }
+
+        public void LoadViewCache()
+        {
+            Console.WriteLine();
+        }
+
+        public void ApplyViewCache()
+        {
+            Console.WriteLine();
+        }
+
+        public void LoadDataCache()
+        {
+            Console.WriteLine();
+        }
+
+        public void ApplyDataCache()
+        {
+            Console.WriteLine();
         }
     }
 }

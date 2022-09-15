@@ -26,8 +26,41 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="42,40,0,0" TextWrapping="Wrap" Text="你希望做什么？" VerticalAlignment="Top" FontSize="36"/>
-            <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="48,120,0,0" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
-            <ListBox BorderThickness="0" Background="Transparent" Height="404" Margin="109,188,27,0" VerticalAlignment="Top"/>
+            <Grid Margin="48,120,10,10" Background="#55FFFFFF">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20" Foreground="#f1f1f1" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
+                <ListBox Grid.Row="1" BorderThickness="0" Background="Transparent">
+                    <ListBox.Style>
+                        <Style TargetType="ListBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBox">
+                                        <Border BorderBrush="AliceBlue" BorderThickness="1">
+                                            <ContentPresenter/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="ItemContainerStyle">
+                                <Setter.Value>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Style>
+                </ListBox>
+            </Grid>
         </Grid>
         <Grid Grid.Column="1">
             <Grid HorizontalAlignment="Left" Margin="21,155,0,0" VerticalAlignment="Top" Width="342">
