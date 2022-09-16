@@ -11,7 +11,7 @@ using System.Windows.Interop;
 
 namespace FileExtractor.WpfStyles
 {
-    public partial class CommonStyle
+    public partial class WindowStyle
     {
         private void btn_closeWindow_Click(object sender, RoutedEventArgs e)
         {

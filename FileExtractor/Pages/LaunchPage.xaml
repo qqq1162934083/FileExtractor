@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FileExtractor.Pages" 
-      xmlns:vm="clr-namespace:FileExtractor.ViewModels" xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls"
+      xmlns:vm="clr-namespace:FileExtractor.ViewModels"
+      xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls"
       mc:Ignorable="d" 
       d:DesignHeight="699" d:DesignWidth="1039"
       Title="LaunchPage">
@@ -27,14 +28,13 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="42,40,0,0" TextWrapping="Wrap" Text="你希望做什么？" VerticalAlignment="Top" FontSize="36"/>
-            <!--<Grid Margin="48,120,40,40" Background="#55FFFFFF">-->
             <Grid Margin="48,120,40,40">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20" Foreground="#f1f1f1" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
-                <ListBox Grid.Row="1" Margin="0,0,0,0" BorderThickness="0" Background="Transparent">
+                <wpfcontrols:MyListBox Grid.Row="1">
                     <vm:RecentAccessItem>
                         <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
@@ -46,7 +46,7 @@
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
                     <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
@@ -56,7 +56,7 @@
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
                     <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
@@ -66,7 +66,7 @@
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
                     <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
@@ -76,7 +76,7 @@
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
                     <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
@@ -86,7 +86,7 @@
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
                     <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
@@ -95,149 +95,58 @@
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
-                    <ListBox.Style>
-                        <Style TargetType="ListBox">
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <wpfcontrols:MyListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate TargetType="ListBox">
-                                        <ScrollViewer>
-                                            <ItemsPresenter/>
-                                            <ScrollViewer.Template>
-                                                <ControlTemplate TargetType="ScrollViewer">
-                                                    <ControlTemplate.Resources>
-                                                        <Style TargetType="ScrollBar">
-                                                            <Style.Triggers>
-                                                                <Trigger Property="Orientation" Value="Vertical">
-                                                                    <Setter Property="Template" Value="{DynamicResource template_verticalScrollBar}"/>
-                                                                </Trigger>
-                                                                <Trigger Property="Orientation" Value="Horizontal">
-                                                                    <Setter Property="Template" Value="{DynamicResource template_horizontalScrollBar}"/>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                            <Style.Resources>
-                                                                <ControlTemplate x:Key="template_horizontalScrollBar" TargetType="ScrollBar">
-                                                                    <Grid Background="White"></Grid>
-                                                                </ControlTemplate>
-                                                                <ControlTemplate x:Key="template_verticalScrollBar" TargetType="ScrollBar">
-                                                                    <ControlTemplate.Resources>
-                                                                        <ControlTemplate x:Key="template_upDownRepeatButton" TargetType="RepeatButton">
-                                                                            <Grid Background="Transparent">
-                                                                                <Path x:Name="path" Fill="#999999" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
-                                                                                <Path x:Name="path_mouseOver" Visibility="Hidden" Stroke="Transparent" Fill="#1c97ea" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
-                                                                            </Grid>
-                                                                            <ControlTemplate.Triggers>
-                                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                                    <Setter TargetName="path" Property="Visibility" Value="Hidden"/>
-                                                                                    <Setter TargetName="path_mouseOver" Property="Visibility" Value="Visible"/>
-                                                                                </Trigger>
-                                                                            </ControlTemplate.Triggers>
-                                                                        </ControlTemplate>
-                                                                        <ControlTemplate x:Key="template_thumb_upDownRepeatButton" TargetType="RepeatButton">
-                                                                            <Grid Background="Transparent"/>
-                                                                        </ControlTemplate>
-                                                                    </ControlTemplate.Resources>
-                                                                    <Grid Background="#3e3e42">
-                                                                        <Grid.RowDefinitions>
-                                                                            <RowDefinition Height="20"/>
-                                                                            <RowDefinition/>
-                                                                            <RowDefinition Height="20"/>
-                                                                        </Grid.RowDefinitions>
-                                                                        <!--上行按钮-->
-                                                                        <RepeatButton Command="ScrollBar.LineUpCommand" Template="{DynamicResource template_upDownRepeatButton}">
-                                                                            <RepeatButton.Tag>
-                                                                                <Geometry>M6,1L1,6L11,6Z</Geometry>
-                                                                            </RepeatButton.Tag>
-                                                                        </RepeatButton>
-                                                                        <!--轨道-->
-                                                                        <Track Name="PART_Track" Grid.Row="1" IsDirectionReversed="True">
-                                                                            <Track.DecreaseRepeatButton>
-                                                                                <!--上页按钮-->
-                                                                                <RepeatButton Command="ScrollBar.PageUpCommand" Template="{DynamicResource template_thumb_upDownRepeatButton}"/>
-                                                                            </Track.DecreaseRepeatButton>
-                                                                            <Track.Thumb>
-                                                                                <!--滑块-->
-                                                                                <wpfcontrols:MyThumb/>
-                                                                            </Track.Thumb>
-                                                                            <Track.IncreaseRepeatButton>
-                                                                                <!--下页按钮-->
-                                                                                <RepeatButton Command="ScrollBar.PageDownCommand" Template="{DynamicResource template_thumb_upDownRepeatButton}"/>
-                                                                            </Track.IncreaseRepeatButton>
-                                                                        </Track>
-                                                                        <!--下行按钮-->
-                                                                        <RepeatButton Grid.Row="2" Command="ScrollBar.LineDownCommand" Template="{DynamicResource template_upDownRepeatButton}">
-                                                                            <RepeatButton.Tag>
-                                                                                <Geometry>M6,6L1,1L11,1Z</Geometry>
-                                                                            </RepeatButton.Tag>
-                                                                        </RepeatButton>
-                                                                    </Grid>
-                                                                </ControlTemplate>
-                                                            </Style.Resources>
-                                                        </Style>
-                                                    </ControlTemplate.Resources>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="auto"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="auto"/>
-                                                        </Grid.RowDefinitions>
-                                                        <ScrollContentPresenter Grid.Row="0" Grid.Column="0" x:Name="PART_ScrollContentPresenter" CanContentScroll="True"/>
-                                                        <Grid Grid.Row="0" Margin="13,0,0,0" Grid.Column="1" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
-                                                            <ScrollBar Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" x:Name="PART_VerticalScrollBar" 
-                                                                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                       ViewportSize="{TemplateBinding ViewportHeight}"
-                                                                       Maximum="{TemplateBinding ScrollableHeight}" 
-                                                                       Minimum="0" Cursor="Arrow" AutomationProperties.AutomationId="VerticalScrollBar"/>
-                                                        </Grid>
-                                                        <Grid Grid.Row="1" Grid.Column="0" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
-                                                            <ScrollBar Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                                                                       Orientation="Horizontal" x:Name="PART_HorizontalScrollBar"/>
-                                                        </Grid>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </ScrollViewer.Template>
-                                        </ScrollViewer>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Grid x:Name="grid_from_listBoxItem" Background="{TemplateBinding Background}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <TextBlock Margin="10,10,10,0" Text="{Binding FileName}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+                                                <TextBlock Margin="10,10,10,0" Text="{Binding AccessTime,StringFormat='yyyy/MM/dd HH:mm'}" Foreground="#b7b9c5" HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <TextBlock Margin="10,5,5,5" Text="{Binding DirPath}" Foreground="#b7b9c5" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                                            </Grid>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="grid_from_listBoxItem" Property="Background" Value="#3f3f40"></Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="grid_from_listBoxItem" Property="Background" Value="#007acc"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="ItemContainerStyle">
-                                <Setter.Value>
-                                    <Style TargetType="ListBoxItem">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ListBoxItem">
-                                                    <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition/>
-                                                            <RowDefinition/>
-                                                        </Grid.RowDefinitions>
-                                                        <Grid Grid.Row="0">
-                                                            <TextBlock Margin="10,10,10,0" Text="{Binding FileName}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
-                                                            <TextBlock Margin="10,10,10,0" Text="{Binding AccessTime,StringFormat='yyyy/MM/dd HH:mm'}" Foreground="#b7b9c5" HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                        <Grid Grid.Row="1">
-                                                            <TextBlock Margin="10,5,5,5" Text="{Binding DirPath}" Foreground="#b7b9c5" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
-                                                        </Grid>
-                                                    </Grid>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="grid" Property="Background" Value="#3f3f40"></Setter>
-                                                        </Trigger>
-                                                        <Trigger Property="IsSelected" Value="True">
-                                                            <Setter TargetName="grid" Property="Background" Value="#007acc"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Setter.Value>
-                            </Setter>
                         </Style>
-                    </ListBox.Style>
-                </ListBox>
+                    </wpfcontrols:MyListBox.ItemContainerStyle>
+                </wpfcontrols:MyListBox>
             </Grid>
         </Grid>
         <Grid Grid.Column="1">

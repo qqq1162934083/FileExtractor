@@ -7,10 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="WpfStyles/CommonStyle.xaml"/>
-                <ResourceDictionary>
-                    <pages:ScrollBarVisibilityConverter x:Key="scrollBarVisibilityConverter"/>
-                </ResourceDictionary>
+                <ResourceDictionary Source="WpfStyles/WindowStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

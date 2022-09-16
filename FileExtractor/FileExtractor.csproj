@@ -97,15 +97,14 @@
     <Compile Include="Pages\NewConfigPage.xaml.cs">
       <DependentUpon>NewConfigPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CollectionExtMethod.cs" />
+    <Compile Include="Utils\ResDicUtils.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
-    <Compile Include="WpfControls\MyThumb.xaml.cs">
-      <DependentUpon>MyThumb.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WpfControls\MyTextBox.xaml.cs">
-      <DependentUpon>MyTextBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WpfStyles\CommonStyle.xaml.cs">
-      <DependentUpon>CommonStyle.xaml</DependentUpon>
+    <Compile Include="WpfControls\MyListBox.cs" />
+    <Compile Include="WpfControls\MyTextBox.cs" />
+    <Compile Include="WpfControls\MyThumb.cs" />
+    <Compile Include="WpfStyles\WindowStyle.xaml.cs">
+      <DependentUpon>WindowStyle.xaml</DependentUpon>
     </Compile>
     <Page Include="FileExtractorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,15 +160,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfControls\MyThumb.xaml">
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WpfControls\MyTextBox.xaml">
+    <Page Include="WpfControls\Styles\MyListBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfStyles\CommonStyle.xaml">
+    <Page Include="WpfControls\Styles\MyTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfControls\Styles\MyThumb.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfStyles\WindowStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

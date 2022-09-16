@@ -1,3 +1,4 @@
+using FileExtractor.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,14 +24,13 @@ namespace FileExtractor.WpfControls
         private Brush NormalBrush { get; set; }
         private Brush FocusBrush { get; set; }
         private Brush PressedBrush { get; set; }
-        public MyThumb()
+        public MyThumb() : base()
         {
+            Style = ResDicUtils.GetCustomControlStyle<MyThumb>();
             var brushConverter = new BrushConverter();
             NormalBrush = (Brush)brushConverter.ConvertFrom("#686868");
             FocusBrush = (Brush)brushConverter.ConvertFrom("#9e9e9e");
             PressedBrush = (Brush)brushConverter.ConvertFrom("#efebef");
-
-            InitializeComponent();
             Loaded += (s, e) => BackgroundPanel = (Grid)Template.FindName("grid", this);
 
             MouseEnter += (s, e) => BackgroundPanel.Background = FocusBrush;

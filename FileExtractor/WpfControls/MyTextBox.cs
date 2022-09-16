@@ -1,3 +1,4 @@
+using FileExtractor.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace FileExtractor.WpfControls
     /// </summary>
     public partial class MyTextBox : TextBox
     {
-        public static readonly DependencyProperty HintTextProperty = RegisterDependencyProperties<MyTextBox,string>(nameof(HintText), string.Empty);
+        public static readonly DependencyProperty HintTextProperty = RegisterDependencyProperties<MyTextBox, string>(nameof(HintText), string.Empty);
         public string HintText
         {
             get { return (string)GetValue(HintTextProperty); }
@@ -41,9 +42,9 @@ namespace FileExtractor.WpfControls
             return DependencyProperty.Register(name, typeof(TProperty), typeof(TElement), new PropertyMetadata(defaultValue));
         }
 
-        public MyTextBox()
+        public MyTextBox() : base()
         {
-            InitializeComponent();
+            Style = ResDicUtils.GetCustomControlStyle<MyTextBox>();
         }
     }
 }

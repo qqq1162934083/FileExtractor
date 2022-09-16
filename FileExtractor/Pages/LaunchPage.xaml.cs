@@ -70,31 +70,4 @@ namespace FileExtractor.Pages
             Console.WriteLine();
         }
     }
-    public class ScrollBarVisibilityConverter : IValueConverter
-    {
-        //public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        //{
-        //    var visibility = (ScrollBarVisibility)values.First(x => x is ScrollBarVisibility);
-        //    var isMouseOver = (bool)values.First(x => x is bool);
-
-        //    if (isMouseOver || visibility == ScrollBarVisibility.Visible) return Visibility.Visible;
-        //    else return visibility;
-        //}
-
-        //public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var isMouseOver = (bool)value;
-            return isMouseOver ? Visibility.Visible : Visibility.Hidden;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }

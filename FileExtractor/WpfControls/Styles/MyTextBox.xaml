@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FileExtractor.WpfControls">
+    <Style TargetType="local:MyTextBox">
+        <Setter Property="CaretBrush" Value="White"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#FF333337"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:MyTextBox">
+                    <Border Width="auto" Height="auto" x:Name="border" Background="#333337" BorderBrush="#3f3f46" BorderThickness="1" Padding="6">
+                        <ScrollViewer Margin="0" BorderThickness="1" BorderBrush="White" x:Name="PART_ContentHost" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#007acc"/>
+                            <Setter TargetName="border" Property="Background" Value="#3f3f46"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
