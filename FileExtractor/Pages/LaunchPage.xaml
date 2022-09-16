@@ -36,6 +36,56 @@
                 <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20" Foreground="#f1f1f1" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
                 <ListBox Grid.Row="1" Margin="0,0,0,0" BorderThickness="0" Background="Transparent">
                     <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
+                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
+                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
+                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
+                    </vm:RecentAccessItem>
+                    <vm:RecentAccessItem>
                         <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
@@ -54,13 +104,110 @@
                                             <ItemsPresenter/>
                                             <ScrollViewer.Template>
                                                 <ControlTemplate TargetType="ScrollViewer">
+                                                    <ControlTemplate.Resources>
+                                                        <Style TargetType="ScrollBar">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Orientation" Value="Vertical">
+                                                                    <Setter Property="Template" Value="{DynamicResource template_verticalScrollBar}"/>
+                                                                </Trigger>
+                                                                <Trigger Property="Orientation" Value="Horizontal">
+                                                                    <Setter Property="Template" Value="{DynamicResource template_horizontalScrollBar}"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                            <Style.Resources>
+                                                                <ControlTemplate x:Key="template_horizontalScrollBar" TargetType="ScrollBar">
+                                                                    <Grid Background="White"></Grid>
+                                                                </ControlTemplate>
+                                                                <ControlTemplate x:Key="template_verticalScrollBar" TargetType="ScrollBar">
+                                                                    <ControlTemplate.Resources>
+                                                                        <ControlTemplate x:Key="template_upDownRepeatButton" TargetType="RepeatButton">
+                                                                            <Grid Background="Transparent">
+                                                                                <Path x:Name="path" Fill="#999999" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
+                                                                                <Path x:Name="path_mouseOver" Visibility="Hidden" Stroke="Transparent" Fill="#1c97ea" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
+                                                                            </Grid>
+                                                                            <ControlTemplate.Triggers>
+                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                    <Setter TargetName="path" Property="Visibility" Value="Hidden"/>
+                                                                                    <Setter TargetName="path_mouseOver" Property="Visibility" Value="Visible"/>
+                                                                                </Trigger>
+                                                                            </ControlTemplate.Triggers>
+                                                                        </ControlTemplate>
+                                                                        <ControlTemplate x:Key="template_thumb_upDownRepeatButton" TargetType="RepeatButton">
+                                                                            <Grid Background="Transparent"/>
+                                                                        </ControlTemplate>
+                                                                    </ControlTemplate.Resources>
+                                                                    <Grid Background="#3e3e42">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="20"/>
+                                                                            <RowDefinition/>
+                                                                            <RowDefinition Height="20"/>
+                                                                        </Grid.RowDefinitions>
+                                                                        <!--上行按钮-->
+                                                                        <RepeatButton Command="ScrollBar.LineUpCommand" Template="{DynamicResource template_upDownRepeatButton}">
+                                                                            <RepeatButton.Tag>
+                                                                                <Geometry>M6,1L1,6L11,6Z</Geometry>
+                                                                            </RepeatButton.Tag>
+                                                                        </RepeatButton>
+                                                                        <!--轨道-->
+                                                                        <Track Name="PART_Track" Grid.Row="1" IsDirectionReversed="True">
+                                                                            <Track.DecreaseRepeatButton>
+                                                                                <!--上页按钮-->
+                                                                                <RepeatButton Command="ScrollBar.PageUpCommand" Template="{DynamicResource template_thumb_upDownRepeatButton}"/>
+                                                                            </Track.DecreaseRepeatButton>
+                                                                            <Track.Thumb>
+                                                                                <!--滑块-->
+                                                                                <Thumb Background="#686868" SnapsToDevicePixels="True">
+                                                                                    <Thumb.Template>
+                                                                                        <ControlTemplate TargetType="Thumb">
+                                                                                            <Grid Background="Transparent">
+                                                                                                <Grid Margin="4,0,4,0" Background="{TemplateBinding Background}"/>
+                                                                                            </Grid>
+                                                                                            <ControlTemplate.Triggers>
+                                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                                    <Setter Property="Background" Value="#9e9e9e"/>
+                                                                                                </Trigger>
+                                                                                            </ControlTemplate.Triggers>
+                                                                                        </ControlTemplate>
+                                                                                    </Thumb.Template>
+                                                                                </Thumb>
+                                                                            </Track.Thumb>
+                                                                            <Track.IncreaseRepeatButton>
+                                                                                <!--下页按钮-->
+                                                                                <RepeatButton Command="ScrollBar.PageDownCommand" Template="{DynamicResource template_thumb_upDownRepeatButton}"/>
+                                                                            </Track.IncreaseRepeatButton>
+                                                                        </Track>
+                                                                        <!--下行按钮-->
+                                                                        <RepeatButton Grid.Row="2" Command="ScrollBar.LineDownCommand" Template="{DynamicResource template_upDownRepeatButton}">
+                                                                            <RepeatButton.Tag>
+                                                                                <Geometry>M6,6L1,1L11,1Z</Geometry>
+                                                                            </RepeatButton.Tag>
+                                                                        </RepeatButton>
+                                                                    </Grid>
+                                                                </ControlTemplate>
+                                                            </Style.Resources>
+                                                        </Style>
+                                                    </ControlTemplate.Resources>
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="auto"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <ContentPresenter Grid.Column="0"/>
-                                                        <Button Margin="13,0,0,0" Width="16" Grid.Column="1"/>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <ScrollContentPresenter Grid.Row="0" Grid.Column="0" x:Name="PART_ScrollContentPresenter" CanContentScroll="True"/>
+                                                        <Grid Grid.Row="0" Margin="13,0,0,0" Grid.Column="1" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
+                                                            <ScrollBar Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" x:Name="PART_VerticalScrollBar" 
+                                                                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                       ViewportSize="{TemplateBinding ViewportHeight}"
+                                                                       Maximum="{TemplateBinding ScrollableHeight}" 
+                                                                       Minimum="0" Cursor="Arrow" AutomationProperties.AutomationId="VerticalScrollBar"/>
+                                                        </Grid>
+                                                        <Grid Grid.Row="1" Grid.Column="0" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
+                                                            <ScrollBar Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                                       Orientation="Horizontal" x:Name="PART_HorizontalScrollBar"/>
+                                                        </Grid>
                                                     </Grid>
                                                 </ControlTemplate>
                                             </ScrollViewer.Template>
@@ -80,8 +227,8 @@
                                                             <RowDefinition/>
                                                         </Grid.RowDefinitions>
                                                         <Grid Grid.Row="0">
-                                                            <TextBlock Margin="10,10,10,0" Text="{Binding FileName}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
-                                                            <TextBlock Margin="10,10,10,0" Text="{Binding AccessTime,StringFormat='yyyy/MM/dd HH:mm'}" Foreground="#b7b9c5" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+                                                            <TextBlock Margin="10,10,10,0" Text="{Binding FileName}" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+                                                            <TextBlock Margin="10,10,10,0" Text="{Binding AccessTime,StringFormat='yyyy/MM/dd HH:mm'}" Foreground="#b7b9c5" HorizontalAlignment="Right" FontSize="12" VerticalAlignment="Center"></TextBlock>
                                                         </Grid>
                                                         <Grid Grid.Row="1">
                                                             <TextBlock Margin="10,5,5,5" Text="{Binding DirPath}" Foreground="#b7b9c5" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>

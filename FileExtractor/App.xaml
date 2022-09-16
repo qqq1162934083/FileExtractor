@@ -2,11 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:FileExtractor"
+             xmlns:pages="clr-namespace:FileExtractor.Pages"
              StartupUri="LaunchWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="WpfStyles/CommonStyle.xaml"/>
+                <ResourceDictionary>
+                    <pages:ScrollBarVisibilityConverter x:Key="scrollBarVisibilityConverter"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
