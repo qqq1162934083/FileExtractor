@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FileExtractor.Pages" 
-      xmlns:vm="clr-namespace:FileExtractor.ViewModels"
+      xmlns:vm="clr-namespace:FileExtractor.ViewModels" xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls"
       mc:Ignorable="d" 
       d:DesignHeight="699" d:DesignWidth="1039"
       Title="LaunchPage">
@@ -156,20 +156,7 @@
                                                                             </Track.DecreaseRepeatButton>
                                                                             <Track.Thumb>
                                                                                 <!--滑块-->
-                                                                                <Thumb Background="#686868" SnapsToDevicePixels="True">
-                                                                                    <Thumb.Template>
-                                                                                        <ControlTemplate TargetType="Thumb">
-                                                                                            <Grid Background="Transparent">
-                                                                                                <Grid Margin="4,0,4,0" Background="{TemplateBinding Background}"/>
-                                                                                            </Grid>
-                                                                                            <ControlTemplate.Triggers>
-                                                                                                <Trigger Property="IsMouseOver" Value="True">
-                                                                                                    <Setter Property="Background" Value="#9e9e9e"/>
-                                                                                                </Trigger>
-                                                                                            </ControlTemplate.Triggers>
-                                                                                        </ControlTemplate>
-                                                                                    </Thumb.Template>
-                                                                                </Thumb>
+                                                                                <wpfcontrols:MyThumb/>
                                                                             </Track.Thumb>
                                                                             <Track.IncreaseRepeatButton>
                                                                                 <!--下页按钮-->

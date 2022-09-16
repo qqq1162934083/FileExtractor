@@ -98,6 +98,9 @@
       <DependentUpon>NewConfigPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\RecentAccessItem.cs" />
+    <Compile Include="WpfControls\MyThumb.xaml.cs">
+      <DependentUpon>MyThumb.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfControls\MyTextBox.xaml.cs">
       <DependentUpon>MyTextBox.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
     <Page Include="Pages\NewConfigPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfControls\MyThumb.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="WpfControls\MyTextBox.xaml">
       <SubType>Designer</SubType>
