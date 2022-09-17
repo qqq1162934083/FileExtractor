@@ -1,3 +1,4 @@
+using FileExtractor.Models;
 using MyTool;
 using NetCore5WpfToolsApp.PrjLogger;
 using System;
@@ -15,6 +16,18 @@ namespace FileExtractor
     /// </summary>
     public partial class App : Application
     {
+        public class Cache
+        {
+            public static StartWorkCache StartWorkCache => StartWorkCacheMgr.DataCache;
+            public static ViewCacheMgr<object, StartWorkCache, object> StartWorkCacheMgr { get; set; }
+
+            internal static void Init()
+            {
+                //初始化缓存管理
+                ViewCacheMgrParams.Init((a, b, c) => GlobalConfig.GetCacheFilePath(a, b, c));
+                StartWorkCacheMgr = new ViewCacheMgr<object, StartWorkCache, object>();
+            }
+        }
         static App()
         {
             //配置日志
@@ -23,8 +36,8 @@ namespace FileExtractor
             //加载App配置
             LoadConfigData();
 
-            //初始化缓存管理
-            ViewCacheMgrParams.Init((a, b, c) => GlobalConfig.GetCacheFilePath(a, b, c));
+            //初始化缓存
+            Cache.Init();
 
             //程序退出事件
             AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnProcessExit;

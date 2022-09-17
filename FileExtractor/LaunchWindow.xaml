@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExtractor"
+        xmlns:wms="clr-namespace:WpfMultiStyle;assembly=WpfMultiStyle"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Source="pack://application:,,,/Pages/LaunchPage.xaml"
         Style="{StaticResource style_baseWindow}"
+        Source="pack://application:,,,/Pages/LaunchPage.xaml"
         Height="699" Width="1039">
 </NavigationWindow>

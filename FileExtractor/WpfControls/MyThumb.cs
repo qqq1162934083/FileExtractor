@@ -18,15 +18,19 @@ using System.Windows.Shapes;
 
 namespace FileExtractor.WpfControls
 {
-    public partial class MyThumb : Thumb
+    public class MyThumb : Thumb
     {
+        static MyThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MyThumb), new FrameworkPropertyMetadata(typeof(MyThumb)));
+        }
         private Grid BackgroundPanel { get; set; }
         private Brush NormalBrush { get; set; }
         private Brush FocusBrush { get; set; }
         private Brush PressedBrush { get; set; }
         public MyThumb() : base()
         {
-            Style = ResDicUtils.GetCustomControlStyle<MyThumb>();
+            //Style = ResDicUtils.GetCustomControlStyle<MyThumb>();
             var brushConverter = new BrushConverter();
             NormalBrush = (Brush)brushConverter.ConvertFrom("#686868");
             FocusBrush = (Brush)brushConverter.ConvertFrom("#9e9e9e");

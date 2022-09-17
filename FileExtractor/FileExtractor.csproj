@@ -60,6 +60,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfMultiStyle, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfMultiStyle.2.0.0\lib\net45\WpfMultiStyle.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -91,6 +94,7 @@
       <DependentUpon>VariableBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Libs\Components\ViewCacheMgr.cs" />
+    <Compile Include="Models\StartWorkCache.cs" />
     <Compile Include="Pages\LaunchPage.xaml.cs">
       <DependentUpon>LaunchPage.xaml</DependentUpon>
     </Compile>
@@ -100,11 +104,11 @@
     <Compile Include="Utils\CollectionExtMethod.cs" />
     <Compile Include="Utils\ResDicUtils.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
-    <Compile Include="WpfControls\MyListBox.cs" />
     <Compile Include="WpfControls\MyTextBox.cs" />
+    <Compile Include="WpfControls\MyListBox.cs" />
     <Compile Include="WpfControls\MyThumb.cs" />
-    <Compile Include="WpfStyles\WindowStyle.xaml.cs">
-      <DependentUpon>WindowStyle.xaml</DependentUpon>
+    <Compile Include="Themes\Styles\MyWindowStyle.xaml.cs">
+      <DependentUpon>MyWindowStyle.xaml</DependentUpon>
     </Compile>
     <Page Include="FileExtractorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -164,19 +168,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WpfControls\Styles\MyListBox.xaml">
+    <Page Include="Themes\Styles\MyListBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfControls\Styles\MyTextBox.xaml">
+    <Page Include="Themes\Styles\MyTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfControls\Styles\MyThumb.xaml">
+    <Page Include="Themes\Styles\MyThumb.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfStyles\WindowStyle.xaml">
+    <Page Include="Themes\Styles\MyWindowStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="PrjResources\" />
+    <Folder Include="WpfStyles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

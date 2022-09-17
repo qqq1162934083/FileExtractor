@@ -3,8 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:FileExtractor.WpfControls">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyListBox.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyTextBox.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyThumb.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Styles/MyListBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Styles/MyTextBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Styles/MyThumb.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Styles/MyWindowStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

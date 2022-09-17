@@ -50,26 +50,41 @@ namespace FileExtractor.Utils
         /// 获取资源字典中的资源
         /// </summary>
         /// <typeparam name="TResource"></typeparam>
-        /// <param name="xamlRelaticePath"></param>
+        /// <param name="xamlRelativePath"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public static TResource GetResource<TResource>(string xamlRelaticePath, Predicate<object> predicate)
+        public static TResource GetResource<TResource>(string xamlRelativePath, Predicate<object> predicate)
         {
-            var resDic = GetResourceDictionary(xamlRelaticePath);
+            var resDic = GetResourceDictionary(xamlRelativePath);
             return (TResource)resDic.Values.FirstOrDefault(predicate);
         }
 
         /// <summary>
         /// 获取资源字典对象
         /// </summary>
-        /// <param name="xamlRelaticePath"></param>
+        /// <param name="xamlRelativePath"></param>
         /// <returns></returns>
-        public static ResourceDictionary GetResourceDictionary(string xamlRelaticePath)
+        public static ResourceDictionary GetResourceDictionary(string xamlRelativePath)
         {
-            xamlRelaticePath = xamlRelaticePath.Replace("\\", "/").TrimStart('/');
+            xamlRelativePath = xamlRelativePath.Replace("\\", "/").TrimStart('/');
             return new ResourceDictionary()
             {
-                Source = new Uri($"pack://application:,,,/{xamlRelaticePath}")
+                Source = new Uri($"pack://application:,,,/{xamlRelativePath}")
+            };
+        }
+
+        /// <summary>
+        /// 获取资源字典对象
+        /// </summary>
+        /// <param name="xamlRelativePath"></param>
+        /// <returns></returns>
+        public static ResourceDictionary GetRelativeResourceDictionary(string xamlRelativePath)
+        {
+            xamlRelativePath = xamlRelativePath.Replace("\\", "/").TrimStart('/');
+            var uri = $"./WpfControls/{xamlRelativePath}";
+            return new ResourceDictionary()
+            {
+                Source = new Uri(uri)
             };
         }
     }

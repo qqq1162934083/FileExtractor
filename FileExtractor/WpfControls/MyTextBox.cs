@@ -2,7 +2,6 @@ using FileExtractor.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,34 +16,34 @@ using System.Windows.Shapes;
 
 namespace FileExtractor.WpfControls
 {
-    /// <summary>
-    /// MyTextBox.xaml 的交互逻辑
-    /// </summary>
-    public partial class MyTextBox : TextBox
+    public class MyTextBox : TextBox
     {
-        public static readonly DependencyProperty HintTextProperty = RegisterDependencyProperties<MyTextBox, string>(nameof(HintText), string.Empty);
+        static MyTextBox()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MyTextBox), new FrameworkPropertyMetadata(typeof(MyTextBox)));
+        }
+
         public string HintText
         {
             get { return (string)GetValue(HintTextProperty); }
             set { SetValue(HintTextProperty, value); }
         }
+        public static readonly DependencyProperty HintTextProperty =
+            DependencyProperty.Register("HintText", typeof(string), typeof(MyTextBox), new PropertyMetadata(string.Empty));
 
-        public static readonly DependencyProperty HintVisibilityProperty = RegisterDependencyProperties<MyTextBox, Visibility>(nameof(HintVisibility), Visibility.Collapsed);
+
+
         public Visibility HintVisibility
         {
             get { return (Visibility)GetValue(HintVisibilityProperty); }
             set { SetValue(HintVisibilityProperty, value); }
         }
-
-        private static DependencyProperty RegisterDependencyProperties<TElement, TProperty>(string name, TProperty defaultValue)
-            where TElement : DependencyObject
-        {
-            return DependencyProperty.Register(name, typeof(TProperty), typeof(TElement), new PropertyMetadata(defaultValue));
-        }
+        public static readonly DependencyProperty HintVisibilityProperty =
+            DependencyProperty.Register("HintVisibility", typeof(Visibility), typeof(MyTextBox), new PropertyMetadata(Visibility.Collapsed));
 
         public MyTextBox() : base()
         {
-            Style = ResDicUtils.GetCustomControlStyle<MyTextBox>();
+            //Style = ResDicUtils.GetCustomControlStyle<MyTextBox>();
         }
     }
 }

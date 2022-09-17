@@ -17,7 +17,7 @@ using FileExtractor.Utils;
 
 namespace FileExtractor.WpfControls
 {
-    public partial class MyListBox : ListBox
+    public class MyListBox : ListBox
     {
         static MyListBox()
         {
@@ -26,8 +26,8 @@ namespace FileExtractor.WpfControls
 
         public MyListBox() : base()
         {
-            Resources = ResDicUtils.GetCustomControlDefaultResourceDictionary<MyListBox>();
-            Style = ResDicUtils.GetCustomControlStyle<MyListBox>();
+            //Resources = ResDicUtils.GetCustomControlDefaultResourceDictionary<MyListBox>();
+            //Style = (Style)ResDicUtils.GetRelativeResourceDictionary($"{nameof(MyListBox)}.xaml").FirstOrDefault(x => x is Style && ((Style)x).TargetType == GetType());
         }
     }
     public class ScrollBarVisibilityConverter : IValueConverter

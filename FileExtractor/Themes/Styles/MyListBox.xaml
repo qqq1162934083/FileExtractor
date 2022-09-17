@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:FileExtractor.WpfControls">
-    <Style TargetType="local:MyListBox" x:Key="key1">
+    <Style TargetType="local:MyListBox">
         <Style.Resources>
             <local:ScrollBarVisibilityConverter x:Key="scrollBarVisibilityConverter"/>
         </Style.Resources>

@@ -9,9 +9,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace FileExtractor.WpfStyles
+namespace FileExtractor.Themes.Styles
 {
-    public partial class WindowStyle
+    public partial class MyWindowStyle
     {
         private void btn_closeWindow_Click(object sender, RoutedEventArgs e)
         {
