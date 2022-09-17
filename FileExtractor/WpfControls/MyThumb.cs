@@ -31,13 +31,16 @@ namespace FileExtractor.WpfControls
             NormalBrush = (Brush)brushConverter.ConvertFrom("#686868");
             FocusBrush = (Brush)brushConverter.ConvertFrom("#9e9e9e");
             PressedBrush = (Brush)brushConverter.ConvertFrom("#efebef");
-            Loaded += (s, e) => BackgroundPanel = (Grid)Template.FindName("grid", this);
-
             MouseEnter += (s, e) => BackgroundPanel.Background = FocusBrush;
             MouseLeave += (s, e) => BackgroundPanel.Background = NormalBrush;
-
             DragStarted += (s, e) => BackgroundPanel.Background = PressedBrush;
             DragCompleted += (s, e) => BackgroundPanel.Background = IsMouseOver ? FocusBrush : NormalBrush;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            BackgroundPanel = (Grid)Template.FindName("PART_grid", this);
         }
     }
 }

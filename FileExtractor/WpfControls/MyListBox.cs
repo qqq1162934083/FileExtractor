@@ -17,7 +17,7 @@ using FileExtractor.Utils;
 
 namespace FileExtractor.WpfControls
 {
-    public class MyListBox : ListBox
+    public partial class MyListBox : ListBox
     {
         static MyListBox()
         {
@@ -26,6 +26,7 @@ namespace FileExtractor.WpfControls
 
         public MyListBox() : base()
         {
+            Resources = ResDicUtils.GetCustomControlDefaultResourceDictionary<MyListBox>();
             Style = ResDicUtils.GetCustomControlStyle<MyListBox>();
         }
     }

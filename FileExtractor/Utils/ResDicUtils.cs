@@ -21,7 +21,29 @@ namespace FileExtractor.Utils
         /// <returns></returns>
         public static Style GetCustomControlStyle<TCustomControl>()
         {
-            return GetResource<Style>(CUSTOM_CONTROL_STYLE_DIR + $"/{typeof(TCustomControl).Name}.xaml", x => x is Style && ((Style)x).TargetType == typeof(TCustomControl));
+            return GetResourceFromCustomControlDefaultResourceDictionary<TCustomControl, Style>(x => x is Style && ((Style)x).TargetType == typeof(TCustomControl));
+        }
+
+        /// <summary>
+        /// 获取自定义控件的默认资源字典
+        /// </summary>
+        /// <typeparam name="TCustomControl"></typeparam>
+        /// <returns></returns>
+        public static ResourceDictionary GetCustomControlDefaultResourceDictionary<TCustomControl>()
+        {
+            return GetResourceDictionary(CUSTOM_CONTROL_STYLE_DIR + $"/{typeof(TCustomControl).Name}.xaml");
+        }
+
+        /// <summary>
+        /// 获取自定义控件的默认资源字典中的资源
+        /// </summary>
+        /// <typeparam name="TResource"></typeparam>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static TResource GetResourceFromCustomControlDefaultResourceDictionary<TCustomControl, TResource>(Predicate<object> predicate)
+        {
+            var resDic = GetCustomControlDefaultResourceDictionary<TCustomControl>();
+            return (TResource)resDic.Values.FirstOrDefault(predicate);
         }
 
         /// <summary>

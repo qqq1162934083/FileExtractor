@@ -6,7 +6,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:MyThumb">
                     <Grid Background="Transparent">
-                        <Grid x:Name="grid" Margin="4,0,4,0" Background="#686868"/>
+                        <Grid x:Name="PART_grid" Margin="4,0,4,0" Background="#686868"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
