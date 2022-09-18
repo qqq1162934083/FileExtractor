@@ -105,10 +105,10 @@
     <Compile Include="Utils\ResDicUtils.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
     <Compile Include="WpfControls\MyTextBox.cs" />
-    <Compile Include="WpfControls\MyListBox.cs" />
+    <Compile Include="WpfControls\Converters\ScrollBarVisibilityConverter.cs" />
     <Compile Include="WpfControls\MyThumb.cs" />
-    <Compile Include="Themes\Styles\MyWindowStyle.xaml.cs">
-      <DependentUpon>MyWindowStyle.xaml</DependentUpon>
+    <Compile Include="WpfControls\Styles\MyWindow.xaml.cs">
+      <DependentUpon>MyWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="FileExtractorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -164,23 +164,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\MyListBox.xaml">
+    <Page Include="WpfControls\Styles\MyListBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Styles\MyTextBox.xaml">
+    <Page Include="WpfControls\Styles\MyTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Styles\MyThumb.xaml">
+    <Page Include="WpfControls\Styles\MyThumb.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Styles\MyWindowStyle.xaml">
+    <Page Include="WpfControls\Styles\MyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

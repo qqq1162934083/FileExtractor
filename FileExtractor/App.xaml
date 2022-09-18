@@ -7,7 +7,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyListBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyTextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyThumb.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyWindow.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

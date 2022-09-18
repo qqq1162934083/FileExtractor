@@ -7,7 +7,7 @@
         xmlns:wms="clr-namespace:WpfMultiStyle;assembly=WpfMultiStyle"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Style="{StaticResource style_baseWindow}"
+        Style="{StaticResource style_myWindow}"
         Source="pack://application:,,,/Pages/LaunchPage.xaml"
         Height="699" Width="1039">
 </NavigationWindow>

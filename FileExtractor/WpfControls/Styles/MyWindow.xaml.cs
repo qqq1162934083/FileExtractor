@@ -11,7 +11,7 @@ using System.Windows.Interop;
 
 namespace FileExtractor.Themes.Styles
 {
-    public partial class MyWindowStyle
+    public partial class MyWindow
     {
         private void btn_closeWindow_Click(object sender, RoutedEventArgs e)
         {

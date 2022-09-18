@@ -34,7 +34,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20" Foreground="#f1f1f1" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
-                <wpfcontrols:MyListBox Grid.Row="1">
+                <ListBox Grid.Row="1" Style="{StaticResource style_myListBox}">
                     <vm:RecentAccessItem>
                         <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
@@ -115,7 +115,7 @@
                         <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
                         <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
                     </vm:RecentAccessItem>
-                    <wpfcontrols:MyListBox.ItemContainerStyle>
+                    <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -145,8 +145,8 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </wpfcontrols:MyListBox.ItemContainerStyle>
-                </wpfcontrols:MyListBox>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
