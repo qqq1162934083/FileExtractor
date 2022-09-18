@@ -22,6 +22,7 @@ namespace FileExtractor.Pages
     /// </summary>
     public partial class NewConfigPage : Page
     {
+        private const string ConfigNameExtName = ".fecfg";
         public NewConfigPage()
         {
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace FileExtractor.Pages
             while (true)
             {
                 configName = defatultConfigName + "(" + configIndex + ")";
-                var configPath = Path.Combine(configDirPath, configName + ".cfg");
+                var configPath = Path.Combine(configDirPath, configName + ConfigNameExtName);
                 if (!File.Exists(configPath)) break;
                 configIndex++;
             }
@@ -58,7 +59,7 @@ namespace FileExtractor.Pages
         private void btn_createConfig_Click(object sender, RoutedEventArgs e)
         {
             //验证
-            var dirPath = tbx_configDirPath.Text.Trim();
+            var dirPath = tbx_configDirPath.Text.Trim().TrimEnd(new char[] { '/', '\\' });
             var configName = tbx_configName.Text.Trim();
             if (!Directory.Exists(dirPath))
             {
@@ -70,12 +71,13 @@ namespace FileExtractor.Pages
                 MessageBox.Show("请输入配置名");
                 return;
             }
-            var filePath = Path.Combine(dirPath, configName + ".cfg");
+            var fileName = configName + ConfigNameExtName;
+            var filePath = Path.Combine(dirPath, fileName);
             try
             {
                 File.Create(filePath).Dispose();
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 if (!Directory.Exists(dirPath))
                 {
@@ -88,10 +90,18 @@ namespace FileExtractor.Pages
                     return;
                 }
             }
+            //缓存打开记录
+            App.Cache.StartWorkCache.UpdateRecentAccessItem(new ViewModels.RecentAccessItem
+            {
+                DirPath = dirPath,
+                FileName = fileName,
+                AccessTime = DateTime.Now
+            });
+
             //进入主页面
             var window = Window.GetWindow(this);
             window.Hide();
-            new FileExtractorWindow().Show();
+            new MainWindow().Show();
             window.Close();
         }
     }

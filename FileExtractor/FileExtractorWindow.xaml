@@ -11,7 +11,8 @@
         mc:Ignorable="d"
         Title="打包工具" 
         Height="859.443" 
-        Width="1187.824" 
+        Width="1187.824"
+        Style="{StaticResource style_myWindow}"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -137,7 +138,7 @@
     </Window.Resources>
 
     <Grid>
-        <DockPanel>
+        <DockPanel Margin="0,40,0,0">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="选项">
                     <MenuItem x:Name="btn_configSaveAs" Header="保存当前视图配置到文件" Click="btn_configSaveAs_Click"/>

@@ -9,18 +9,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="699" d:DesignWidth="1039"
       Title="LaunchPage">
-    <Page.Resources>
-        <ControlTemplate x:Key="controlTemplate_btnFunction" TargetType="Button">
-            <Grid x:Name="grid" Height="77" Background="#333337">
-                <TextBlock Text="{TemplateBinding Content}" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#f1f1f1" FontSize="20"></TextBlock>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="grid" Property="Background" Value="#3f3f40"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
@@ -34,93 +22,34 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,20" Foreground="#f1f1f1" TextWrapping="Wrap" Text="打开最近使用的内容" VerticalAlignment="Top" FontSize="20"/>
-                <ListBox Grid.Row="1" Style="{StaticResource style_myListBox}">
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>WebShellApp</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
-                    <vm:RecentAccessItem>
-                        <vm:RecentAccessItem.FileName>测试配置</vm:RecentAccessItem.FileName>
-                        <vm:RecentAccessItem.DirPath>C:\Desktop</vm:RecentAccessItem.DirPath>
-                        <vm:RecentAccessItem.AccessTime>2011-11-11 11:11:11</vm:RecentAccessItem.AccessTime>
-                    </vm:RecentAccessItem>
+                <ListBox x:Name="lbx_recentAccessItem" Grid.Row="1" Style="{StaticResource style_myListBox}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
-                                        <Grid x:Name="grid_from_listBoxItem" Background="{TemplateBinding Background}">
+                                        <Grid Cursor="Hand" x:Name="grid_from_listBoxItem" Background="{TemplateBinding Background}">
+                                            <Grid.ContextMenu>
+                                                <ContextMenu Width="100">
+                                                    <ContextMenu.Style>
+                                                        <Style TargetType="ContextMenu">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="ContextMenu">
+                                                                        <Border Background="#1b1b1c" BorderBrush="#333337" BorderThickness="1" Padding="2">
+                                                                            <StackPanel IsItemsHost="True"></StackPanel>
+                                                                        </Border>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Setter Property="ItemContainerStyle" Value="{StaticResource style_myContextMenuItem}"/>
+                                                        </Style>
+                                                    </ContextMenu.Style>
+                                                    <MenuItem Header="从列表中删除"/>
+                                                    <MenuItem Header="复制目录路径"/>
+                                                    <MenuItem Header="复制文件路径"/>
+                                                </ContextMenu>
+                                            </Grid.ContextMenu>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition/>
                                                 <RowDefinition/>
@@ -155,8 +84,8 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Button x:Name="btn_openConfig" Click="btn_openConfig_Click" Margin="0,2,0,2" Grid.Row="0" Template="{StaticResource controlTemplate_btnFunction}" Content="打开现有配置"></Button>
-                <Button x:Name="btn_createConfig" Click="btn_createConfig_Click" Margin="0,2,0,2" Grid.Row="1" Template="{StaticResource controlTemplate_btnFunction}" Content="创建新配置"></Button>
+                <Button x:Name="btn_openConfig" Click="btn_openConfig_Click" Height="77" Margin="0,2,0,2" Grid.Row="0" Style="{StaticResource style_myButton}" Content="打开现有配置"></Button>
+                <Button x:Name="btn_createConfig" Click="btn_createConfig_Click" Height="77" Margin="0,2,0,2" Grid.Row="1" Style="{StaticResource style_myButton}" Content="创建新配置"></Button>
             </Grid>
             <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="21,120,0,0" TextWrapping="Wrap" Text="开始使用" VerticalAlignment="Top" FontSize="20"/>
         </Grid>

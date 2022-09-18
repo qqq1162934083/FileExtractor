@@ -1,4 +1,5 @@
 using FileExtractor.Models;
+using FileExtractor.Pages;
 using MyTool;
 using NetCore5WpfToolsApp.PrjLogger;
 using System;
@@ -19,13 +20,13 @@ namespace FileExtractor
         public class Cache
         {
             public static StartWorkCache StartWorkCache => StartWorkCacheMgr.DataCache;
-            public static ViewCacheMgr<object, StartWorkCache, object> StartWorkCacheMgr { get; set; }
+            public static ViewCacheMgr<LaunchPage, StartWorkCache, object> StartWorkCacheMgr { get; set; }
 
             internal static void Init()
             {
                 //初始化缓存管理
                 ViewCacheMgrParams.Init((a, b, c) => GlobalConfig.GetCacheFilePath(a, b, c));
-                StartWorkCacheMgr = new ViewCacheMgr<object, StartWorkCache, object>();
+                //StartWorkCacheMgr = new ViewCacheMgr<object, StartWorkCache, object>();
             }
         }
         static App()

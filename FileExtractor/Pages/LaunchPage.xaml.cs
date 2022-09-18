@@ -1,3 +1,4 @@
+using FileExtractor.Models;
 using MyTool;
 using MyTool.Modules.Module_FileExtractor;
 using NetCore5WpfToolsApp.Utils.Controls;
@@ -27,12 +28,9 @@ namespace FileExtractor.Pages
     /// </summary>
     public partial class LaunchPage : Page, IConfigControlCache
     {
-        public ViewCacheMgr<LaunchPage, object, object> CacheMgr { get; set; }
         public LaunchPage()
         {
-            CacheMgr = new ViewCacheMgr<LaunchPage, object, object>(this);
-            Loaded += (s, e) => CacheMgr.NotifyLoad();
-            Unloaded += (s, e) => CacheMgr.NotifySave();
+            App.Cache.StartWorkCacheMgr = new ViewCacheMgr<LaunchPage, StartWorkCache, object>(this);Loaded += (s, e) => App.Cache.StartWorkCacheMgr.NotifyLoad();
             InitializeComponent();
         }
 
@@ -40,8 +38,33 @@ namespace FileExtractor.Pages
         {
             FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*.cfg;*.json", x =>
             {
-                var data = JsonConvert.DeserializeObject<FileExtractorDataCache>(File.ReadAllText(x.FileName));
-                Console.WriteLine();
+                var fileInfo = new FileInfo(x.FileName);
+                FileExtractorDataCache data = null;
+                try
+                {
+                    data = JsonConvert.DeserializeObject<FileExtractorDataCache>(File.ReadAllText(x.FileName));
+                }
+                catch(Exception exp)
+                {
+                    MessageBox.Show("打开文件失败，无法识别文件内容");
+                    return;
+                }
+                try
+                {
+                    App.Cache.StartWorkCache.UpdateRecentAccessItem(new ViewModels.RecentAccessItem
+                    {
+                        FileName = fileInfo.Name,
+                        DirPath = fileInfo.DirectoryName,
+                        AccessTime = DateTime.Now
+                    });
+                }
+                finally
+                {
+                    var window = Window.GetWindow(this);
+                    window.Hide();
+                    new MainWindow().Show();
+                    window.Close();
+                }
             });
         }
 
@@ -52,22 +75,19 @@ namespace FileExtractor.Pages
 
         public void LoadViewCache()
         {
-            Console.WriteLine();
         }
 
         public void ApplyViewCache()
         {
-            Console.WriteLine();
         }
 
         public void LoadDataCache()
         {
-            Console.WriteLine();
+            lbx_recentAccessItem.ItemsSource = App.Cache.StartWorkCache.RecentAccessItemList;
         }
 
         public void ApplyDataCache()
         {
-            Console.WriteLine();
         }
     }
 }
