@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:FileExtractor.WpfControls">
     <Style TargetType="ListBox" x:Key="style_myListBox">
         <Style.Resources>
-            <local:ScrollBarVisibilityConverter x:Key="scrollBarVisibilityConverter"/>
+            <local:BoolVisibilityConverter x:Key="scrollBarVisibilityConverter"/>
         </Style.Resources>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="Transparent"/>

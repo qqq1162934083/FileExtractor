@@ -4,23 +4,94 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExtractor"
+        xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls"
         mc:Ignorable="d"
         Style="{StaticResource style_myWindow}"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow"
         Height="699" Width="1039">
     <Grid>
-        <TabControl Background="Transparent" HorizontalAlignment="Left" Height="306" Margin="47,56,0,0" VerticalAlignment="Top" Width="225">
-            <TabItem Background="Transparent" Header="文件">
+        <TabControl Background="Transparent" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Left" Margin="47,56,0,45" Width="348">
+            <TabControl.Style>
+                <Style TargetType="TabControl">
+                    <Setter Property="ItemContainerStyle">
+                        <Setter.Value>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Grid x:Name="PART_grid">
+                                                <Border BorderThickness="0,0,0,3" Visibility="{TemplateBinding IsSelected,Converter={StaticResource boolVisibilityConverter}}" BorderBrush="#686868"/>
+                                                <Border Padding="5">
+                                                    <TextBlock x:Name="PART_textBlock" Foreground="#f1f1f1" Text="{TemplateBinding Header}"></TextBlock>
+                                                </Border>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger SourceName="PART_grid" Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="PART_textBlock" Property="Foreground" Value="SkyBlue"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabControl">
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,0,1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="3"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid>
+                                            <Border HorizontalAlignment="Left" BorderThickness="0,1,1,0" BorderBrush="{TemplateBinding BorderBrush}">
+                                                <TabPanel IsItemsHost="True"/>
+                                            </Border>
+                                        </Grid>
+                                        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1">
+                                            <ContentPresenter ContentSource="SelectedContent"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Style>
+            <TabItem Background="Transparent" Header="文件映射">
                 <Grid Background="Transparent">
                     <ListBox Style="{StaticResource style_myListBox}"/>
                 </Grid>
             </TabItem>
-            <TabItem Background="Transparent" Header="目录">
+            <TabItem Background="Transparent" Header="目录映射">
                 <Grid Background="Transparent">
                     <ListBox Style="{StaticResource style_myListBox}"/>
                 </Grid>
             </TabItem>
         </TabControl>
+        <Grid Margin="479,126,133,518">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Foreground="White" Grid.Column="0" Margin="0,0,10,0" Text="打包到" VerticalAlignment="Center"/>
+            <wpfcontrols:MyTextBox Grid.Column="1" x:Name="tbx_packedDestDir" Height="39"/>
+            <TextBlock Foreground="White" Grid.Column="2" Margin="10,0,0,0" Text="目录下" VerticalAlignment="Center"/>
+        </Grid>
+        <Grid Margin="479,216,168,428">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Foreground="White" Grid.Column="0" Margin="0,0,10,0" Text="命名为" VerticalAlignment="Center"/>
+            <wpfcontrols:MyTextBox Grid.Column="1" x:Name="tbx_packedDestName" Height="39"/>
+            <TextBlock Foreground="White" Grid.Column="2" Margin="10,0,0,0" Text="" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </Window>

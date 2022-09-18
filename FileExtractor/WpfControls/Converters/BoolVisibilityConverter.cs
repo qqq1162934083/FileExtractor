@@ -17,12 +17,15 @@ using FileExtractor.Utils;
 
 namespace FileExtractor.WpfControls
 {
-    public class ScrollBarVisibilityConverter : IValueConverter
+    public class BoolVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var isMouseOver = (bool)value;
-            return isMouseOver ? Visibility.Visible : Visibility.Hidden;
+            var visibleIfTrue = true;
+            if (parameter != null) visibleIfTrue = bool.Parse(parameter.ToString());
+            var visible = (bool)value;
+            visible = visibleIfTrue ? visible : !visible;
+            return visible ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

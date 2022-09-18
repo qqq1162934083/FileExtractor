@@ -106,7 +106,7 @@
     <Compile Include="Utils\ResDicUtils.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
     <Compile Include="WpfControls\MyTextBox.cs" />
-    <Compile Include="WpfControls\Converters\ScrollBarVisibilityConverter.cs" />
+    <Compile Include="WpfControls\Converters\BoolVisibilityConverter.cs" />
     <Compile Include="WpfControls\MyThumb.cs" />
     <Compile Include="WpfControls\Styles\MyWindow.xaml.cs">
       <DependentUpon>MyWindow.xaml</DependentUpon>
