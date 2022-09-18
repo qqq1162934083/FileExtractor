@@ -22,10 +22,12 @@ namespace FileExtractor.Pages
     /// </summary>
     public partial class NewConfigPage : Page
     {
-        private const string ConfigNameExtName = ".fecfg";
+        public LaunchWindow ParentWindow { get; private set; }
+
         public NewConfigPage()
         {
             InitializeComponent();
+            Loaded += (s, e) => ParentWindow = (LaunchWindow)Window.GetWindow(this);
             InitDefaultUI();
         }
 
@@ -39,7 +41,7 @@ namespace FileExtractor.Pages
             while (true)
             {
                 configName = defatultConfigName + "(" + configIndex + ")";
-                var configPath = Path.Combine(configDirPath, configName + ConfigNameExtName);
+                var configPath = Path.Combine(configDirPath, configName + App.ConfigNameExtName);
                 if (!File.Exists(configPath)) break;
                 configIndex++;
             }
@@ -71,7 +73,7 @@ namespace FileExtractor.Pages
                 MessageBox.Show("请输入配置名");
                 return;
             }
-            var fileName = configName + ConfigNameExtName;
+            var fileName = configName + App.ConfigNameExtName;
             var filePath = Path.Combine(dirPath, fileName);
             try
             {
@@ -90,19 +92,20 @@ namespace FileExtractor.Pages
                     return;
                 }
             }
-            //缓存打开记录
-            App.Cache.StartWorkCache.UpdateRecentAccessItem(new ViewModels.RecentAccessItem
+            var accessItem = new ViewModels.RecentAccessItem
             {
                 DirPath = dirPath,
                 FileName = fileName,
                 AccessTime = DateTime.Now
-            });
+            };
+            //缓存打开记录
+            App.Cache.StartWorkCache.UpdateRecentAccessItem(accessItem);
 
             //进入主页面
-            var window = Window.GetWindow(this);
-            window.Hide();
-            new MainWindow().Show();
-            window.Close();
+            ParentWindow.Jump2WorkWindow(new Models.WorkData
+            {
+                AccessItemInfo = accessItem
+            });
         }
     }
 }

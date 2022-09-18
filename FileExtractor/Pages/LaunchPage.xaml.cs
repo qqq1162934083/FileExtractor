@@ -1,4 +1,5 @@
 using FileExtractor.Models;
+using FileExtractor.ViewModels;
 using MyTool;
 using MyTool.Modules.Module_FileExtractor;
 using NetCore5WpfToolsApp.Utils.Controls;
@@ -28,15 +29,18 @@ namespace FileExtractor.Pages
     /// </summary>
     public partial class LaunchPage : Page, IConfigControlCache
     {
+        public LaunchWindow ParentWindow { get; set; }
         public LaunchPage()
         {
-            App.Cache.StartWorkCacheMgr = new ViewCacheMgr<LaunchPage, StartWorkCache, object>(this);Loaded += (s, e) => App.Cache.StartWorkCacheMgr.NotifyLoad();
+            App.Cache.StartWorkCacheMgr = new ViewCacheMgr<LaunchPage, StartWorkCache, object>(this); Loaded += (s, e) => App.Cache.StartWorkCacheMgr.NotifyLoad();
             InitializeComponent();
+            Loaded += (s, e) => ParentWindow = (LaunchWindow)Window.GetWindow(this);
         }
 
         private void btn_openConfig_Click(object sender, RoutedEventArgs e)
         {
-            FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*.cfg;*.json", x =>
+            //FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*.fecfg;*.json", x =>
+            FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*" + App.ConfigNameExtName, x =>
             {
                 var fileInfo = new FileInfo(x.FileName);
                 FileExtractorDataCache data = null;
@@ -44,26 +48,27 @@ namespace FileExtractor.Pages
                 {
                     data = JsonConvert.DeserializeObject<FileExtractorDataCache>(File.ReadAllText(x.FileName));
                 }
-                catch(Exception exp)
+                catch (Exception exp)
                 {
                     MessageBox.Show("打开文件失败，无法识别文件内容");
                     return;
                 }
+                var accessItem = new RecentAccessItem
+                {
+                    FileName = fileInfo.Name,
+                    DirPath = fileInfo.DirectoryName,
+                    AccessTime = DateTime.Now
+                };
                 try
                 {
-                    App.Cache.StartWorkCache.UpdateRecentAccessItem(new ViewModels.RecentAccessItem
-                    {
-                        FileName = fileInfo.Name,
-                        DirPath = fileInfo.DirectoryName,
-                        AccessTime = DateTime.Now
-                    });
+                    App.Cache.StartWorkCache.UpdateRecentAccessItem(accessItem);
                 }
                 finally
                 {
-                    var window = Window.GetWindow(this);
-                    window.Hide();
-                    new MainWindow().Show();
-                    window.Close();
+                    ParentWindow.Jump2WorkWindow(new WorkData
+                    {
+                        AccessItemInfo = accessItem
+                    });
                 }
             });
         }
@@ -83,11 +88,50 @@ namespace FileExtractor.Pages
 
         public void LoadDataCache()
         {
+            ReloadRecentAccessItemList();
+        }
+
+        private void ReloadRecentAccessItemList()
+        {
+            lbx_recentAccessItem.ItemsSource = null;
             lbx_recentAccessItem.ItemsSource = App.Cache.StartWorkCache.RecentAccessItemList;
         }
 
         public void ApplyDataCache()
         {
+        }
+
+        private void menuItem_removeItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var data = (RecentAccessItem)menuItem.DataContext;
+            App.Cache.StartWorkCache.RemoveRecentAccessItem(data);
+            ReloadRecentAccessItemList();
+        }
+
+        private void menuItem_copyDirPath_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var data = (RecentAccessItem)menuItem.DataContext;
+            Clipboard.SetDataObject(data.DirPath);
+        }
+
+        private void menuItem_copyFilePath_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var data = (RecentAccessItem)menuItem.DataContext;
+            Clipboard.SetDataObject(data.FilePath);
+        }
+
+        private void ListBoxItem_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton != MouseButton.Left) return;
+            var item = (FrameworkElement)sender;
+            var accessItem = (RecentAccessItem)item.DataContext;
+            ParentWindow.Jump2WorkWindow(new WorkData
+            {
+                AccessItemInfo = accessItem
+            });
         }
     }
 }

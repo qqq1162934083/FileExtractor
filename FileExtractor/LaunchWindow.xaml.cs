@@ -1,4 +1,5 @@
 using FileExtractor.Libs;
+using FileExtractor.Models;
 using MyTool.Modules.Module_FileExtractor;
 using NetCore5WpfToolsApp.Utils.Controls;
 using Newtonsoft.Json;
@@ -29,6 +30,14 @@ namespace FileExtractor
         public LaunchWindow()
         {
             InitializeComponent();
+        }
+
+        public void Jump2WorkWindow(WorkData data)
+        {
+            Hide();
+            var mainWindow = new WorkWindow(data);
+            mainWindow.Show();
+            Close();
         }
     }
 }

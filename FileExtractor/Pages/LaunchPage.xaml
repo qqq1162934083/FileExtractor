@@ -25,10 +25,11 @@
                 <ListBox x:Name="lbx_recentAccessItem" Grid.Row="1" Style="{StaticResource style_myListBox}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
+                            <EventSetter Event="MouseDown" Handler="ListBoxItem_MouseUp"></EventSetter>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
-                                        <Grid Cursor="Hand" x:Name="grid_from_listBoxItem" Background="{TemplateBinding Background}">
+                                        <Grid Cursor="Hand" MouseUp="ListBoxItem_MouseUp" x:Name="grid_from_listBoxItem" Background="{TemplateBinding Background}">
                                             <Grid.ContextMenu>
                                                 <ContextMenu Width="100">
                                                     <ContextMenu.Style>
@@ -45,9 +46,9 @@
                                                             <Setter Property="ItemContainerStyle" Value="{StaticResource style_myContextMenuItem}"/>
                                                         </Style>
                                                     </ContextMenu.Style>
-                                                    <MenuItem Header="从列表中删除"/>
-                                                    <MenuItem Header="复制目录路径"/>
-                                                    <MenuItem Header="复制文件路径"/>
+                                                    <MenuItem x:Name="menuItem_removeItem" Header="从列表中删除" Click="menuItem_removeItem_Click"/>
+                                                    <MenuItem x:Name="menuItem_copyDirPath" Header="复制目录路径" Click="menuItem_copyDirPath_Click"/>
+                                                    <MenuItem x:Name="menuItem_copyFilePath" Header="复制文件路径" Click="menuItem_copyFilePath_Click"/>
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
                                             <Grid.RowDefinitions>

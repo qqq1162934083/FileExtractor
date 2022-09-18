@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,5 +16,7 @@ namespace FileExtractor.ViewModels
         {
             return FileName + "  " + AccessTime.ToString("yyyy-MM-dd HH:mm:ss");
         }
+
+        public string FilePath => Path.Combine(DirPath, FileName);
     }
 }

@@ -17,6 +17,7 @@ namespace FileExtractor
     /// </summary>
     public partial class App : Application
     {
+        public const string ConfigNameExtName = ".fecfg";
         public class Cache
         {
             public static StartWorkCache StartWorkCache => StartWorkCacheMgr.DataCache;

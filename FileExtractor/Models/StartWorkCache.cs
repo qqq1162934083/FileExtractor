@@ -52,5 +52,13 @@ namespace FileExtractor.Models
             App.Cache.StartWorkCache.RecentAccessItemList = App.Cache.StartWorkCache.RecentAccessItemList.OrderByDescending(x => x.AccessTime).ToList();//排序
             App.Cache.StartWorkCacheMgr.NotifySave();//保存
         }
+        public bool RemoveRecentAccessItem(RecentAccessItem recentAccessItem)
+        {
+            var item = App.Cache.StartWorkCache.RecentAccessItemList.FirstOrDefault(x => x.DirPath == recentAccessItem.DirPath && recentAccessItem.FileName == x.FileName);
+            if (item == null) return false;
+            App.Cache.StartWorkCache.RecentAccessItemList.Remove(item);
+            App.Cache.StartWorkCacheMgr.NotifySave();//保存
+            return true;
+        }
     }
 }
