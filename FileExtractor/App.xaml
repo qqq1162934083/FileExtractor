@@ -10,6 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyContextMenuItem.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyButton2.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyButton.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyListBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyTextBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyThumb.xaml"/>

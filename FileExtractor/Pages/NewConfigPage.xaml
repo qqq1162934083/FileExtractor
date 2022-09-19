@@ -8,25 +8,6 @@
       mc:Ignorable="d"
       d:DesignHeight="699" d:DesignWidth="1039"
       Title="NewConfigPage">
-
-    <Page.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" BorderBrush="#555555" BorderThickness="1" Background="#3f3f46">
-                            <TextBlock Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" MinWidth="50" Margin="5" Text="{TemplateBinding Content}"></TextBlock>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#0097fb"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
     <Grid>
         <TextBlock Text="创建新配置" Foreground="White" Margin="48,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="33"></TextBlock>
         <Grid Margin="50,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -64,8 +45,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btn_previoutStep" Grid.Column="0" Content="上一步" Click="btn_previoutStep_Click" Width="80" Height="30" Margin="2,2,4,2"></Button>
-            <Button x:Name="btn_createConfig" Grid.Column="1" Content="创建" Width="80" Height="30" Margin="4,2,2,2" Click="btn_createConfig_Click"></Button>
+            <wpfcontrols:MyButton x:Name="btn_previoutStep" Grid.Column="0" Content="上一步" Click="btn_previoutStep_Click" Width="80" Height="30" Margin="2,2,4,2"></wpfcontrols:MyButton>
+            <wpfcontrols:MyButton x:Name="btn_createConfig" Grid.Column="1" Content="创建" Width="80" Height="30" Margin="4,2,2,2" Click="btn_createConfig_Click"></wpfcontrols:MyButton>
         </Grid>
     </Grid>
 </Page>
