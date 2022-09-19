@@ -105,6 +105,8 @@
     <Compile Include="Utils\CollectionExtMethod.cs" />
     <Compile Include="Utils\ResDicUtils.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
+    <Compile Include="WpfControls\MyButton.cs" />
+    <Compile Include="WpfControls\MyButton2.cs" />
     <Compile Include="WpfControls\MyTextBox.cs" />
     <Compile Include="WpfControls\Converters\BoolVisibilityConverter.cs" />
     <Compile Include="WpfControls\MyThumb.cs" />
@@ -169,7 +171,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WpfControls\Styles\MyButton.xaml">
+    <Page Include="WpfControls\Styles\MyButton2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
