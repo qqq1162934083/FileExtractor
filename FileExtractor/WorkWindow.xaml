@@ -80,18 +80,40 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Foreground="White" Grid.Column="0" Margin="0,0,10,0" Text="打包到" VerticalAlignment="Center"/>
-            <wpfcontrols:MyTextBox Grid.Column="1" x:Name="tbx_packedDestDir" Height="39"/>
+            <wpfcontrols:MyTextBox IsReadOnly="True" Grid.Column="1" x:Name="tbx_packedDestDir" Height="39"/>
             <TextBlock Foreground="White" Grid.Column="2" Margin="10,0,0,0" Text="目录下" VerticalAlignment="Center"/>
         </Grid>
-        <Grid Margin="479,216,168,428">
+        <Grid Margin="479,216,111,428">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Foreground="White" Grid.Column="0" Margin="0,0,10,0" Text="命名为" VerticalAlignment="Center"/>
-            <wpfcontrols:MyTextBox Grid.Column="1" x:Name="tbx_packedDestName" Height="39"/>
-            <TextBlock Foreground="White" Grid.Column="2" Margin="10,0,0,0" Text="" VerticalAlignment="Center"/>
+            <TextBlock Foreground="White" Grid.Column="0" Margin="0,0,10,0" FontSize="12" Text="命名为" VerticalAlignment="Center"/>
+            <wpfcontrols:MyTextBox IsReadOnly="True" Grid.Column="1" x:Name="tbx_packedDestName" Height="39"/>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Grid Width="10"/>
+                <wpfcontrols:MyButton x:Name="btn_packedDestNameOptions" Click="btn_packedDestNameOptions_Click" Content="选项" Width="50"></wpfcontrols:MyButton>
+            </StackPanel>
+            <TextBlock Foreground="White" Grid.Column="3" Margin="10,0,0,0" Text="" VerticalAlignment="Center"/>
         </Grid>
+        <wpfcontrols:MyButton x:Name="btn_pack" Content="打包" Click="btn_pack_Click" Margin="0,0,98,85" TextFontSize="12" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="81"/>
+        <Popup x:Name="popup_btn_packedDestNameOptions" Visibility="Visible" PopupAnimation="Slide" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestNameOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
+            <Border BorderBrush="#555555" BorderThickness="1">
+                <Grid Width="160">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Height="50">
+                        <wpfcontrols:MyButton Width="60" Height="25" Content="修改"/>
+                    </Grid>
+                    <CheckBox Grid.Row="1" Content="启用日期表达式"/>
+                    <CheckBox Grid.Row="2"  Content="启用压缩"/>
+                </Grid>
+            </Border>
+        </Popup>
     </Grid>
 </Window>

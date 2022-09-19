@@ -8,6 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyCheckBox.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyContextMenuItem.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyButton2.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfControls/Styles/MyButton.xaml"/>
