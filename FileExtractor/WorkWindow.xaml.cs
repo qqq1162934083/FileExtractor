@@ -32,12 +32,17 @@ namespace FileExtractor
 
         private void btn_pack_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void btn_packedDestNameOptions_Click(object sender, RoutedEventArgs e)
         {
             popup_btn_packedDestNameOptions.IsOpen = true;
+        }
+
+        private void btn_packedDestDirOptions_Click(object sender, RoutedEventArgs e)
+        {
+            popup_btn_packedDestDirOptions.IsOpen = true;
         }
     }
 }

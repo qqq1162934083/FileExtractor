@@ -18,5 +18,16 @@ namespace FileExtractor.ViewModels
         }
 
         public string FilePath => Path.Combine(DirPath, FileName);
+        public string ConfigName 
+        {
+            get 
+            {
+                var spliterIndex = FileName.LastIndexOf('.');
+                if (spliterIndex >= 0)
+                    return FileName.Substring(0, spliterIndex);
+                else
+                    return FileName;
+            }
+        }
     }
 }
