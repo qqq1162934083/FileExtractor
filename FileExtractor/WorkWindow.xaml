@@ -12,6 +12,7 @@
         Title="MainWindow"
         Height="699" Width="1039">
     <Grid>
+        <!--标题头-->
         <Border CornerRadius="0,0,5,5"
             Height="auto" Width="auto"
             Padding="8" Margin="45,0,0,0"
@@ -20,116 +21,127 @@
             <TextBlock FontSize="14" FontWeight="Bold" Foreground="#b5f1f1" Text="{Binding RelativeSource={RelativeSource AncestorType=local:WorkWindow,Mode=FindAncestor},Path=WorkData.AccessItemInfo.ConfigName}"
                    ToolTip="{Binding RelativeSource={RelativeSource AncestorType=local:WorkWindow,Mode=FindAncestor},Path=WorkData.AccessItemInfo.FilePath}"/>
         </Border>
-        <TabControl Background="Transparent" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Left" Margin="47,56,0,45" Width="348">
-            <TabControl.Style>
-                <Style TargetType="TabControl">
-                    <Setter Property="ItemContainerStyle">
-                        <Setter.Value>
-                            <Style TargetType="TabItem">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TabItem">
-                                            <Grid x:Name="PART_grid">
-                                                <Border BorderThickness="0,0,0,3" Visibility="{TemplateBinding IsSelected,Converter={StaticResource boolVisibilityConverter}}" BorderBrush="#686868"/>
-                                                <Border Padding="5">
-                                                    <TextBlock x:Name="PART_textBlock" Foreground="#f1f1f1" Text="{TemplateBinding Header}"></TextBlock>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition MaxWidth="1000"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <TabControl Background="Transparent" BorderBrush="Transparent" BorderThickness="1" Margin="46,56,48,45">
+                    <TabControl.Style>
+                        <Style TargetType="TabControl">
+                            <Setter Property="ItemContainerStyle">
+                                <Setter.Value>
+                                    <Style TargetType="TabItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="TabItem">
+                                                    <Grid x:Name="PART_grid">
+                                                        <Border BorderThickness="0,0,0,3" Visibility="{TemplateBinding IsSelected,Converter={StaticResource boolVisibilityConverter}}" BorderBrush="#686868"/>
+                                                        <Border Padding="5">
+                                                            <TextBlock x:Name="PART_textBlock" Foreground="#f1f1f1" Text="{TemplateBinding Header}"></TextBlock>
+                                                        </Border>
+                                                    </Grid>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger SourceName="PART_grid" Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="PART_textBlock" Property="Foreground" Value="SkyBlue"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabControl">
+                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,0,1">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto"/>
+                                                    <RowDefinition Height="3"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Grid>
+                                                    <Border HorizontalAlignment="Left" BorderThickness="0,1,1,0" BorderBrush="{TemplateBinding BorderBrush}">
+                                                        <TabPanel IsItemsHost="True"/>
+                                                    </Border>
+                                                </Grid>
+                                                <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1">
+                                                    <ContentPresenter ContentSource="SelectedContent"/>
                                                 </Border>
                                             </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger SourceName="PART_grid" Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="PART_textBlock" Property="Foreground" Value="SkyBlue"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TabControl">
-                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,0,1">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="auto"/>
-                                            <RowDefinition Height="3"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <Grid>
-                                            <Border HorizontalAlignment="Left" BorderThickness="0,1,1,0" BorderBrush="{TemplateBinding BorderBrush}">
-                                                <TabPanel IsItemsHost="True"/>
-                                            </Border>
-                                        </Grid>
-                                        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1">
-                                            <ContentPresenter ContentSource="SelectedContent"/>
                                         </Border>
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TabControl.Style>
-            <TabItem Background="Transparent" Header="文件映射">
-                <Grid Background="Transparent">
-                    <ListBox Style="{StaticResource style_myListBox}"/>
-                </Grid>
-            </TabItem>
-            <TabItem Background="Transparent" Header="目录映射">
-                <Grid Background="Transparent">
-                    <ListBox Style="{StaticResource style_myListBox}"/>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <StackPanel Margin="0,126,133,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="206" Width="339">
-            <TextBlock Foreground="White" Grid.Row="0" Margin="0,0,10,0" FontSize="12" Text="您想要打包到何处：" VerticalAlignment="Center"/>
-            <Grid Height="5"></Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Style>
+                    <TabItem Background="Transparent" Header="文件映射">
+                        <Grid Background="Transparent">
+                            <ListBox Style="{StaticResource style_myListBox}"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Background="Transparent" Header="目录映射">
+                        <Grid Background="Transparent">
+                            <ListBox Style="{StaticResource style_myListBox}"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
             <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <wpfcontrols:MyTextBox IsReadOnly="True" x:Name="tbx_packedDestDir" Height="39"/>
-                <wpfcontrols:MyButton Grid.Column="2" x:Name="btn_packedDestDirOptions" Click="btn_packedDestDirOptions_Click" Content="选项" Width="50"></wpfcontrols:MyButton>
-            </Grid>
-            <Grid Height="20"></Grid>
-            <TextBlock Foreground="White" Grid.Column="2" Margin="0,0,10,0" FontSize="12" Text="给您的包取个名字吧：" VerticalAlignment="Center"/>
-            <Grid Height="5"></Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <wpfcontrols:MyTextBox IsReadOnly="True" x:Name="tbx_packedDestName" Height="39"/>
-                <wpfcontrols:MyButton x:Name="btn_packedDestNameOptions" Grid.Column="2" Click="btn_packedDestNameOptions_Click" Content="选项" Width="50"></wpfcontrols:MyButton>
-            </Grid>
-        </StackPanel>
-        <wpfcontrols:MyButton x:Name="btn_pack" Content="打包" Click="btn_pack_Click" Margin="0,0,98,85" TextFontSize="12" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="81"/>
-        <Popup x:Name="popup_btn_packedDestNameOptions" Visibility="Visible" PopupAnimation="Slide" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestNameOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
-            <Border BorderBrush="#555555" Background="#252526" BorderThickness="1">
-                <StackPanel Width="160" Height="auto">
+                <StackPanel Margin="44,80,118,346">
+                    <TextBlock Foreground="White" Grid.Row="0" Margin="0,0,10,0" FontSize="12" Text="您想要打包到何处：" VerticalAlignment="Center"/>
                     <Grid Height="5"></Grid>
-                    <wpfcontrols:MyButton Margin="0,10,0,5" Width="120" Height="30" Content="设置值"/>
-                    <wpfcontrols:MyCheckBox Grid.Row="1" TextFontSize="12" Padding="20,0,20,0" Content="启用日期表达式"/>
-                    <wpfcontrols:MyCheckBox Grid.Row="2" TextFontSize="12" Padding="20,0,20,0" Content="启用压缩"/>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <wpfcontrols:MyTextBox IsReadOnly="True" x:Name="tbx_packedDestDir" Height="39"/>
+                        <wpfcontrols:MyButton Grid.Column="2" x:Name="btn_packedDestDirOptions" Click="btn_packedDestDirOptions_Click" Content="选项" Width="50"></wpfcontrols:MyButton>
+                    </Grid>
+                    <Grid Height="20"></Grid>
+                    <TextBlock Foreground="White" Grid.Column="2" Margin="0,0,10,0" FontSize="12" Text="给您的包取个名字吧：" VerticalAlignment="Center"/>
                     <Grid Height="5"></Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <wpfcontrols:MyTextBox IsReadOnly="True" x:Name="tbx_packedDestName" Height="39"/>
+                        <wpfcontrols:MyButton x:Name="btn_packedDestNameOptions" Grid.Column="2" Click="btn_packedDestNameOptions_Click" Content="选项" Width="50"></wpfcontrols:MyButton>
+                    </Grid>
                 </StackPanel>
-            </Border>
-        </Popup>
-        <Popup x:Name="popup_btn_packedDestDirOptions" Visibility="Visible" PopupAnimation="Slide" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestDirOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
-            <Border BorderBrush="#555555" Background="#252526" BorderThickness="1">
-                <StackPanel Height="auto" Width="160">
-                    <Grid Height="5"></Grid>
-                    <wpfcontrols:MyButton Margin="0,5,0,5" Width="120" Height="30" Content="通过键盘输入设置值"/>
-                    <wpfcontrols:MyButton Margin="0,5,0,5" Width="120" Height="30" Content="通过目录选择设置值"/>
-                    <wpfcontrols:MyButton Margin="0,5,0,5" Width="120" Height="30" Content="打开设置的目录"/>
-                    <wpfcontrols:MyCheckBox Margin="0,5,0,5" TextFontSize="12" Padding="20,0,20,0" Content="FTP目录模式"/>
-                    <Grid Height="5"></Grid>
-                </StackPanel>
-            </Border>
-        </Popup>
+                <wpfcontrols:MyButton x:Name="btn_pack" Content="打包" Click="btn_pack_Click" Margin="0,0,44,35" TextFontSize="12" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="81"/>
+                <Popup x:Name="popup_btn_packedDestNameOptions" Visibility="Visible" PopupAnimation="Slide" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestNameOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
+                    <Border BorderBrush="#555555" Background="#252526" BorderThickness="1">
+                        <StackPanel Width="160" Height="auto">
+                            <Grid Height="5"></Grid>
+                            <wpfcontrols:MyButton Margin="0,10,0,5" Width="120" Height="30" Content="设置值"/>
+                            <wpfcontrols:MyCheckBox Grid.Row="1" TextFontSize="12" Padding="20,0,20,0" Content="启用日期表达式"/>
+                            <wpfcontrols:MyCheckBox Grid.Row="2" TextFontSize="12" Padding="20,0,20,0" Content="启用压缩"/>
+                            <Grid Height="5"></Grid>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+                <Popup x:Name="popup_btn_packedDestDirOptions" Visibility="Visible" PopupAnimation="Slide" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestDirOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
+                    <Border BorderBrush="#555555" Background="#252526" BorderThickness="1">
+                        <StackPanel Height="auto" Width="160">
+                            <Grid Height="5"></Grid>
+                            <wpfcontrols:MyButton Margin="0,5,0,5" Width="120" Height="30" Content="通过键盘输入设置值"/>
+                            <wpfcontrols:MyButton Margin="0,5,0,5" Width="120" Height="30" Content="通过目录选择设置值"/>
+                            <wpfcontrols:MyButton Margin="0,5,0,5" Width="120" Height="30" Content="打开设置的目录"/>
+                            <wpfcontrols:MyCheckBox Margin="0,5,0,5" TextFontSize="12" Padding="20,0,20,0" Content="FTP目录模式"/>
+                            <Grid Height="5"></Grid>
+                        </StackPanel>
+                    </Border>
+                </Popup>
+            </Grid>
+            <GridSplitter Grid.Column="1" Width="1" Opacity="0.2" HorizontalAlignment="Left"/>
+        </Grid>
     </Grid>
 </Window>
