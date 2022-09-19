@@ -110,8 +110,8 @@
                     <Grid Height="50">
                         <wpfcontrols:MyButton Width="60" Height="25" Content="修改"/>
                     </Grid>
-                    <CheckBox Grid.Row="1" Content="启用日期表达式"/>
-                    <CheckBox Grid.Row="2"  Content="启用压缩"/>
+                    <wpfcontrols:MyCheckBox Grid.Row="1" TextFontSize="12" Content="启用日期表达式"/>
+                    <wpfcontrols:MyCheckBox Grid.Row="2" TextFontSize="12" Content="启用压缩"/>
                 </Grid>
             </Border>
         </Popup>

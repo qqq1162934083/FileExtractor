@@ -107,6 +107,7 @@
     <Compile Include="ViewModels\RecentAccessItem.cs" />
     <Compile Include="WpfControls\MyButton.cs" />
     <Compile Include="WpfControls\MyButton2.cs" />
+    <Compile Include="WpfControls\MyCheckBox.cs" />
     <Compile Include="WpfControls\MyTextBox.cs" />
     <Compile Include="WpfControls\Converters\BoolVisibilityConverter.cs" />
     <Compile Include="WpfControls\MyThumb.cs" />
