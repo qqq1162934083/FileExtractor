@@ -1,7 +1,6 @@
 using FileExtractor.Models;
 using FileExtractor.ViewModels;
 using MyTool;
-using MyTool.Modules.Module_FileExtractor;
 using NetCore5WpfToolsApp.Utils.Controls;
 using Newtonsoft.Json;
 using System;
@@ -39,14 +38,13 @@ namespace FileExtractor.Pages
 
         private void btn_openConfig_Click(object sender, RoutedEventArgs e)
         {
-            //FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*.fecfg;*.json", x =>
             FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*" + App.ConfigNameExtName, x =>
             {
                 var fileInfo = new FileInfo(x.FileName);
-                FileExtractorDataCache data = null;
+                ConfigData data = null;
                 try
                 {
-                    data = JsonConvert.DeserializeObject<FileExtractorDataCache>(File.ReadAllText(x.FileName));
+                    data = JsonConvert.DeserializeObject<ConfigData>(File.ReadAllText(x.FileName));
                 }
                 catch (Exception exp)
                 {
@@ -67,7 +65,8 @@ namespace FileExtractor.Pages
                 {
                     ParentWindow.Jump2WorkWindow(new WorkData
                     {
-                        AccessItemInfo = accessItem
+                        AccessItemInfo = accessItem,
+                        ConfigData = data
                     });
                 }
             });
@@ -128,6 +127,8 @@ namespace FileExtractor.Pages
             if (e.ChangedButton != MouseButton.Left) return;
             var item = (FrameworkElement)sender;
             var accessItem = (RecentAccessItem)item.DataContext;
+            throw new NotImplementedException();
+
             ParentWindow.Jump2WorkWindow(new WorkData
             {
                 AccessItemInfo = accessItem

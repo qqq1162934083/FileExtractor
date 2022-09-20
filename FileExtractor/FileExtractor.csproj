@@ -104,6 +104,9 @@
     </Compile>
     <Compile Include="Utils\CollectionExtMethod.cs" />
     <Compile Include="Utils\ResDicUtils.cs" />
+    <Compile Include="ViewModels\ConfigData.cs" />
+    <Compile Include="ViewModels\DirMapping.cs" />
+    <Compile Include="ViewModels\FileMapping.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
     <Compile Include="WpfControls\MyButton.cs" />
     <Compile Include="WpfControls\MyButton2.cs" />
@@ -114,14 +117,6 @@
     <Compile Include="WpfControls\Styles\MyWindow.xaml.cs">
       <DependentUpon>MyWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="FileExtractorWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="FileExtractor_Setting.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -130,15 +125,6 @@
     <Compile Include="Libs\Win32.cs" />
     <Compile Include="WorkWindow.xaml.cs">
       <DependentUpon>WorkWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FileExtractConfig.cs" />
-    <Compile Include="FileExtractorWindow.xaml.cs">
-      <DependentUpon>FileExtractorWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FileExtractorDataCache.cs" />
-    <Compile Include="Models\FileExtractorViewCache.cs" />
-    <Compile Include="FileExtractor_Setting.xaml.cs">
-      <DependentUpon>FileExtractor_Setting.xaml</DependentUpon>
     </Compile>
     <Page Include="LaunchWindow.xaml">
       <SubType>Designer</SubType>

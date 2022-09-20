@@ -26,8 +26,31 @@ namespace FileExtractor
         public WorkWindow() : this(null) { }
         public WorkWindow(WorkData workData)
         {
-            WorkData = workData;
             InitializeComponent();
+            ReloadWorkData(workData);
+        }
+
+        /// <summary>
+        /// 重新加载配置数据
+        /// </summary>
+        private void ReloadWorkData(WorkData workData)
+        {
+            WorkData = workData;
+            var configData = workData.ConfigData;
+            //加载视图
+            SetBinding(lbx_fileMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.FileMappingList));
+            SetBinding(lbx_dirMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.DirMappingList));
+            SetBinding(tbx_packageDir, TextBox.TextProperty, configData, nameof(configData.PackageDir));
+            SetBinding(tbx_packageName, TextBox.TextProperty, configData, nameof(configData.PackageName));
+            SetBinding(cb_enabledCompress, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledCompress));
+            SetBinding(cb_enabledDateTimeExpression, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledDateTimeExpression));
+        }
+        private void SetBinding(FrameworkElement elem, DependencyProperty dependencyProperty, object source, string path)
+        {
+            var binding = new Binding();
+            binding.Source = source;
+            binding.Path = new PropertyPath(path);
+            elem.SetBinding(dependencyProperty, binding);
         }
 
         private void btn_pack_Click(object sender, RoutedEventArgs e)

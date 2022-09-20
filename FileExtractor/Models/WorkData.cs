@@ -11,6 +11,7 @@ namespace FileExtractor.Models
     public class WorkData
     {
         public RecentAccessItem AccessItemInfo { get; set; }
+        internal ConfigData ConfigData { get; set; }
         //public ExtractedDirViewModel Data { get; set; }
     }
 }

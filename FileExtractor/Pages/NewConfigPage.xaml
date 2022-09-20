@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <wpfcontrols:MyTextBox x:Name="tbx_configDirPath" HintText="请输入位置信息" HintVisibility="Collapsed" Grid.Column="0" Height="39" Width="550"/>
-                <Button x:Name="btn_selectConfigDirPath" Grid.Column="1" Content="..." FontSize="12" Width="36" Height="auto" Margin="16,0,2,0" Click="btn_selectConfigDirPath_Click"/>
+                <wpfcontrols:MyButton x:Name="btn_selectConfigDirPath" Grid.Column="1" Content="..." FontSize="12" Width="36" Height="auto" Margin="16,0,2,0" Click="btn_selectConfigDirPath_Click"/>
             </Grid>
             <TextBlock Grid.Row="2" Margin="2,5,0,5" Foreground="#e76050" Text="{Binding ElementName=tbx_configDirPath, Path=HintText}" Visibility="{Binding ElementName=tbx_configDirPath,Path=HintVisibility}"></TextBlock>
             <TextBlock Grid.Row="3" Margin="0,20,0,10" Text="配置名称" Foreground="White" FontSize="12"></TextBlock>
