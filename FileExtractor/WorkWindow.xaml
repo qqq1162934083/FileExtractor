@@ -26,75 +26,107 @@
                 <ColumnDefinition/>
                 <ColumnDefinition MaxWidth="1000"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <TabControl Background="Transparent" BorderBrush="Transparent" BorderThickness="1" Margin="46,56,48,45">
-                    <TabControl.Style>
-                        <Style TargetType="TabControl">
-                            <Setter Property="ItemContainerStyle">
-                                <Setter.Value>
-                                    <Style TargetType="TabItem">
+            <Grid Grid.Column="0" Margin="46,56,48,45">
+                <Grid>
+                    <TabControl Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
+                        <TabControl.ContextMenu>
+                            <ContextMenu Width="100">
+                                <ContextMenu.Style>
+                                    <Style TargetType="ContextMenu">
                                         <Setter Property="Template">
                                             <Setter.Value>
-                                                <ControlTemplate TargetType="TabItem">
-                                                    <Grid x:Name="PART_grid">
-                                                        <Border BorderThickness="0,0,0,3" Visibility="{TemplateBinding IsSelected,Converter={StaticResource boolVisibilityConverter}}" BorderBrush="#686868"/>
-                                                        <Border Padding="5">
-                                                            <TextBlock x:Name="PART_textBlock" Foreground="#f1f1f1" Text="{TemplateBinding Header}"></TextBlock>
-                                                        </Border>
-                                                    </Grid>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger SourceName="PART_grid" Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="PART_textBlock" Property="Foreground" Value="SkyBlue"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
+                                                <ControlTemplate TargetType="ContextMenu">
+                                                    <Border Background="#1b1b1c" BorderBrush="#333337" BorderThickness="1" Padding="2">
+                                                        <StackPanel IsItemsHost="True"></StackPanel>
+                                                    </Border>
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
+                                        <Setter Property="ItemContainerStyle" Value="{StaticResource style_myContextMenuItem}"/>
                                     </Style>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="TabControl">
-                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,0,1">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto"/>
-                                                    <RowDefinition Height="3"/>
-                                                    <RowDefinition/>
-                                                </Grid.RowDefinitions>
+                                </ContextMenu.Style>
+                                <MenuItem x:Name="menuItem_removeItem" Header="通过选择添加项"/>
+                                <MenuItem x:Name="menuItem_copyDirPath" Header="通过键入添加项"/>
+                            </ContextMenu>
+                        </TabControl.ContextMenu>
+                        <TabControl.Style>
+                            <Style TargetType="TabControl">
+                                <Setter Property="ItemContainerStyle">
+                                    <Setter.Value>
+                                        <Style TargetType="TabItem">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="TabItem">
+                                                        <Grid x:Name="PART_grid">
+                                                            <Border BorderThickness="0,0,0,3" Visibility="{TemplateBinding IsSelected,Converter={StaticResource boolVisibilityConverter}}" BorderBrush="#686868"/>
+                                                            <Border Padding="5">
+                                                                <TextBlock x:Name="PART_textBlock" Foreground="#f1f1f1" Text="{TemplateBinding Header}"></TextBlock>
+                                                            </Border>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger SourceName="PART_grid" Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="PART_textBlock" Property="Foreground" Value="SkyBlue"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabControl">
+                                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,0,1">
                                                 <Grid>
-                                                    <Border HorizontalAlignment="Left" BorderThickness="0,1,1,0" BorderBrush="{TemplateBinding BorderBrush}">
-                                                        <TabPanel IsItemsHost="True"/>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                        <RowDefinition Height="3"/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid>
+                                                        <Border HorizontalAlignment="Left" BorderThickness="0,1,1,0" BorderBrush="{TemplateBinding BorderBrush}">
+                                                            <TabPanel IsItemsHost="True"/>
+                                                        </Border>
+                                                    </Grid>
+                                                    <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1">
+                                                        <ContentPresenter ContentSource="SelectedContent"/>
                                                     </Border>
                                                 </Grid>
-                                                <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1">
-                                                    <ContentPresenter ContentSource="SelectedContent"/>
-                                                </Border>
-                                            </Grid>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TabControl.Style>
-                    <TabItem Background="Transparent" Header="文件映射">
-                        <Grid Background="Transparent">
-                            <ListBox x:Name="lbx_fileMapping" Style="{StaticResource style_myListBox}">
-                                <ListBoxItem>
-                                    <!--<viewmodels:FileMapping>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Style>
+                        <TabItem Background="Transparent" Header="文件映射">
+                            <Grid Background="Transparent">
+                                <ListBox x:Name="lbx_fileMapping" Style="{StaticResource style_myListBox}">
+                                    <ListBoxItem>
+                                        <!--<viewmodels:FileMapping>
                                         
                                     </viewmodels:FileMapping>-->
-                                </ListBoxItem>
-                            </ListBox>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Background="Transparent" Header="目录映射">
-                        <Grid Background="Transparent">
-                            <ListBox x:Name="lbx_dirMapping" Style="{StaticResource style_myListBox}"/>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
+                                    </ListBoxItem>
+                                </ListBox>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Background="Transparent" Header="目录映射">
+                            <Grid Background="Transparent">
+                                <ListBox x:Name="lbx_dirMapping" Style="{StaticResource style_myListBox}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Background="Transparent" Header="环境变量">
+                            <Grid Background="Transparent">
+                                <ListBox x:Name="lbx_envVariable" Style="{StaticResource style_myListBox}"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <StackPanel Margin="0,3,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <wpfcontrols:MyButton Content="通过键入添加" Click="btn_pack_Click" Padding="0" TextFontSize="12" Height="20" Width="80"/>
+                        <Grid Width="5"/>
+                        <wpfcontrols:MyButton Content="通过选择添加" Click="btn_pack_Click" Padding="0" TextFontSize="12" Height="20" Width="80"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
             <Grid Grid.Column="1">
                 <StackPanel Margin="44,80,118,346">
@@ -123,7 +155,7 @@
                     </Grid>
                 </StackPanel>
                 <wpfcontrols:MyButton x:Name="btn_pack" Content="打包" Click="btn_pack_Click" Margin="0,0,44,35" TextFontSize="12" Height="35" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="81"/>
-                <Popup x:Name="popup_btn_packedDestNameOptions" Visibility="Visible" PopupAnimation="Slide" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestNameOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
+                <Popup x:Name="popup_btn_packedDestNameOptions" Visibility="Visible" PopupAnimation="Fade" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestNameOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
                     <Border BorderBrush="#555555" Background="#252526" BorderThickness="1">
                         <StackPanel Width="160" Height="auto">
                             <Grid Height="5"></Grid>
@@ -134,7 +166,7 @@
                         </StackPanel>
                     </Border>
                 </Popup>
-                <Popup x:Name="popup_btn_packedDestDirOptions" Visibility="Visible" PopupAnimation="Slide" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestDirOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
+                <Popup x:Name="popup_btn_packedDestDirOptions" Visibility="Visible" PopupAnimation="Fade" Width="auto" Height="auto" PlacementTarget="{Binding ElementName=btn_packedDestDirOptions}" Placement="Bottom" AllowsTransparency="True" StaysOpen="False" Margin="854,260,-11,173">
                     <Border BorderBrush="#555555" Background="#252526" BorderThickness="1">
                         <StackPanel Height="auto" Width="160">
                             <Grid Height="5"></Grid>
