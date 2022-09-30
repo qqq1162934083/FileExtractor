@@ -68,6 +68,11 @@ namespace FileExtractor.ViewModels
         [JsonIgnore]
         private string _packageDir;
 
+        public ConfigData()
+        {
+            _dirMappingList = new List<DirMapping>();
+            _fileMappingList = new List<FileMapping>();
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -216,6 +216,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dialogs\" />
     <Folder Include="PrjResources\" />
     <Folder Include="WpfStyles\" />
   </ItemGroup>

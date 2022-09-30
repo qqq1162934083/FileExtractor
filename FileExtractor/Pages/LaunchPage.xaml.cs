@@ -127,12 +127,36 @@ namespace FileExtractor.Pages
             if (e.ChangedButton != MouseButton.Left) return;
             var item = (FrameworkElement)sender;
             var accessItem = (RecentAccessItem)item.DataContext;
-            throw new NotImplementedException();
-
-            ParentWindow.Jump2WorkWindow(new WorkData
+            if (!File.Exists(accessItem.FilePath))
             {
-                AccessItemInfo = accessItem
-            });
+                var msgBoxResult = MessageBox.Show("该文件已经不存在，是否移除该项引用?", "警告", MessageBoxButton.YesNo);
+                if (msgBoxResult == MessageBoxResult.Yes)
+                {
+                    //删除引用
+                    App.Cache.StartWorkCache.RemoveRecentAccessItem(accessItem);
+                }
+                return;
+            }
+            else
+            {
+                var configContent = File.ReadAllText(accessItem.FilePath);
+                var data = (ConfigData)null;
+                try
+                {
+                    data = JsonConvert.DeserializeObject<ConfigData>(configContent);
+                }
+                catch (Exception exp)
+                {
+                    MessageBox.Show("无效的配置文件");
+                    return;
+                }
+
+                ParentWindow.Jump2WorkWindow(new WorkData
+                {
+                    AccessItemInfo = accessItem,
+                    ConfigData = data
+                });
+            }
         }
     }
 }

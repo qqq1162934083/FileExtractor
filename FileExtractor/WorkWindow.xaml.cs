@@ -36,6 +36,8 @@ namespace FileExtractor
         private void ReloadWorkData(WorkData workData)
         {
             WorkData = workData;
+            if (WorkData.ConfigData == null)
+                workData.ConfigData = new ViewModels.ConfigData();
             var configData = workData.ConfigData;
             //加载视图
             SetBinding(lbx_fileMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.FileMappingList));
@@ -66,6 +68,32 @@ namespace FileExtractor
         private void btn_packedDestDirOptions_Click(object sender, RoutedEventArgs e)
         {
             popup_btn_packedDestDirOptions.IsOpen = true;
+        }
+
+        private void btn_addItemByTyping_Click(object sender, RoutedEventArgs e)
+        {
+            switch (tabControl_itemList.SelectedIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+        }
+
+        private void btn_addItemByChoose_Click(object sender, RoutedEventArgs e)
+        {
+            switch (tabControl_itemList.SelectedIndex)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
         }
     }
 }
