@@ -29,12 +29,13 @@ namespace FileExtractor.Dialogs
             FuncIndex = funcIndex;
             InitializeComponent();
         }
-        public static void ShowDialog(int funcIndex, Action<ItemInfoDialog> handle)
+        public static void ShowDialog(int funcIndex, Action<ItemInfoDialog> initHandle, Action<ItemInfoDialog> handle)
         {
             var dialog = new ItemInfoDialog(funcIndex);
+            initHandle?.Invoke(dialog);
             if (dialog.ShowDialog().GetValueOrDefault())
             {
-                handle(dialog);
+                handle?.Invoke(dialog);
             }
         }
 

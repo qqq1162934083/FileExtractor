@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExtractor"
-        xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls" xmlns:viewmodels="clr-namespace:FileExtractor.ViewModels" xmlns:converters="clr-namespace:FileExtractor.WpfControls.Converters"
+        xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls" xmlns:viewmodels="clr-namespace:FileExtractor.ViewModels"
         mc:Ignorable="d"
         Style="{StaticResource style_myWindow}"
         WindowStartupLocation="CenterScreen"
@@ -27,8 +27,8 @@
                     <Setter Property="ItemContainerStyle" Value="{StaticResource style_myContextMenuItem}"/>
                 </Style>
             </ContextMenu.Style>
-            <MenuItem x:Name="menuItem_removeItem" Header="修改"/>
-            <MenuItem x:Name="menuItem_copyDirPath" Header="移除"/>
+            <MenuItem x:Name="menuItem_editItem" Header="修改" Click="menuItem_editItem_Click"/>
+            <MenuItem x:Name="menuItem_removeItem" Header="移除" Click="menuItem_removeItem_Click"/>
         </ContextMenu>
     </Window.Resources>
     <Grid>
@@ -208,7 +208,7 @@
                         </TabItem>
                         <TabItem Background="Transparent" Header="环境变量">
                             <Grid Background="Transparent">
-                                <ListBox x:Name="lbx_envVariable" Style="{StaticResource style_myListBox}">
+                                <ListBox x:Name="lbx_varMapping" Style="{StaticResource style_myListBox}">
                                     <ListBox.ItemContainerStyle>
                                         <Style TargetType="ListBoxItem">
                                             <Setter Property="ContextMenu" Value="{StaticResource contextMenu_tabControl_itemList_item}"/>
@@ -226,9 +226,9 @@
                                                                     <ColumnDefinition/>
                                                                 </Grid.ColumnDefinitions>
                                                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="变量名" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VariableName}"/>
+                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VarName}"/>
                                                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="变量值" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VariableValue}"/>
+                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VarValue}"/>
                                                             </Grid>
                                                         </Border>
                                                         <ControlTemplate.Triggers>

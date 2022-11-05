@@ -111,7 +111,7 @@
     <Compile Include="ViewModels\DirMapping.cs" />
     <Compile Include="ViewModels\FileMapping.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
-    <Compile Include="WpfControls\Converters\TabControlListBoxHasSelectionBoolConverter.cs" />
+    <Compile Include="ViewModels\ValueMapping.cs" />
     <Compile Include="WpfControls\MyButton.cs" />
     <Compile Include="WpfControls\MyButton2.cs" />
     <Compile Include="WpfControls\MyCheckBox.cs" />

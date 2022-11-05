@@ -12,17 +12,37 @@ namespace FileExtractor.ViewModels
     {
         public BindingList<FileMapping> FileMappingList
         {
-            get => _fileMappingList;
+            get
+            {
+                if (_fileMappingList == null) _fileMappingList = new BindingList<FileMapping>();
+                return _fileMappingList;
+            }
             set => HandleSetValue(nameof(FileMappingList), _fileMappingList, value);
         }
         [JsonIgnore]
         private BindingList<FileMapping> _fileMappingList;
 
 
+        public BindingList<ValueMapping> ValueMappingList
+        {
+            get
+            {
+                if (_valueMappingList == null) _valueMappingList = new BindingList<ValueMapping>();
+                return _valueMappingList;
+            }
+            set => HandleSetValue(nameof(ValueMappingList), _valueMappingList, value);
+        }
+        [JsonIgnore]
+        private BindingList<ValueMapping> _valueMappingList;
+
 
         public BindingList<DirMapping> DirMappingList
         {
-            get => _dirMappingList;
+            get
+            {
+                if (_dirMappingList == null) _dirMappingList = new BindingList<DirMapping>();
+                return _dirMappingList;
+            }
             set => HandleSetValue(nameof(DirMappingList), _dirMappingList, value);
         }
         [JsonIgnore]

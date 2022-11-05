@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace FileExtractor.ViewModels
 {
-    public class DirMapping : INotifyPropertyChanged
+    public class ValueMapping : INotifyPropertyChanged
     {
-        public string SrcPath
+        public string VarName
         {
-            get => _srcPath;
-            set => HandleSetValue(nameof(SrcPath), nameof(_srcPath), value);
+            get => _varName;
+            set => HandleSetValue(nameof(VarName), nameof(_varName), value);
         }
         [JsonIgnore]
-        private string _srcPath;
+        private string _varName;
 
 
-        public string DestPath
+        public string VarValue
         {
-            get => _destPath;
-            set => HandleSetValue(nameof(DestPath), nameof(_destPath), value);
+            get => _varValue;
+            set => HandleSetValue(nameof(VarValue), nameof(_varValue), value);
         }
         [JsonIgnore]
-        private string _destPath;
+        private string _varValue;
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void HandleSetValue<T>(string propName, string srcMemberName, T destValue)

@@ -1,5 +1,6 @@
 using FileExtractor.Dialogs;
 using FileExtractor.Models;
+using FileExtractor.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,7 @@ namespace FileExtractor
             //加载视图
             SetBinding(lbx_fileMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.FileMappingList));
             SetBinding(lbx_dirMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.DirMappingList));
+            SetBinding(lbx_varMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.ValueMappingList));
             SetBinding(tbx_packageDir, TextBox.TextProperty, configData, nameof(configData.PackageDir));
             SetBinding(tbx_packageName, TextBox.TextProperty, configData, nameof(configData.PackageName));
             SetBinding(cb_enabledCompress, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledCompress));
@@ -73,7 +75,7 @@ namespace FileExtractor
 
         private void btn_addItemByTyping_Click(object sender, RoutedEventArgs e)
         {
-            ItemInfoDialog.ShowDialog(tabControl_itemList.SelectedIndex, dialog =>
+            ItemInfoDialog.ShowDialog(tabControl_itemList.SelectedIndex, null, dialog =>
             {
                 switch (dialog.FuncIndex)
                 {
@@ -90,12 +92,14 @@ namespace FileExtractor
                         var destDirPath = dialog.tbx_dirMapping_dest.Text;
                         //验证
                         WorkData.ConfigData.DirMappingList.Add(new ViewModels.DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
+                        WorkData.SaveConfigData();
                         break;
                     case 2:
                         var varName = dialog.tbx_varName.Text;
                         var varValue = dialog.tbx_varValue.Text;
                         //验证
-                        //WorkData.ConfigData.Add(new ViewModels.DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
+                        WorkData.ConfigData.ValueMappingList.Add(new ViewModels.ValueMapping() { VarName = varName, VarValue = varValue });
+                        WorkData.SaveConfigData();
                         break;
                     default:
                         throw new Exception("超出预期范围");
@@ -114,6 +118,98 @@ namespace FileExtractor
                 case 2:
                     break;
             }
+        }
+
+        private void menuItem_removeItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var data = menuItem.DataContext;
+            if (data == null) throw new Exception($"操作失败：未选中数据");
+            switch (data)
+            {
+                case FileMapping _:
+                    var fileMappingData = (FileMapping)data;
+                    WorkData.ConfigData.FileMappingList.Remove(fileMappingData);
+                    break;
+                case DirMapping _:
+                    var dirMappingData = (DirMapping)data;
+                    WorkData.ConfigData.DirMappingList.Remove(dirMappingData);
+                    break;
+                case ValueMapping _:
+                    var valueMappingData = (ValueMapping)data;
+                    WorkData.ConfigData.ValueMappingList.Remove(valueMappingData);
+                    break;
+                default:
+                    throw new Exception("选中的数据类型异常");
+            }
+            WorkData.SaveConfigData();
+        }
+
+
+        private void menuItem_editItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var data = menuItem.DataContext;
+            if (data == null) throw new Exception($"操作失败：未选中数据");
+            var funcIndex = 0;
+            switch (data)
+            {
+                case FileMapping _:
+                    funcIndex = 0;
+                    break;
+                case DirMapping _:
+                    funcIndex = 1;
+                    break;
+                case ValueMapping _:
+                    funcIndex = 2;
+                    break;
+                default:
+                    throw new Exception("选中的数据类型异常");
+            }
+            WorkData.SaveConfigData();
+
+            ItemInfoDialog.ShowDialog(funcIndex, dialog =>
+            {
+                switch (funcIndex)
+                {
+                    case 0:
+                        var fileMappingData = (FileMapping)data;
+                        dialog.tbx_fileMapping_source.Text = fileMappingData.SrcPath;
+                        dialog.tbx_fileMapping_dest.Text = fileMappingData.DestPath;
+                        break;
+                    case 1:
+                        var dirMappingData = (DirMapping)data;
+                        dialog.tbx_dirMapping_source.Text = dirMappingData.SrcPath;
+                        dialog.tbx_dirMapping_dest.Text = dirMappingData.DestPath;
+                        break;
+                    case 2:
+                        var valueMappingData = (ValueMapping)data;
+                        dialog.tbx_varName.Text = valueMappingData.VarName;
+                        dialog.tbx_varValue.Text = valueMappingData.VarValue;
+                        break;
+                    default:
+                        throw new Exception("超出预测的功能范围");
+                }
+            }, dialog =>
+            {
+                switch (dialog.FuncIndex)
+                {
+                    case 0:
+                        var fileMappingData = (FileMapping)data;
+                        fileMappingData.SrcPath = dialog.tbx_fileMapping_source.Text;
+                        fileMappingData.DestPath = dialog.tbx_fileMapping_dest.Text;
+                        break;
+                    case 1:
+                        var dirMappingData = (DirMapping)data;
+                        dirMappingData.SrcPath = dialog.tbx_dirMapping_source.Text;
+                        dirMappingData.DestPath = dialog.tbx_dirMapping_dest.Text;
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        throw new Exception("超出预期范围");
+                }
+            });
         }
     }
 }
