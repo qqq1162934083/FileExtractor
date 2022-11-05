@@ -4,13 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileExtractor"
-        xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls" xmlns:viewmodels="clr-namespace:FileExtractor.ViewModels"
+        xmlns:wpfcontrols="clr-namespace:FileExtractor.WpfControls" xmlns:viewmodels="clr-namespace:FileExtractor.ViewModels" xmlns:converters="clr-namespace:FileExtractor.WpfControls.Converters"
         mc:Ignorable="d"
         Style="{StaticResource style_myWindow}"
         WindowStartupLocation="CenterScreen"
         OverridesDefaultStyle="True"
         Title="MainWindow"
         Height="699" Width="1039">
+    <Window.Resources>
+        <ContextMenu Width="100" x:Key="contextMenu_tabControl_itemList_item">
+            <ContextMenu.Style>
+                <Style TargetType="ContextMenu">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ContextMenu">
+                                <Border Background="#1b1b1c" BorderBrush="#333337" BorderThickness="1" Padding="2">
+                                    <StackPanel IsItemsHost="True"></StackPanel>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ItemContainerStyle" Value="{StaticResource style_myContextMenuItem}"/>
+                </Style>
+            </ContextMenu.Style>
+            <MenuItem x:Name="menuItem_removeItem" Header="修改"/>
+            <MenuItem x:Name="menuItem_copyDirPath" Header="移除"/>
+        </ContextMenu>
+    </Window.Resources>
     <Grid>
         <StackPanel Orientation="Horizontal">
             <Menu VerticalAlignment="Top" Height="auto" Width="auto">
@@ -19,7 +39,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                                    
+                                    <Grid></Grid>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -54,26 +74,6 @@
             <Grid Grid.Column="0" Margin="46,56,48,45">
                 <Grid>
                     <TabControl x:Name="tabControl_itemList" Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
-                        <TabControl.ContextMenu>
-                            <ContextMenu Width="100">
-                                <ContextMenu.Style>
-                                    <Style TargetType="ContextMenu">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="ContextMenu">
-                                                    <Border Background="#1b1b1c" BorderBrush="#333337" BorderThickness="1" Padding="2">
-                                                        <StackPanel IsItemsHost="True"></StackPanel>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="ItemContainerStyle" Value="{StaticResource style_myContextMenuItem}"/>
-                                    </Style>
-                                </ContextMenu.Style>
-                                <MenuItem x:Name="menuItem_removeItem" Header="通过选择添加项"/>
-                                <MenuItem x:Name="menuItem_copyDirPath" Header="通过键入添加项"/>
-                            </ContextMenu>
-                        </TabControl.ContextMenu>
                         <TabControl.Style>
                             <Style TargetType="TabControl">
                                 <Setter Property="ItemContainerStyle">
@@ -127,17 +127,123 @@
                         <TabItem Background="Transparent" Header="文件映射">
                             <Grid Background="Transparent">
                                 <ListBox x:Name="lbx_fileMapping" Style="{StaticResource style_myListBox}">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="ContextMenu" Value="{StaticResource contextMenu_tabControl_itemList_item}"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Padding="5" Background="{TemplateBinding Background}">
+                                                            <Grid x:Name="PART_background">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition/>
+                                                                    <RowDefinition/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="auto"/>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="源文件" Foreground="White" Padding="10,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding SrcPath}"/>
+                                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="目的地" Foreground="White" Padding="10,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding DestPath}"/>
+                                                            </Grid>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="#3f3f40"></Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Background" Value="#007acc"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
                                 </ListBox>
                             </Grid>
                         </TabItem>
                         <TabItem Background="Transparent" Header="目录映射">
                             <Grid Background="Transparent">
-                                <ListBox x:Name="lbx_dirMapping" Style="{StaticResource style_myListBox}"/>
+                                <ListBox x:Name="lbx_dirMapping" Style="{StaticResource style_myListBox}">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="ContextMenu" Value="{StaticResource contextMenu_tabControl_itemList_item}"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Padding="5" Background="{TemplateBinding Background}">
+                                                            <Grid x:Name="PART_background">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition/>
+                                                                    <RowDefinition/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="auto"/>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="源文件" Foreground="White" Padding="10,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding SrcPath}"/>
+                                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="目的地" Foreground="White" Padding="10,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding DestPath}"/>
+                                                            </Grid>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="#3f3f40"></Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Background" Value="#007acc"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
                             </Grid>
                         </TabItem>
                         <TabItem Background="Transparent" Header="环境变量">
                             <Grid Background="Transparent">
-                                <ListBox x:Name="lbx_envVariable" Style="{StaticResource style_myListBox}"/>
+                                <ListBox x:Name="lbx_envVariable" Style="{StaticResource style_myListBox}">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="ContextMenu" Value="{StaticResource contextMenu_tabControl_itemList_item}"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <Border Padding="5" Background="{TemplateBinding Background}">
+                                                            <Grid x:Name="PART_background">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition/>
+                                                                    <RowDefinition/>
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="auto"/>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="变量名" Foreground="White" Padding="10,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VariableName}"/>
+                                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="变量值" Foreground="White" Padding="10,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VariableValue}"/>
+                                                            </Grid>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="#3f3f40"></Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsSelected" Value="True">
+                                                                <Setter Property="Background" Value="#007acc"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle></ListBox>
                             </Grid>
                         </TabItem>
                     </TabControl>

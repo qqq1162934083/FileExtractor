@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FileExtractor.ViewModels
 {
-    class DirMapping : INotifyPropertyChanged
+    public class DirMapping : INotifyPropertyChanged
     {
         public string SrcPath
         {

@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace FileExtractor.ViewModels
 {
-    class ConfigData : INotifyPropertyChanged
+    public class ConfigData : INotifyPropertyChanged
     {
-        public List<FileMapping> FileMappingList
+        public BindingList<FileMapping> FileMappingList
         {
             get => _fileMappingList;
             set => HandleSetValue(nameof(FileMappingList), _fileMappingList, value);
         }
         [JsonIgnore]
-        private List<FileMapping> _fileMappingList;
+        private BindingList<FileMapping> _fileMappingList;
 
 
 
-        public List<DirMapping> DirMappingList
+        public BindingList<DirMapping> DirMappingList
         {
             get => _dirMappingList;
             set => HandleSetValue(nameof(DirMappingList), _dirMappingList, value);
         }
         [JsonIgnore]
-        private List<DirMapping> _dirMappingList;
+        private BindingList<DirMapping> _dirMappingList;
 
 
 
@@ -70,8 +70,8 @@ namespace FileExtractor.ViewModels
 
         public ConfigData()
         {
-            _dirMappingList = new List<DirMapping>();
-            _fileMappingList = new List<FileMapping>();
+            _dirMappingList = new BindingList<DirMapping>();
+            _fileMappingList = new BindingList<FileMapping>();
         }
 
 
@@ -82,7 +82,11 @@ namespace FileExtractor.ViewModels
             var targetReference = srcValue;
             var hasChanged = !Equals(targetReference, destValue);
             targetReference = destValue;
-            if (hasChanged) PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            if (hasChanged) NotifyChanged(propName);
+        }
+        public void NotifyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

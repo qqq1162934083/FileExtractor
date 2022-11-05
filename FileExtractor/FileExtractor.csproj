@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\ItemInfoDialog.xaml.cs">
+      <DependentUpon>ItemInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LaunchWindow.xaml.cs">
       <DependentUpon>LaunchWindow.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,7 @@
     <Compile Include="ViewModels\DirMapping.cs" />
     <Compile Include="ViewModels\FileMapping.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
+    <Compile Include="WpfControls\Converters\TabControlListBoxHasSelectionBoolConverter.cs" />
     <Compile Include="WpfControls\MyButton.cs" />
     <Compile Include="WpfControls\MyButton2.cs" />
     <Compile Include="WpfControls\MyCheckBox.cs" />
@@ -126,6 +130,10 @@
     <Compile Include="WorkWindow.xaml.cs">
       <DependentUpon>WorkWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Dialogs\ItemInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LaunchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,7 +224,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dialogs\" />
     <Folder Include="PrjResources\" />
     <Folder Include="WpfStyles\" />
   </ItemGroup>

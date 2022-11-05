@@ -139,23 +139,19 @@ namespace FileExtractor.Pages
             }
             else
             {
-                var configContent = File.ReadAllText(accessItem.FilePath);
-                var data = (ConfigData)null;
+                var workData = new WorkData
+                {
+                    AccessItemInfo = accessItem
+                };
                 try
                 {
-                    data = JsonConvert.DeserializeObject<ConfigData>(configContent);
+                    workData.LoadConfigData();
                 }
-                catch (Exception exp)
+                catch(Exception exp)
                 {
-                    MessageBox.Show("无效的配置文件");
-                    return;
+                    MessageBox.Show(exp.Message);
                 }
-
-                ParentWindow.Jump2WorkWindow(new WorkData
-                {
-                    AccessItemInfo = accessItem,
-                    ConfigData = data
-                });
+                ParentWindow.Jump2WorkWindow(workData);
             }
         }
     }

@@ -1,3 +1,4 @@
+using FileExtractor.Dialogs;
 using FileExtractor.Models;
 using System;
 using System.Collections.Generic;
@@ -72,15 +73,34 @@ namespace FileExtractor
 
         private void btn_addItemByTyping_Click(object sender, RoutedEventArgs e)
         {
-            switch (tabControl_itemList.SelectedIndex)
+            ItemInfoDialog.ShowDialog(tabControl_itemList.SelectedIndex, dialog =>
             {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-            }
+                switch (dialog.FuncIndex)
+                {
+                    case 0:
+                        var srcFilePath = dialog.tbx_fileMapping_source.Text;
+                        var destFilePath = dialog.tbx_fileMapping_dest.Text;
+                        //验证
+                        WorkData.ConfigData.FileMappingList.Add(new ViewModels.FileMapping() { DestPath = destFilePath, SrcPath = srcFilePath });
+                        WorkData.SaveConfigData();
+                        WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
+                        break;
+                    case 1:
+                        var srcDirPath = dialog.tbx_dirMapping_source.Text;
+                        var destDirPath = dialog.tbx_dirMapping_dest.Text;
+                        //验证
+                        WorkData.ConfigData.DirMappingList.Add(new ViewModels.DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
+                        break;
+                    case 2:
+                        var varName = dialog.tbx_varName.Text;
+                        var varValue = dialog.tbx_varValue.Text;
+                        //验证
+                        //WorkData.ConfigData.Add(new ViewModels.DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
+                        break;
+                    default:
+                        throw new Exception("超出预期范围");
+                }
+            });
         }
 
         private void btn_addItemByChoose_Click(object sender, RoutedEventArgs e)
