@@ -61,7 +61,7 @@
                                                         </Track.DecreaseRepeatButton>
                                                         <Track.Thumb>
                                                             <!--滑块-->
-                                                            <local:MyThumb/>
+                                                            <local:MyThumb Margin="0,4,0,4"/>
                                                         </Track.Thumb>
                                                         <Track.IncreaseRepeatButton>
                                                             <!--右页按钮-->
@@ -97,7 +97,7 @@
                                                         </Track.DecreaseRepeatButton>
                                                         <Track.Thumb>
                                                             <!--滑块-->
-                                                            <local:MyThumb/>
+                                                            <local:MyThumb Margin="4,0,4,0"/>
                                                         </Track.Thumb>
                                                         <Track.IncreaseRepeatButton>
                                                             <!--下页按钮-->
