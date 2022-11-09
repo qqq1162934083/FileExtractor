@@ -73,7 +73,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="46,56,48,45">
                 <Grid>
-                    <TabControl x:Name="tabControl_itemList" Background="Transparent" BorderBrush="Transparent" BorderThickness="1">
+                    <TabControl x:Name="tabControl_itemList" Background="Transparent" BorderBrush="Transparent" BorderThickness="1" SelectionChanged="tabControl_itemList_SelectionChanged">
                         <TabControl.Style>
                             <Style TargetType="TabControl">
                                 <Setter Property="ItemContainerStyle">

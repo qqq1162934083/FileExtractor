@@ -211,5 +211,10 @@ namespace FileExtractor
                 }
             });
         }
+
+        private void tabControl_itemList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btn_addItemByChoose.IsEnabled = tabControl_itemList.SelectedIndex != 2;
+        }
     }
 }
