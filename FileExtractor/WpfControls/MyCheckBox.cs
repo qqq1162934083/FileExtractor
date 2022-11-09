@@ -17,7 +17,9 @@ namespace FileExtractor.WpfControls
             DefaultStyleKeyProperty.OverrideMetadata(type, new FrameworkPropertyMetadata(type));
         }
 
-
+        public MyCheckBox()
+        {
+        }
 
         public Brush TextForeground
         {

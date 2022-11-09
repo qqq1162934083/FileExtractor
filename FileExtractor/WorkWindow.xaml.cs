@@ -49,8 +49,12 @@ namespace FileExtractor
             SetBinding(lbx_varMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.ValueMappingList));
             SetBinding(tbx_packageDir, TextBox.TextProperty, configData, nameof(configData.PackageDir));
             SetBinding(tbx_packageName, TextBox.TextProperty, configData, nameof(configData.PackageName));
-            SetBinding(cb_enabledCompress, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledCompress));
-            SetBinding(cb_enabledDateTimeExpression, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledDateTimeExpression));
+            cb_enabledCompress.IsChecked = configData.EnabledCompress;
+            cb_enabledDateTimeExpression.IsChecked = configData.EnabledDateTimeExpression;
+            cb_enabledPackageDirFtpSupport.IsChecked = configData.EnabledPackageDirFtpSupport;
+            //SetBinding(cb_enabledCompress, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledCompress));
+            //SetBinding(cb_enabledDateTimeExpression, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledDateTimeExpression));
+            //SetBinding(cb_enabledPackageDirFtpSupport, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledPackageDirFtpSupport));
         }
         private void SetBinding(FrameworkElement elem, DependencyProperty dependencyProperty, object source, string path)
         {
@@ -150,14 +154,17 @@ namespace FileExtractor
                 case FileMapping _:
                     var fileMappingData = (FileMapping)data;
                     WorkData.ConfigData.FileMappingList.Remove(fileMappingData);
+                    WorkData.SaveConfigData();
                     break;
                 case DirMapping _:
                     var dirMappingData = (DirMapping)data;
                     WorkData.ConfigData.DirMappingList.Remove(dirMappingData);
+                    WorkData.SaveConfigData();
                     break;
                 case ValueMapping _:
                     var valueMappingData = (ValueMapping)data;
                     WorkData.ConfigData.ValueMappingList.Remove(valueMappingData);
+                    WorkData.SaveConfigData();
                     break;
                 default:
                     throw new Exception("选中的数据类型异常");
@@ -236,5 +243,34 @@ namespace FileExtractor
         {
             btn_addItemByChoose.IsEnabled = tabControl_itemList.SelectedIndex != 2;
         }
+
+        private void cb_enabledDateTimeExpression_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            var configData = WorkData?.ConfigData;
+            if (configData != null)
+            {
+                configData.EnabledDateTimeExpression = cb_enabledDateTimeExpression.IsChecked.GetValueOrDefault(false);
+                WorkData.SaveConfigData();
+            }
+        }
+        private void cb_enabledCompress_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            var configData = WorkData?.ConfigData;
+            if (configData != null)
+            {
+                configData.EnabledCompress = cb_enabledCompress.IsChecked.GetValueOrDefault(false);
+                WorkData.SaveConfigData();
+            }
+        }
+        private void cb_enabledPackageDirFtpSupport_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            var configData = WorkData?.ConfigData;
+            if (configData != null)
+            {
+                configData.EnabledPackageDirFtpSupport = cb_enabledPackageDirFtpSupport.IsChecked.GetValueOrDefault(false);
+                WorkData.SaveConfigData();
+            }
+        }
+
     }
 }

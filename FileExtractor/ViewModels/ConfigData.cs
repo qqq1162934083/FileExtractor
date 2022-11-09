@@ -59,6 +59,15 @@ namespace FileExtractor.ViewModels
         private bool _enabledDateTimeExpression;
 
 
+        public bool EnabledPackageDirFtpSupport
+        {
+            get => _enabledPackageDirFtpSupport;
+            set => HandleSetValue(nameof(EnabledPackageDirFtpSupport), _enabledPackageDirFtpSupport, value);
+        }
+        [JsonIgnore]
+        private bool _enabledPackageDirFtpSupport;
+
+
 
         public bool EnabledCompress
         {
