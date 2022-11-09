@@ -5,6 +5,7 @@ using FileExtractor.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -91,7 +92,6 @@ namespace FileExtractor
                         destFilePath = destFilePath.Replace("/", "\\");
                         WorkData.ConfigData.FileMappingList.Add(new FileMapping() { DestPath = destFilePath, SrcPath = srcFilePath });
                         WorkData.SaveConfigData();
-                        //WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
                         break;
                     case 1:
                         var srcDirPath = dialog.tbx_dirMapping_source.Text;
@@ -283,7 +283,7 @@ namespace FileExtractor
 
         private void btn_openPackedDestDir_Click(object sender, RoutedEventArgs e)
         {
-
+            Process.Start("Explorer.exe", tbx_packageDir.Text);
         }
 
         /// <summary>
@@ -297,6 +297,19 @@ namespace FileExtractor
             {
                 handle?.Invoke(configData);
             }
+        }
+
+        private void btn_setPackageNameByTyping_Click(object sender, RoutedEventArgs e)
+        {
+            ValueBox.Show("设置包名：", tbx_packageName.Text, (srcValue, destValue) =>
+            {
+                //此处还需要添加验证
+                HandleConfigDataIfNotNull(configData =>
+                {
+                    configData.PackageName = destValue;
+                    WorkData.SaveConfigData();
+                });
+            });
         }
     }
 }

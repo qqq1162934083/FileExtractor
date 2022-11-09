@@ -9,7 +9,7 @@
         Style="{StaticResource style_myWindow}"
         Title="" Height="450" Width="800">
     <Grid>
-        <Grid Background="Transparent" Margin="100,60,100,60">
+        <Grid Background="Transparent" Margin="100,60,100,100">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="10"/>

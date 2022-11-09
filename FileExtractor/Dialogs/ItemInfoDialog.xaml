@@ -9,7 +9,7 @@
         Style="{StaticResource style_myWindow}"
         Title="AddItemDialog" Height="450" Width="800">
     <Grid>
-        <TabControl Margin="0,60,0,60" IsHitTestVisible="True" SelectedIndex="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor},Path=FuncIndex}">
+        <TabControl Margin="0,60,0,120" IsHitTestVisible="True" SelectedIndex="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor},Path=FuncIndex}">
             <TabControl.Style>
                 <Style TargetType="TabControl">
                     <Setter Property="ItemContainerStyle">

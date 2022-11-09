@@ -285,7 +285,7 @@
                     <Border BorderBrush="#555555" Background="#252526" BorderThickness="1">
                         <StackPanel Width="160" Height="auto">
                             <Grid Height="5"></Grid>
-                            <wpfcontrols:MyButton Margin="0,10,0,5" Width="120" Height="30" Content="设置值"/>
+                            <wpfcontrols:MyButton x:Name="btn_setPackageNameByTyping" Margin="0,10,0,5" Width="120" Height="30" Content="设置值" Click="btn_setPackageNameByTyping_Click"/>
                             <wpfcontrols:MyCheckBox x:Name="cb_enabledDateTimeExpression" Grid.Row="1" TextFontSize="12" Padding="20,0,20,0" Content="启用日期表达式" Unchecked="cb_enabledDateTimeExpression_CheckedChanged" Checked="cb_enabledDateTimeExpression_CheckedChanged"/>
                             <wpfcontrols:MyCheckBox x:Name="cb_enabledCompress" Grid.Row="2" TextFontSize="12" Padding="20,0,20,0" Content="启用压缩" Unchecked="cb_enabledCompress_CheckedChanged" Checked="cb_enabledCompress_CheckedChanged"/>
                             <Grid Height="5"></Grid>
