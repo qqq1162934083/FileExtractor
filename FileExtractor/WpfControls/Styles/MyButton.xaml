@@ -6,7 +6,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:MyButton">
                     <Border x:Name="border" BorderBrush="#555555" BorderThickness="1" Background="#3f3f46" Padding="{TemplateBinding Padding}">
-                        <TextBlock Foreground="White" HorizontalAlignment="Center" FontSize="{TemplateBinding TextFontSize}" VerticalAlignment="Center" TextAlignment="Center" MinWidth="50" Text="{TemplateBinding Content}"></TextBlock>
+                        <TextBlock Foreground="{TemplateBinding TextForeground}" HorizontalAlignment="Center" FontSize="{TemplateBinding TextFontSize}" VerticalAlignment="Center" TextAlignment="Center" MinWidth="50" Text="{TemplateBinding Content}"></TextBlock>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
