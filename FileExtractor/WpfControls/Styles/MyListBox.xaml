@@ -25,27 +25,58 @@
                                             </Trigger>
                                         </Style.Triggers>
                                         <Style.Resources>
+                                            <ControlTemplate x:Key="template_RepeatButton" TargetType="RepeatButton">
+                                                <Grid Background="Transparent">
+                                                    <Path x:Name="path" Fill="#999999" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
+                                                    <Path x:Name="path_mouseOver" Visibility="Hidden" Stroke="Transparent" Fill="#1c97ea" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="path" Property="Visibility" Value="Hidden"/>
+                                                        <Setter TargetName="path_mouseOver" Property="Visibility" Value="Visible"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                            <ControlTemplate x:Key="template_thumb_RepeatButton" TargetType="RepeatButton">
+                                                <Grid Background="Transparent"/>
+                                            </ControlTemplate>
                                             <ControlTemplate x:Key="template_horizontalScrollBar" TargetType="ScrollBar">
-                                                <Grid Background="White"></Grid>
+                                                <Grid Background="#3e3e42">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="20"/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="20"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <!--左行按钮-->
+                                                    <RepeatButton Command="ScrollBar.LineLeftCommand" Template="{DynamicResource template_RepeatButton}">
+                                                        <RepeatButton.Tag>
+                                                            <Geometry>M1,6L6,11L6,1Z</Geometry>
+                                                        </RepeatButton.Tag>
+                                                    </RepeatButton>
+                                                    <!--轨道-->
+                                                    <Track Name="PART_Track" Orientation="Horizontal" Grid.Column="1" IsDirectionReversed="True">
+                                                        <Track.DecreaseRepeatButton>
+                                                            <!--左页按钮-->
+                                                            <RepeatButton Command="ScrollBar.PageLeftCommand" Template="{DynamicResource template_thumb_RepeatButton}"/>
+                                                        </Track.DecreaseRepeatButton>
+                                                        <Track.Thumb>
+                                                            <!--滑块-->
+                                                            <local:MyThumb/>
+                                                        </Track.Thumb>
+                                                        <Track.IncreaseRepeatButton>
+                                                            <!--右页按钮-->
+                                                            <RepeatButton Command="ScrollBar.PageRightCommand" Template="{DynamicResource template_thumb_RepeatButton}"/>
+                                                        </Track.IncreaseRepeatButton>
+                                                    </Track>
+                                                    <!--右行按钮-->
+                                                    <RepeatButton Grid.Column="2" Command="ScrollBar.LineRightCommand" Template="{DynamicResource template_RepeatButton}">
+                                                        <RepeatButton.Tag>
+                                                            <Geometry>M1,1L1,11L6,6Z</Geometry>
+                                                        </RepeatButton.Tag>
+                                                    </RepeatButton>
+                                                </Grid>
                                             </ControlTemplate>
                                             <ControlTemplate x:Key="template_verticalScrollBar" TargetType="ScrollBar">
-                                                <ControlTemplate.Resources>
-                                                    <ControlTemplate x:Key="template_upDownRepeatButton" TargetType="RepeatButton">
-                                                        <Grid Background="Transparent">
-                                                            <Path x:Name="path" Fill="#999999" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
-                                                            <Path x:Name="path_mouseOver" Visibility="Hidden" Stroke="Transparent" Fill="#1c97ea" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{TemplateBinding Tag}"/>
-                                                        </Grid>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="path" Property="Visibility" Value="Hidden"/>
-                                                                <Setter TargetName="path_mouseOver" Property="Visibility" Value="Visible"/>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                    <ControlTemplate x:Key="template_thumb_upDownRepeatButton" TargetType="RepeatButton">
-                                                        <Grid Background="Transparent"/>
-                                                    </ControlTemplate>
-                                                </ControlTemplate.Resources>
                                                 <Grid Background="#3e3e42">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="20"/>
@@ -53,7 +84,7 @@
                                                         <RowDefinition Height="20"/>
                                                     </Grid.RowDefinitions>
                                                     <!--上行按钮-->
-                                                    <RepeatButton Command="ScrollBar.LineUpCommand" Template="{DynamicResource template_upDownRepeatButton}">
+                                                    <RepeatButton Command="ScrollBar.LineUpCommand" Template="{DynamicResource template_RepeatButton}">
                                                         <RepeatButton.Tag>
                                                             <Geometry>M6,1L1,6L11,6Z</Geometry>
                                                         </RepeatButton.Tag>
@@ -62,7 +93,7 @@
                                                     <Track Name="PART_Track" Grid.Row="1" IsDirectionReversed="True">
                                                         <Track.DecreaseRepeatButton>
                                                             <!--上页按钮-->
-                                                            <RepeatButton Command="ScrollBar.PageUpCommand" Template="{DynamicResource template_thumb_upDownRepeatButton}"/>
+                                                            <RepeatButton Command="ScrollBar.PageUpCommand" Template="{DynamicResource template_thumb_RepeatButton}"/>
                                                         </Track.DecreaseRepeatButton>
                                                         <Track.Thumb>
                                                             <!--滑块-->
@@ -70,11 +101,11 @@
                                                         </Track.Thumb>
                                                         <Track.IncreaseRepeatButton>
                                                             <!--下页按钮-->
-                                                            <RepeatButton Command="ScrollBar.PageDownCommand" Template="{DynamicResource template_thumb_upDownRepeatButton}"/>
+                                                            <RepeatButton Command="ScrollBar.PageDownCommand" Template="{DynamicResource template_thumb_RepeatButton}"/>
                                                         </Track.IncreaseRepeatButton>
                                                     </Track>
                                                     <!--下行按钮-->
-                                                    <RepeatButton Grid.Row="2" Command="ScrollBar.LineDownCommand" Template="{DynamicResource template_upDownRepeatButton}">
+                                                    <RepeatButton Grid.Row="2" Command="ScrollBar.LineDownCommand" Template="{DynamicResource template_RepeatButton}">
                                                         <RepeatButton.Tag>
                                                             <Geometry>M6,6L1,1L11,1Z</Geometry>
                                                         </RepeatButton.Tag>
@@ -94,16 +125,19 @@
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
                                     <ScrollContentPresenter Grid.Row="0" Grid.Column="0" x:Name="PART_ScrollContentPresenter" CanContentScroll="True"/>
-                                    <Grid Grid.Row="0" Margin="13,0,0,0" Grid.Column="1" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
+                                    <Grid Grid.Row="0" Margin="1,0,0,0" Grid.Column="1" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
                                         <ScrollBar Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" x:Name="PART_VerticalScrollBar" 
-                                                                       Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                       ViewportSize="{TemplateBinding ViewportHeight}"
-                                                                       Maximum="{TemplateBinding ScrollableHeight}" 
-                                                                       Minimum="0" Cursor="Arrow" AutomationProperties.AutomationId="VerticalScrollBar"/>
+                                                                        Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                        ViewportSize="{TemplateBinding ViewportHeight}"
+                                                                        Maximum="{TemplateBinding ScrollableHeight}" 
+                                                                        Minimum="0" Cursor="Arrow" AutomationProperties.AutomationId="VerticalScrollBar"/>
                                     </Grid>
-                                    <Grid Grid.Row="1" Grid.Column="0" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
-                                        <ScrollBar Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                                                                       Orientation="Horizontal" x:Name="PART_HorizontalScrollBar"/>
+                                    <Grid Grid.Row="1" Margin="0,1,0,0" Grid.Column="0" Visibility="{Binding RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor},Path=IsMouseOver,Converter={StaticResource scrollBarVisibilityConverter}}">
+                                        <ScrollBar Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" x:Name="PART_HorizontalScrollBar" Orientation="Horizontal"
+                                                                        Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                        ViewportSize="{TemplateBinding ViewportWidth}"
+                                                                        Maximum="{TemplateBinding ScrollableWidth}" 
+                                                                        Minimum="0" Cursor="Arrow" AutomationProperties.AutomationId="HorizontalScrollBar"/>
                                     </Grid>
                                 </Grid>
                             </ControlTemplate>
