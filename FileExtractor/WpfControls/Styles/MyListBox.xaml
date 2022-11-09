@@ -54,7 +54,7 @@
                                                         </RepeatButton.Tag>
                                                     </RepeatButton>
                                                     <!--轨道-->
-                                                    <Track Name="PART_Track" Orientation="Horizontal" Grid.Column="1" IsDirectionReversed="True">
+                                                    <Track Name="PART_Track" Orientation="Horizontal" Grid.Column="1" IsDirectionReversed="False">
                                                         <Track.DecreaseRepeatButton>
                                                             <!--左页按钮-->
                                                             <RepeatButton Command="ScrollBar.PageLeftCommand" Template="{DynamicResource template_thumb_RepeatButton}"/>
