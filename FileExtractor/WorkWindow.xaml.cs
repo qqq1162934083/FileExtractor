@@ -2,6 +2,7 @@ using Common.Libs;
 using FileExtractor.Dialogs;
 using FileExtractor.Models;
 using FileExtractor.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,12 +50,9 @@ namespace FileExtractor
             SetBinding(lbx_varMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.ValueMappingList));
             SetBinding(tbx_packageDir, TextBox.TextProperty, configData, nameof(configData.PackageDir));
             SetBinding(tbx_packageName, TextBox.TextProperty, configData, nameof(configData.PackageName));
-            cb_enabledCompress.IsChecked = configData.EnabledCompress;
-            cb_enabledDateTimeExpression.IsChecked = configData.EnabledDateTimeExpression;
-            cb_enabledPackageDirFtpSupport.IsChecked = configData.EnabledPackageDirFtpSupport;
-            //SetBinding(cb_enabledCompress, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledCompress));
-            //SetBinding(cb_enabledDateTimeExpression, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledDateTimeExpression));
-            //SetBinding(cb_enabledPackageDirFtpSupport, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledPackageDirFtpSupport));
+            SetBinding(cb_enabledCompress, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledCompress));
+            SetBinding(cb_enabledDateTimeExpression, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledDateTimeExpression));
+            SetBinding(cb_enabledPackageDirFtpSupport, CheckBox.IsCheckedProperty, configData, nameof(configData.EnabledPackageDirFtpSupport));
         }
         private void SetBinding(FrameworkElement elem, DependencyProperty dependencyProperty, object source, string path)
         {
@@ -66,7 +64,7 @@ namespace FileExtractor
 
         private void btn_pack_Click(object sender, RoutedEventArgs e)
         {
-
+            Console.WriteLine(JsonConvert.SerializeObject(WorkData.ConfigData, Formatting.Indented));
         }
 
         private void btn_packedDestNameOptions_Click(object sender, RoutedEventArgs e)
@@ -93,7 +91,7 @@ namespace FileExtractor
                         destFilePath = destFilePath.Replace("/", "\\");
                         WorkData.ConfigData.FileMappingList.Add(new FileMapping() { DestPath = destFilePath, SrcPath = srcFilePath });
                         WorkData.SaveConfigData();
-                        WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
+                        //WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
                         break;
                     case 1:
                         var srcDirPath = dialog.tbx_dirMapping_source.Text;
@@ -246,31 +244,59 @@ namespace FileExtractor
 
         private void cb_enabledDateTimeExpression_CheckedChanged(object sender, RoutedEventArgs e)
         {
-            var configData = WorkData?.ConfigData;
-            if (configData != null)
-            {
-                configData.EnabledDateTimeExpression = cb_enabledDateTimeExpression.IsChecked.GetValueOrDefault(false);
-                WorkData.SaveConfigData();
-            }
+            HandleConfigDataIfNotNull(configData => WorkData.SaveConfigData());
         }
         private void cb_enabledCompress_CheckedChanged(object sender, RoutedEventArgs e)
         {
-            var configData = WorkData?.ConfigData;
-            if (configData != null)
-            {
-                configData.EnabledCompress = cb_enabledCompress.IsChecked.GetValueOrDefault(false);
-                WorkData.SaveConfigData();
-            }
+            HandleConfigDataIfNotNull(configData => WorkData.SaveConfigData());
         }
         private void cb_enabledPackageDirFtpSupport_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            HandleConfigDataIfNotNull(configData => WorkData.SaveConfigData());
+        }
+
+        private void btn_setPackedDestDirByTyping_Click(object sender, RoutedEventArgs e)
+        {
+            ValueBox.Show("设置路径值：", tbx_packageDir.Text, (srcValue, destValue) =>
+            {
+                //此处还需要添加验证
+                HandleConfigDataIfNotNull(configData =>
+                {
+                    configData.PackageDir = destValue;
+                    WorkData.SaveConfigData();
+                });
+            });
+        }
+
+        private void btn_setPackedDestDirByChoose_Click(object sender, RoutedEventArgs e)
+        {
+            FileDialogUtils.SelectFolder(x =>
+            {
+                //此处还需要添加验证
+                HandleConfigDataIfNotNull(configData =>
+                {
+                    configData.PackageDir = x.SelectedPath;
+                    WorkData.SaveConfigData();
+                });
+            });
+        }
+
+        private void btn_openPackedDestDir_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// 如果configData不为空则进行处理
+        /// </summary>
+        /// <param name="handle"></param>
+        private void HandleConfigDataIfNotNull(Action<ConfigData> handle)
         {
             var configData = WorkData?.ConfigData;
             if (configData != null)
             {
-                configData.EnabledPackageDirFtpSupport = cb_enabledPackageDirFtpSupport.IsChecked.GetValueOrDefault(false);
-                WorkData.SaveConfigData();
+                handle?.Invoke(configData);
             }
         }
-
     }
 }

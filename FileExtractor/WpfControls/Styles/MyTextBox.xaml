@@ -18,6 +18,14 @@
                             <Setter TargetName="border" Property="BorderBrush" Value="#007acc"/>
                             <Setter TargetName="border" Property="Background" Value="#3f3f46"/>
                         </Trigger>
+                        <Trigger Property="AcceptsReturn" Value="True">
+                            <Setter TargetName="PART_ContentHost" Property="VerticalAlignment" Value="Stretch"/>
+                            <Setter TargetName="PART_ContentHost" Property="HorizontalAlignment" Value="Stretch"/>
+                        </Trigger>
+                        <Trigger Property="AcceptsReturn" Value="False">
+                            <Setter TargetName="PART_ContentHost" Property="VerticalAlignment" Value="Center"/>
+                            <Setter TargetName="PART_ContentHost" Property="HorizontalAlignment" Value="Stretch"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

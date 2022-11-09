@@ -2,7 +2,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +19,7 @@ namespace FileExtractor.ViewModels
                 if (_fileMappingList == null) _fileMappingList = new BindingList<FileMapping>();
                 return _fileMappingList;
             }
-            set => HandleSetValue(nameof(FileMappingList), _fileMappingList, value);
+            set => HandleSetValue(nameof(FileMappingList), nameof(_fileMappingList), value);
         }
         [JsonIgnore]
         private BindingList<FileMapping> _fileMappingList;
@@ -30,7 +32,7 @@ namespace FileExtractor.ViewModels
                 if (_valueMappingList == null) _valueMappingList = new BindingList<ValueMapping>();
                 return _valueMappingList;
             }
-            set => HandleSetValue(nameof(ValueMappingList), _valueMappingList, value);
+            set => HandleSetValue(nameof(ValueMappingList), nameof(_valueMappingList), value);
         }
         [JsonIgnore]
         private BindingList<ValueMapping> _valueMappingList;
@@ -43,7 +45,7 @@ namespace FileExtractor.ViewModels
                 if (_dirMappingList == null) _dirMappingList = new BindingList<DirMapping>();
                 return _dirMappingList;
             }
-            set => HandleSetValue(nameof(DirMappingList), _dirMappingList, value);
+            set => HandleSetValue(nameof(DirMappingList), nameof(_dirMappingList), value);
         }
         [JsonIgnore]
         private BindingList<DirMapping> _dirMappingList;
@@ -53,7 +55,7 @@ namespace FileExtractor.ViewModels
         public bool EnabledDateTimeExpression
         {
             get => _enabledDateTimeExpression;
-            set => HandleSetValue(nameof(EnabledDateTimeExpression), _enabledDateTimeExpression, value);
+            set => HandleSetValue(nameof(EnabledDateTimeExpression), nameof(_enabledDateTimeExpression), value);
         }
         [JsonIgnore]
         private bool _enabledDateTimeExpression;
@@ -62,7 +64,7 @@ namespace FileExtractor.ViewModels
         public bool EnabledPackageDirFtpSupport
         {
             get => _enabledPackageDirFtpSupport;
-            set => HandleSetValue(nameof(EnabledPackageDirFtpSupport), _enabledPackageDirFtpSupport, value);
+            set => HandleSetValue(nameof(EnabledPackageDirFtpSupport), nameof(_enabledPackageDirFtpSupport), value);
         }
         [JsonIgnore]
         private bool _enabledPackageDirFtpSupport;
@@ -72,7 +74,7 @@ namespace FileExtractor.ViewModels
         public bool EnabledCompress
         {
             get => _enabledCompress;
-            set => HandleSetValue(nameof(EnabledCompress), _enabledCompress, value);
+            set => HandleSetValue(nameof(EnabledCompress), nameof(_enabledCompress), value);
         }
         [JsonIgnore]
         private bool _enabledCompress;
@@ -82,7 +84,7 @@ namespace FileExtractor.ViewModels
         public string PackageName
         {
             get => _packageName;
-            set => HandleSetValue(nameof(PackageName), _packageName, value);
+            set => HandleSetValue(nameof(PackageName), nameof(_packageName), value);
         }
         [JsonIgnore]
         private string _packageName;
@@ -92,7 +94,7 @@ namespace FileExtractor.ViewModels
         public string PackageDir
         {
             get => _packageDir;
-            set => HandleSetValue(nameof(PackageDir), _packageDir, value);
+            set => HandleSetValue(nameof(PackageDir), nameof(_packageDir), value);
         }
         [JsonIgnore]
         private string _packageDir;
@@ -106,13 +108,34 @@ namespace FileExtractor.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void HandleSetValue<T>(string propName, T srcValue, T destValue)
+        private void HandleSetValue<T>(string propName, string srcMemberName, T destValue)
         {
-            var targetReference = srcValue;
-            var hasChanged = !Equals(targetReference, destValue);
-            targetReference = destValue;
-            if (hasChanged) NotifyChanged(propName);
+            //获取成员信息
+            var type = GetType();
+            T srcValue;
+            var srcFieldInfo = (FieldInfo)null;
+            var srcPropInfo = (PropertyInfo)null;
+            srcFieldInfo = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).FirstOrDefault(x => x.Name == srcMemberName);
+            if (srcFieldInfo != null)
+                srcValue = (T)srcFieldInfo.GetValue(this);
+            else
+            {
+                srcPropInfo = type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).FirstOrDefault(x => x.Name == srcMemberName);
+                if (srcPropInfo == null) throw new Exception("找不到成员 " + srcMemberName);
+                srcValue = (T)srcPropInfo.GetValue(this);
+            }
+
+            var hasChanged = !Equals(srcValue, destValue);
+            if (hasChanged)
+            {
+                if (srcFieldInfo != null)
+                    srcFieldInfo.SetValue(this, destValue);
+                else
+                    srcPropInfo.SetValue(this, destValue);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            }
         }
+
         public void NotifyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
