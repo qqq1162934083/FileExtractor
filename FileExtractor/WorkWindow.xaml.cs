@@ -1,8 +1,10 @@
+using Common.Libs;
 using FileExtractor.Dialogs;
 using FileExtractor.Models;
 using FileExtractor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,23 +84,27 @@ namespace FileExtractor
                     case 0:
                         var srcFilePath = dialog.tbx_fileMapping_source.Text;
                         var destFilePath = dialog.tbx_fileMapping_dest.Text;
-                        //验证
-                        WorkData.ConfigData.FileMappingList.Add(new ViewModels.FileMapping() { DestPath = destFilePath, SrcPath = srcFilePath });
+                        //此处还需要添加验证
+                        srcFilePath = srcFilePath.Replace("/", "\\");
+                        destFilePath = destFilePath.Replace("/", "\\");
+                        WorkData.ConfigData.FileMappingList.Add(new FileMapping() { DestPath = destFilePath, SrcPath = srcFilePath });
                         WorkData.SaveConfigData();
                         WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
                         break;
                     case 1:
                         var srcDirPath = dialog.tbx_dirMapping_source.Text;
                         var destDirPath = dialog.tbx_dirMapping_dest.Text;
-                        //验证
-                        WorkData.ConfigData.DirMappingList.Add(new ViewModels.DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
+                        //此处还需要添加验证
+                        srcDirPath = srcDirPath.Replace("/", "\\");
+                        destDirPath = destDirPath.Replace("/", "\\");
+                        WorkData.ConfigData.DirMappingList.Add(new DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
                         WorkData.SaveConfigData();
                         break;
                     case 2:
                         var varName = dialog.tbx_varName.Text;
                         var varValue = dialog.tbx_varValue.Text;
-                        //验证
-                        WorkData.ConfigData.ValueMappingList.Add(new ViewModels.ValueMapping() { VarName = varName, VarValue = varValue });
+                        //此处还需要添加验证
+                        WorkData.ConfigData.ValueMappingList.Add(new ValueMapping() { VarName = varName, VarValue = varValue });
                         WorkData.SaveConfigData();
                         break;
                     default:
@@ -112,11 +118,25 @@ namespace FileExtractor
             switch (tabControl_itemList.SelectedIndex)
             {
                 case 0:
+                    FileDialogUtils.SelectOpenFile(x => x.Filter = "文件|*", x =>
+                    {
+                        //此处还需要添加验证
+                        WorkData.ConfigData.FileMappingList.Add(new FileMapping() { DestPath = "\\", SrcPath = x.FileName });
+                        WorkData.SaveConfigData();
+                        WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
+                    });
                     break;
                 case 1:
+                    FileDialogUtils.SelectFolder(x =>
+                    {
+                        //此处还需要添加验证
+                        WorkData.ConfigData.DirMappingList.Add(new DirMapping() { DestPath = "\\", SrcPath = x.SelectedPath });
+                        WorkData.SaveConfigData();
+                        WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
+                    });
                     break;
-                case 2:
-                    break;
+                default:
+                    throw new Exception("不在预期的范围");
             }
         }
 

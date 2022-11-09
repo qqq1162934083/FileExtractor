@@ -1,6 +1,5 @@
 using FileExtractor.Libs;
 using FileExtractor.Models;
-using NetCore5WpfToolsApp.Utils.Controls;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

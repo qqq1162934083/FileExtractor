@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
-namespace NetCore5WpfToolsApp.Utils.Controls
+namespace Common.Libs
 {
     public static class FileDialogUtils
     {
