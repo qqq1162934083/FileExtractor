@@ -2,6 +2,7 @@ using FileExtractor.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,12 @@ namespace FileExtractor.Models
         /// <summary>
         /// 最近访问的项目
         /// </summary>
-        public List<RecentAccessItem> RecentAccessItemList
+        public BindingList<RecentAccessItem> RecentAccessItemList
         {
             get
             {
                 if (_recentAccessItemList == null)
-                    _recentAccessItemList = new List<RecentAccessItem>();
+                    _recentAccessItemList = new BindingList<RecentAccessItem>();
                 return _recentAccessItemList;
             }
             set
@@ -28,7 +29,7 @@ namespace FileExtractor.Models
         }
 
         [JsonIgnore]
-        public List<RecentAccessItem> _recentAccessItemList;
+        public BindingList<RecentAccessItem> _recentAccessItemList;
 
         /// <summary>
         /// 配置文件所在目录，方便快速加载
@@ -49,7 +50,7 @@ namespace FileExtractor.Models
                 //更新
                 item.AccessTime = recentAccessItem.AccessTime;
             }
-            App.Cache.StartWorkCache.RecentAccessItemList = App.Cache.StartWorkCache.RecentAccessItemList.OrderByDescending(x => x.AccessTime).ToList();//排序
+            App.Cache.StartWorkCache.RecentAccessItemList = new BindingList<RecentAccessItem>(App.Cache.StartWorkCache.RecentAccessItemList.OrderByDescending(x => x.AccessTime).ToList());//排序
             App.Cache.StartWorkCacheMgr.NotifySave();//保存
         }
         public bool RemoveRecentAccessItem(RecentAccessItem recentAccessItem)

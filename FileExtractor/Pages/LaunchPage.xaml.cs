@@ -105,8 +105,15 @@ namespace FileExtractor.Pages
 
         private void ReloadRecentAccessItemList()
         {
-            lbx_recentAccessItem.ItemsSource = null;
-            lbx_recentAccessItem.ItemsSource = App.Cache.StartWorkCache.RecentAccessItemList;
+            SetBinding(lbx_recentAccessItem, ListBox.ItemsSourceProperty, App.Cache.StartWorkCache, nameof(App.Cache.StartWorkCache.RecentAccessItemList));
+        }
+
+        private void SetBinding(FrameworkElement elem, DependencyProperty dependencyProperty, object source, string path)
+        {
+            var binding = new Binding();
+            binding.Source = source;
+            binding.Path = new PropertyPath(path);
+            elem.SetBinding(dependencyProperty, binding);
         }
 
         public void ApplyDataCache()
@@ -152,19 +159,7 @@ namespace FileExtractor.Pages
             }
             else
             {
-                var workData = new WorkData
-                {
-                    AccessItemInfo = accessItem
-                };
-                try
-                {
-                    workData.LoadConfigData();
-                }
-                catch (Exception exp)
-                {
-                    MessageBox.Show(exp.Message);
-                }
-                ParentWindow.Jump2WorkWindow(workData);
+                HandleOpenConfig(accessItem.FilePath);
             }
         }
 
