@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace MyTool
+namespace Common
 {
     public static class GlobalConfig
     {

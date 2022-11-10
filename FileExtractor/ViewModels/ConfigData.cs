@@ -83,7 +83,11 @@ namespace FileExtractor.ViewModels
 
         public string PackageName
         {
-            get => _packageName;
+            get
+            {
+                if (_packageName == null) _packageName = string.Empty;
+                return _packageName;
+            }
             set => HandleSetValue(nameof(PackageName), nameof(_packageName), value);
         }
         [JsonIgnore]
@@ -93,7 +97,11 @@ namespace FileExtractor.ViewModels
 
         public string PackageDir
         {
-            get => _packageDir;
+            get
+            {
+                if (_packageDir == null) _packageDir = string.Empty;
+                return _packageDir;
+            }
             set => HandleSetValue(nameof(PackageDir), nameof(_packageDir), value);
         }
         [JsonIgnore]

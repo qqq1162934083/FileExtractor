@@ -2,6 +2,7 @@ using Common.Libs;
 using FileExtractor.Dialogs;
 using FileExtractor.Models;
 using FileExtractor.ViewModels;
+using Common;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +20,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Microsoft.VisualBasic.FileIO;
+using System.IO.Compression;
 
 namespace FileExtractor
 {
@@ -63,9 +66,215 @@ namespace FileExtractor
             elem.SetBinding(dependencyProperty, binding);
         }
 
+        /// <summary>
+        /// 获取和处理时间日期表达式
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        private string ParseTimeExp(string fileName)
+        {
+            var timeExpressionRegexPattern = "\\$\\{\\s*TimePattern\\s*\\=\\s*\"\\s*[\\d\\D]*?\\s*\"\\s*\\}";//日期时间表达式匹配正则表达式
+            var timePatternRegexPattern = "(?<=\\$\\{\\s*TimePattern\\s*\\=\\s*\"\\s*)[\\d\\D]*?(?=\\s*\"\\s*\\})";//日期表达式中的时间规则提取正则表达式
+            var match = Regex.Match(fileName, timeExpressionRegexPattern);
+            if (match.Success)
+            {
+                var timeExpressionStr = match.Value;
+                var timePatternStr = Regex.Match(timeExpressionStr, timePatternRegexPattern).Value;
+                var timeStr = DateTime.Now.ToString(timePatternStr);
+                var result = fileName.Substring(0, match.Index);
+                result += timeStr;
+                result += fileName.Substring(match.Index + match.Length);
+                return result;
+            }
+            else
+            {
+                throw new Exception("时间表达式有误");
+            }
+        }
+
+        /// <summary>
+        /// 解析目的地路径
+        /// 从相对路径且可能含有环境变量的路径解析得到真实路径
+        /// 相对于方法增加 fileName 和 dirPath 两个参数的获取逻辑
+        /// </summary>
+        /// <param name="baseDir"></param>
+        /// <param name="mapping"></param>
+        /// <param name="valueMappingList"></param>
+        /// <returns></returns>
+        private string ParseDestPathByMapping(string baseDir, object mapping, IList<ValueMapping> valueMappingList)
+        {
+            var fileName = (string)null;
+            var dirPath = (string)null;
+            if (mapping is FileMapping)
+            {
+                var fileMapping = (FileMapping)mapping;
+                if (fileMapping.DestPath.EndsWith("\\"))
+                {
+                    fileName = fileMapping.SrcPath.Substring(fileMapping.SrcPath.LastIndexOf("\\") + 1);
+                    dirPath = fileMapping.DestPath;
+                }
+                else
+                {
+                    fileName = fileMapping.DestPath.Substring(fileMapping.DestPath.LastIndexOf("\\") + 1);
+                    dirPath = fileMapping.DestPath.Substring(0, fileMapping.DestPath.Length - fileName.Length);
+                }
+            }
+            else if (mapping is DirMapping)
+            {
+                var dirMapping = (DirMapping)mapping;
+                if (dirMapping.DestPath.EndsWith("\\"))
+                {
+                    fileName = dirMapping.SrcPath.Substring(dirMapping.SrcPath.LastIndexOf("\\") + 1);
+                    dirPath = dirMapping.DestPath;
+                }
+                else
+                {
+                    fileName = dirMapping.DestPath.Substring(dirMapping.DestPath.LastIndexOf("\\") + 1);
+                    dirPath = dirMapping.DestPath.Substring(0, dirMapping.DestPath.Length - fileName.Length);
+                }
+            }
+            else throw new Exception("不在预期范围的类型");
+            return ParseDestPath(baseDir, dirPath, fileName, valueMappingList);
+        }
+
+        /// <summary>
+        /// 解析目的地路径
+        /// 从相对路径且可能含有环境变量的路径解析得到真实路径
+        /// </summary>
+        /// <param name="baseDir">基础目录，相对路径将以此为出发点</param>
+        /// <param name="dirPath">路径中的目录部分 可以以"\"结尾</param>
+        /// <param name="fileName">路径中的文件名部分 不能带有"\"</param>
+        /// <param name="valueMappingList"></param>
+        /// <returns></returns>
+        private string ParseDestPath(string baseDir, string dirPath, string fileName, IList<ValueMapping> valueMappingList)
+        {
+            baseDir = baseDir.Trim();
+            dirPath = dirPath.Trim();
+            fileName = fileName.Trim();
+
+            //统一路径分隔符
+            baseDir = baseDir.Replace("/", "\\");
+            dirPath = dirPath.Replace("/", "\\");
+            fileName = fileName.Replace("/", "\\");
+
+            //移除文件名
+            if (!dirPath.EndsWith("\\")) dirPath = Regex.Replace(dirPath, "[^\\\\]*$", x => string.Empty);
+
+            //解析相对目录
+            var pathItemList = baseDir.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            //驱动盘
+            var diskNo = pathItemList.First();
+            pathItemList.RemoveAt(0);
+            pathItemList.AddRange(dirPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries));
+            var upCount = 0;
+            var indexOfPathItemList = pathItemList.Count - 1;
+            while (indexOfPathItemList >= 0)
+            {
+                if (pathItemList[indexOfPathItemList].Equals(".."))
+                {
+                    upCount++;
+                    pathItemList.RemoveAt(indexOfPathItemList);
+                }
+                else
+                {
+                    if (upCount > 0)
+                    {
+                        upCount--;
+                        pathItemList.RemoveAt(indexOfPathItemList);
+                    }
+                }
+                indexOfPathItemList--;
+            }
+            pathItemList.Add(fileName);//拼接结果
+            if (valueMappingList != null)
+            {
+                //解析变量
+                pathItemList.ForEach(pathItem =>
+                {
+                    foreach (var valueMapping in valueMappingList)
+                    {
+                        var varTag = "${" + valueMapping.VarName + "}";
+                        pathItem.Replace(varTag, valueMapping.VarValue);
+                    }
+                });
+            }
+            var destPath = string.Join("\\", pathItemList);
+            destPath = diskNo + "\\" + destPath;
+
+            return destPath;
+        }
+
         private void btn_pack_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(WorkData.ConfigData, Formatting.Indented));
+            HandleConfigDataIfNotNull(configData =>
+            {
+                var enableTimeExp = configData.EnabledDateTimeExpression;
+                var enableCompress = configData.EnabledCompress;
+                var enableFtp = configData.EnabledPackageDirFtpSupport;
+
+                var packageName = configData.PackageName;
+                var packageDir = configData.PackageDir;
+                if (string.IsNullOrEmpty(packageName)) throw new Exception("设置的包名为空");
+                if (string.IsNullOrEmpty(packageDir)) throw new Exception("设置的打包目录为空");
+                packageName = enableTimeExp ? ParseTimeExp(packageName) : packageName;
+
+                var tmpCompressFileRandomCode = Guid.NewGuid().ToString("N");//临时压缩文件guid
+
+                #region 判断原路径是否存在，如果存在询问删除以继续
+                var packageInfo = new DirectoryInfo(Path.Combine(packageDir, packageName));
+                if (packageInfo.Exists)
+                {
+                    if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"该目录下文件夹 [ {packageName} ] 已经存在，继续操作会删除原文件夹(移入回收站)然后重新生成，是否要继续操作？", "重要提示", MessageBoxButton.OKCancel))) return;
+                    FileSystem.DeleteDirectory(packageInfo.FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                }
+                #endregion
+
+                //临时打包目录，如果启用压缩，则为压缩临时文件夹
+                var tmpPackageInfo = new DirectoryInfo(enableCompress ? Path.Combine(GlobalConfig.AppTmpDir, GetType().Name, tmpCompressFileRandomCode) : packageInfo.FullName);
+                tmpPackageInfo.Create();//创建临时打包的目录
+
+                //映射处理
+                configData.FileMappingList.ToList().ForEach(fileMapping =>
+                {
+                    if (!File.Exists(fileMapping.SrcPath)) throw new Exception($"文件[{fileMapping.SrcPath}]不存在");
+                    var destFilePath = ParseDestPathByMapping(tmpPackageInfo.FullName, fileMapping, configData.ValueMappingList);
+                    var destFileInfo = new FileInfo(destFilePath);
+                    if (!destFileInfo.Directory.Exists) Directory.CreateDirectory(destFileInfo.Directory.FullName);
+                    File.Copy(fileMapping.SrcPath, destFilePath);
+                });
+                configData.DirMappingList.ToList().ForEach(dirMapping =>
+                {
+                    if (!Directory.Exists(dirMapping.SrcPath)) throw new Exception($"文件夹[{dirMapping.SrcPath}]不存在");
+                    var destDirPath = ParseDestPathByMapping(tmpPackageInfo.FullName, dirMapping, configData.ValueMappingList);
+                    //Directory.CreateDirectory(destDirPath);
+                    FileUtils.CopyDirRecursively(dirMapping.SrcPath, destDirPath);
+                });
+
+                //如果启用压缩移动到真实位置
+                if (enableCompress)
+                {
+                    //压缩
+                    var zipPath = packageInfo.FullName + ".zip";
+                    ZipFile.CreateFromDirectory(packageInfo.FullName, packageInfo.FullName + ".zip");
+                    //移动
+                    var destZipPath = Path.Combine(packageDir, packageName + ".zip");
+                    try
+                    {
+                        File.Move(zipPath, destZipPath);
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            //删除临时
+                            Directory.Delete(packageInfo.Parent.FullName, true);
+                        }
+                        catch { }
+                    }
+                }
+                MessageBox.Show("ok");
+            });
         }
 
         private void btn_packedDestNameOptions_Click(object sender, RoutedEventArgs e)

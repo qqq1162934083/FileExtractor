@@ -57,7 +57,7 @@ namespace Common.Libs
             }
 
             //复制所有文件 & 保持文件名和路径一致
-            foreach (string filePath in Directory.GetFiles(srcDirPath, "*.*", SearchOption.AllDirectories))
+            foreach (string filePath in Directory.GetFiles(srcDirPath, "*", SearchOption.AllDirectories))
             {
                 File.Copy(filePath, filePath.Replace(srcDirPath, destDirPath), true);
             }

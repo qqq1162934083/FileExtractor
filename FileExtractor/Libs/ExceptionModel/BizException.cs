@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 
-namespace MyTool
+namespace Common
 {
     public class BizException : Exception
     {

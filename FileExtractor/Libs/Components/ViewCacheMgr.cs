@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace MyTool
+namespace Common
 {
 
     public class ViewCacheMgr<TBind, TDataCache, TViewCache> : IConfigControlCache
