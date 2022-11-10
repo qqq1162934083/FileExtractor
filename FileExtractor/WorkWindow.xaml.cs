@@ -311,5 +311,12 @@ namespace FileExtractor
                 });
             });
         }
+
+        private void menuItem_closeCurrConfig_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            new LaunchWindow().Show();
+            Close();
+        }
     }
 }

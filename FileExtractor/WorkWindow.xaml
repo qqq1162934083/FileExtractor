@@ -12,7 +12,7 @@
         Title="MainWindow"
         Height="699" Width="1039">
     <Window.Resources>
-        <ContextMenu Width="100" x:Key="contextMenu_tabControl_itemList_item">
+        <ContextMenu x:Key="contextMenu_tabControl_itemList_item">
             <ContextMenu.Style>
                 <Style TargetType="ContextMenu">
                     <Setter Property="Template">
@@ -24,11 +24,10 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="ItemContainerStyle" Value="{StaticResource style_myContextMenuItem}"/>
                 </Style>
             </ContextMenu.Style>
-            <MenuItem x:Name="menuItem_editItem" Header="修改" Click="menuItem_editItem_Click"/>
-            <MenuItem x:Name="menuItem_removeItem" Header="移除" Click="menuItem_removeItem_Click"/>
+            <wpfcontrols:MyMenuItem x:Name="menuItem_editItem" Width="60" Text="修 改" TextAlignment="Center" Click="menuItem_editItem_Click"/>
+            <wpfcontrols:MyMenuItem x:Name="menuItem_removeItem" Width="60" Text="移 除" TextAlignment="Center" Click="menuItem_removeItem_Click"/>
         </ContextMenu>
     </Window.Resources>
     <Grid>
@@ -36,29 +35,11 @@
             <Grid Width="10"></Grid>
             <Image Height="18" Source="pack://application:,,,/PrjResources/Images/appIcon.ico"/>
             <Grid Width="10"></Grid>
-            <Border Padding="5">
-                <Menu VerticalAlignment="Center" Height="auto" Width="auto">
-                    <Menu.ItemContainerStyle>
-                        <Style TargetType="{x:Type MenuItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type MenuItem}">
-                                        <Grid>
-                                            <TextBlock Foreground="White" Text="{TemplateBinding Header}"/>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </Menu.ItemContainerStyle>
-                    <Menu.Template>
-                        <ControlTemplate TargetType="{x:Type Menu}">
-                            <ItemsPresenter/>
-                        </ControlTemplate>
-                    </Menu.Template>
-                    <MenuItem Header="文件">
-                        <MenuItem Header="关闭当前配置"/>
-                    </MenuItem>
+            <Border Padding="5,0,5,5">
+                <Menu VerticalAlignment="Center" Background="Transparent" Height="auto" Width="auto">
+                    <wpfcontrols:MyMenuItem Text="文件" Width="60" TextAlignment="Center" SubmenuPlacement="Bottom">
+                        <wpfcontrols:MyMenuItem x:Name="menuItem_closeCurrConfig" Click="menuItem_closeCurrConfig_Click" Text="  关闭当前配置" Width="100"/>
+                    </wpfcontrols:MyMenuItem>
                 </Menu>
             </Border>
             <Grid Width="45"></Grid>

@@ -53,12 +53,6 @@ namespace FileExtractor.WpfControls
             }
         }
 
-        public void test()
-        {
-
-        }
-
-
         // Using a DependencyProperty as the backing store for TextFontSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextFontSizeProperty =
             DependencyProperty.Register(nameof(TextFontSize), typeof(double), typeof(MyButton), new PropertyMetadata(12d));

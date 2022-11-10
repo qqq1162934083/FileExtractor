@@ -119,6 +119,7 @@
     <Compile Include="ViewModels\FileMapping.cs" />
     <Compile Include="ViewModels\RecentAccessItem.cs" />
     <Compile Include="ViewModels\ValueMapping.cs" />
+    <Compile Include="WpfControls\MyMenuItem.cs" />
     <Compile Include="WpfControls\MyButton.cs" />
     <Compile Include="WpfControls\MyButton2.cs" />
     <Compile Include="WpfControls\MyCheckBox.cs" />
@@ -181,7 +182,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WpfControls\Styles\MyContextMenuItem.xaml">
+    <Page Include="WpfControls\Styles\MyMenuItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
