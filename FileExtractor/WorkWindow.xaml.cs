@@ -48,6 +48,7 @@ namespace FileExtractor
             if (WorkData.ConfigData == null)
                 workData.ConfigData = new ViewModels.ConfigData();
             var configData = workData.ConfigData;
+            configData.CalcNo4BindingList();
             //加载视图
             SetBinding(lbx_fileMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.FileMappingList));
             SetBinding(lbx_dirMapping, ListBox.ItemsSourceProperty, configData, nameof(configData.DirMappingList));
@@ -276,6 +277,25 @@ namespace FileExtractor
                 MessageBox.Show("ok");
             });
         }
+        private T GetAncestor<T>(Visual v) where T : DependencyObject
+        {
+            var a = VisualTreeHelper.GetParent(v);
+            while (a != null)
+            {
+                if (a is T)
+                    return (T)a;
+                a = VisualTreeHelper.GetParent(a);
+            }
+            return null;
+        }
+        private void TextBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+            TextBlock tb = sender as TextBlock;
+            var lb = GetAncestor<ListBox>(tb);
+            if (lb == null)
+                return;
+            tb.Text = (lb.Items.IndexOf(tb.DataContext) + 1).ToString();
+        }
 
         private void btn_packedDestNameOptions_Click(object sender, RoutedEventArgs e)
         {
@@ -291,64 +311,67 @@ namespace FileExtractor
         {
             ItemInfoDialog.ShowDialog(tabControl_itemList.SelectedIndex, null, dialog =>
             {
-                switch (dialog.FuncIndex)
+                HandleConfigDataIfNotNull(configData =>
                 {
-                    case 0:
-                        var srcFilePath = dialog.tbx_fileMapping_source.Text;
-                        var destFilePath = dialog.tbx_fileMapping_dest.Text;
-                        //此处还需要添加验证
-                        srcFilePath = srcFilePath.Replace("/", "\\");
-                        destFilePath = destFilePath.Replace("/", "\\");
-                        WorkData.ConfigData.FileMappingList.Add(new FileMapping() { DestPath = destFilePath, SrcPath = srcFilePath });
-                        WorkData.SaveConfigData();
-                        break;
-                    case 1:
-                        var srcDirPath = dialog.tbx_dirMapping_source.Text;
-                        var destDirPath = dialog.tbx_dirMapping_dest.Text;
-                        //此处还需要添加验证
-                        srcDirPath = srcDirPath.Replace("/", "\\");
-                        destDirPath = destDirPath.Replace("/", "\\");
-                        WorkData.ConfigData.DirMappingList.Add(new DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
-                        WorkData.SaveConfigData();
-                        break;
-                    case 2:
-                        var varName = dialog.tbx_varName.Text;
-                        var varValue = dialog.tbx_varValue.Text;
-                        //此处还需要添加验证
-                        WorkData.ConfigData.ValueMappingList.Add(new ValueMapping() { VarName = varName, VarValue = varValue });
-                        WorkData.SaveConfigData();
-                        break;
-                    default:
-                        throw new Exception("超出预期范围");
-                }
+                    switch (dialog.FuncIndex)
+                    {
+                        case 0:
+                            var srcFilePath = dialog.tbx_fileMapping_source.Text;
+                            var destFilePath = dialog.tbx_fileMapping_dest.Text;
+                            //此处还需要添加验证
+                            srcFilePath = srcFilePath.Replace("/", "\\");
+                            destFilePath = destFilePath.Replace("/", "\\");
+                            configData.FileMappingList.Add(new FileMapping() { DestPath = destFilePath, SrcPath = srcFilePath });
+                            break;
+                        case 1:
+                            var srcDirPath = dialog.tbx_dirMapping_source.Text;
+                            var destDirPath = dialog.tbx_dirMapping_dest.Text;
+                            //此处还需要添加验证
+                            srcDirPath = srcDirPath.Replace("/", "\\");
+                            destDirPath = destDirPath.Replace("/", "\\");
+                            configData.DirMappingList.Add(new DirMapping() { DestPath = destDirPath, SrcPath = srcDirPath });
+                            break;
+                        case 2:
+                            var varName = dialog.tbx_varName.Text;
+                            var varValue = dialog.tbx_varValue.Text;
+                            //此处还需要添加验证
+                            configData.ValueMappingList.Add(new ValueMapping() { VarName = varName, VarValue = varValue });
+                            break;
+                        default:
+                            throw new Exception("超出预期范围");
+                    }
+                    configData.CalcNo4BindingList();
+                    WorkData.SaveConfigData();
+                });
             });
         }
 
         private void btn_addItemByChoose_Click(object sender, RoutedEventArgs e)
         {
-            switch (tabControl_itemList.SelectedIndex)
+            HandleConfigDataIfNotNull(configData =>
             {
-                case 0:
-                    FileDialogUtils.SelectOpenFile(x => x.Filter = "文件|*", x =>
-                    {
-                        //此处还需要添加验证
-                        WorkData.ConfigData.FileMappingList.Add(new FileMapping() { DestPath = "\\", SrcPath = x.FileName });
-                        WorkData.SaveConfigData();
-                        WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
-                    });
-                    break;
-                case 1:
-                    FileDialogUtils.SelectFolder(x =>
-                    {
-                        //此处还需要添加验证
-                        WorkData.ConfigData.DirMappingList.Add(new DirMapping() { DestPath = "\\", SrcPath = x.SelectedPath });
-                        WorkData.SaveConfigData();
-                        WorkData.ConfigData.NotifyChanged(nameof(WorkData.ConfigData.FileMappingList));
-                    });
-                    break;
-                default:
-                    throw new Exception("不在预期的范围");
-            }
+                switch (tabControl_itemList.SelectedIndex)
+                {
+                    case 0:
+                        FileDialogUtils.SelectOpenFile(x => x.Filter = "文件|*", x =>
+                        {
+                            //此处还需要添加验证
+                            configData.FileMappingList.Add(new FileMapping() { DestPath = "\\", SrcPath = x.FileName });
+                        });
+                        break;
+                    case 1:
+                        FileDialogUtils.SelectFolder(x =>
+                        {
+                            //此处还需要添加验证
+                            configData.DirMappingList.Add(new DirMapping() { DestPath = "\\", SrcPath = x.SelectedPath });
+                        });
+                        break;
+                    default:
+                        throw new Exception("不在预期的范围");
+                }
+                configData.CalcNo4BindingList();
+                WorkData.SaveConfigData();
+            });
         }
 
         private void menuItem_removeItem_Click(object sender, RoutedEventArgs e)
@@ -356,27 +379,28 @@ namespace FileExtractor
             var menuItem = (MenuItem)sender;
             var data = menuItem.DataContext;
             if (data == null) throw new Exception($"操作失败：未选中数据");
-            switch (data)
+            HandleConfigDataIfNotNull(configData =>
             {
-                case FileMapping _:
-                    var fileMappingData = (FileMapping)data;
-                    WorkData.ConfigData.FileMappingList.Remove(fileMappingData);
-                    WorkData.SaveConfigData();
-                    break;
-                case DirMapping _:
-                    var dirMappingData = (DirMapping)data;
-                    WorkData.ConfigData.DirMappingList.Remove(dirMappingData);
-                    WorkData.SaveConfigData();
-                    break;
-                case ValueMapping _:
-                    var valueMappingData = (ValueMapping)data;
-                    WorkData.ConfigData.ValueMappingList.Remove(valueMappingData);
-                    WorkData.SaveConfigData();
-                    break;
-                default:
-                    throw new Exception("选中的数据类型异常");
-            }
-            WorkData.SaveConfigData();
+                switch (data)
+                {
+                    case FileMapping _:
+                        var fileMappingData = (FileMapping)data;
+                        configData.FileMappingList.Remove(fileMappingData);
+                        break;
+                    case DirMapping _:
+                        var dirMappingData = (DirMapping)data;
+                        configData.DirMappingList.Remove(dirMappingData);
+                        break;
+                    case ValueMapping _:
+                        var valueMappingData = (ValueMapping)data;
+                        configData.ValueMappingList.Remove(valueMappingData);
+                        break;
+                    default:
+                        throw new Exception("选中的数据类型异常");
+                }
+                configData.CalcNo4BindingList();
+                WorkData.SaveConfigData();
+            });
         }
 
 

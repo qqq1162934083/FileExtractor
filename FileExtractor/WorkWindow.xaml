@@ -127,13 +127,17 @@
                                                                     <RowDefinition/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="20"/>
                                                                     <ColumnDefinition Width="auto"/>
                                                                     <ColumnDefinition/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="源文件" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding SrcPath}"/>
-                                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="目的地" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding DestPath}"/>
+                                                                <Grid Grid.Row="0" Grid.Column="0" Height="20" Background="#ff338870">
+                                                                    <TextBlock x:Name="PART_No" Text="{Binding No}" Foreground="White" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="源文件" Foreground="White" Padding="5,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="2" Padding="10,5,10,5" Text="{Binding SrcPath}"/>
+                                                                <TextBlock Grid.Row="1" Grid.Column="1" Text="目的地" Foreground="White" Padding="5,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="2" Padding="10,5,10,5" Text="{Binding DestPath}"/>
                                                             </Grid>
                                                         </Border>
                                                         <ControlTemplate.Triggers>
@@ -168,13 +172,17 @@
                                                                     <RowDefinition/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="20"/>
                                                                     <ColumnDefinition Width="auto"/>
                                                                     <ColumnDefinition/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="源目录" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding SrcPath}"/>
-                                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="目的地" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding DestPath}"/>
+                                                                <Grid Grid.Row="0" Grid.Column="0" Height="20" Background="#ff338870">
+                                                                    <TextBlock x:Name="PART_No" Text="{Binding No}" Foreground="White" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="源目录" Foreground="White" Padding="5,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="2" Padding="10,5,10,5" Text="{Binding SrcPath}"/>
+                                                                <TextBlock Grid.Row="1" Grid.Column="1" Text="目的地" Foreground="White" Padding="5,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="2" Padding="10,5,10,5" Text="{Binding DestPath}"/>
                                                             </Grid>
                                                         </Border>
                                                         <ControlTemplate.Triggers>
@@ -209,13 +217,17 @@
                                                                     <RowDefinition/>
                                                                 </Grid.RowDefinitions>
                                                                 <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="20"/>
                                                                     <ColumnDefinition Width="auto"/>
                                                                     <ColumnDefinition/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <TextBlock Grid.Row="0" Grid.Column="0" Text="变量名" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VarName}"/>
-                                                                <TextBlock Grid.Row="1" Grid.Column="0" Text="变量值" Foreground="White" Padding="10,5,10,5"/>
-                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="1" Padding="10,5,10,5" Text="{Binding VarValue}"/>
+                                                                <Grid Grid.Row="0" Grid.Column="0" Height="20" Background="#ff338870">
+                                                                    <TextBlock x:Name="PART_No" Text="{Binding No}" Foreground="White" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Grid>
+                                                                <TextBlock Grid.Row="0" Grid.Column="1" Text="变量名" Foreground="White" Padding="5,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="0" Grid.Column="2" Padding="10,5,10,5" Text="{Binding VarName}"/>
+                                                                <TextBlock Grid.Row="1" Grid.Column="1" Text="变量值" Foreground="White" Padding="5,5,10,5"/>
+                                                                <TextBlock Foreground="White" Grid.Row="1" Grid.Column="2" Padding="10,5,10,5" Text="{Binding VarValue}"/>
                                                             </Grid>
                                                         </Border>
                                                         <ControlTemplate.Triggers>

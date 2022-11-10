@@ -11,6 +11,19 @@ namespace FileExtractor.ViewModels
 {
     public class ValueMapping : INotifyPropertyChanged
     {
+        /// <summary>
+        /// 排序使用
+        /// </summary>
+        [JsonIgnore]
+        public int No
+        {
+            get => _no;
+            set => HandleSetValue(nameof(No), nameof(_no), value);
+        }
+        [JsonIgnore]
+        private int _no;
+
+
         public string VarName
         {
             get => _varName;

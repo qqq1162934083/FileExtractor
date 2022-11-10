@@ -24,6 +24,25 @@ namespace FileExtractor.ViewModels
         [JsonIgnore]
         private BindingList<FileMapping> _fileMappingList;
 
+        /// <summary>
+        /// 计算排序值
+        /// </summary>
+        public void CalcNo4BindingList()
+        {
+            foreach(var mapping in FileMappingList)
+            {
+                mapping.No = FileMappingList.IndexOf(mapping) + 1;
+            }
+            foreach(var mapping in DirMappingList)
+            {
+                mapping.No = DirMappingList.IndexOf(mapping) + 1;
+            }
+            foreach(var mapping in ValueMappingList)
+            {
+                mapping.No = ValueMappingList.IndexOf(mapping) + 1;
+            }
+        }
+
 
         public BindingList<ValueMapping> ValueMappingList
         {

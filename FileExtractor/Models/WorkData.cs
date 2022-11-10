@@ -15,8 +15,6 @@ namespace FileExtractor.Models
         public RecentAccessItem AccessItemInfo { get; set; }
         public ConfigData ConfigData { get; set; }
 
-        //public ExtractedDirViewModel Data { get; set; }
-
         /// <summary>
         /// 加载配置数据
         /// </summary>
