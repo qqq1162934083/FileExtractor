@@ -1,10 +1,12 @@
 using Common.Libs;
 using FileExtractor.Models;
+using FileExtractor.Models.ObsoleteVersion;
 using FileExtractor.ViewModels;
 using MyTool;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -38,38 +40,49 @@ namespace FileExtractor.Pages
 
         private void btn_openConfig_Click(object sender, RoutedEventArgs e)
         {
-            FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*" + App.ConfigNameExtName, x =>
+            try
             {
-                var fileInfo = new FileInfo(x.FileName);
-                ConfigData data = null;
-                try
+                FileDialogUtils.SelectOpenFile(x => x.Filter = "配置文件|*" + App.ConfigNameExtName, x =>
                 {
-                    data = JsonConvert.DeserializeObject<ConfigData>(File.ReadAllText(x.FileName));
-                }
-                catch (Exception exp)
+                    HandleOpenConfig(x.FileName);
+                });
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show(exp.Message);
+            }
+        }
+
+        private void HandleOpenConfig(string configPath)
+        {
+            var fileInfo = new FileInfo(configPath);
+            ConfigData data = null;
+            try
+            {
+                data = JsonConvert.DeserializeObject<ConfigData>(File.ReadAllText(configPath));
+            }
+            catch (Exception exp)
+            {
+                throw new Exception("打开文件失败，无法识别文件内容");
+            }
+            var accessItem = new RecentAccessItem
+            {
+                FileName = fileInfo.Name,
+                DirPath = fileInfo.DirectoryName,
+                AccessTime = DateTime.Now
+            };
+            try
+            {
+                App.Cache.StartWorkCache.UpdateRecentAccessItem(accessItem);
+            }
+            finally
+            {
+                ParentWindow.Jump2WorkWindow(new WorkData
                 {
-                    MessageBox.Show("打开文件失败，无法识别文件内容");
-                    return;
-                }
-                var accessItem = new RecentAccessItem
-                {
-                    FileName = fileInfo.Name,
-                    DirPath = fileInfo.DirectoryName,
-                    AccessTime = DateTime.Now
-                };
-                try
-                {
-                    App.Cache.StartWorkCache.UpdateRecentAccessItem(accessItem);
-                }
-                finally
-                {
-                    ParentWindow.Jump2WorkWindow(new WorkData
-                    {
-                        AccessItemInfo = accessItem,
-                        ConfigData = data
-                    });
-                }
-            });
+                    AccessItemInfo = accessItem,
+                    ConfigData = data
+                });
+            }
         }
 
         private void btn_createConfig_Click(object sender, RoutedEventArgs e)
@@ -147,11 +160,76 @@ namespace FileExtractor.Pages
                 {
                     workData.LoadConfigData();
                 }
-                catch(Exception exp)
+                catch (Exception exp)
                 {
                     MessageBox.Show(exp.Message);
                 }
                 ParentWindow.Jump2WorkWindow(workData);
+            }
+        }
+
+        private void btn_convertByObsoleteConfig_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FileDialogUtils.SelectOpenFile(x =>
+                {
+                    x.Filter = "配置文件|*";
+                    x.Title = "选择旧版本配置文件";
+                }, dialog =>
+                {
+                    var fileInfo = new FileInfo(dialog.FileName);
+                    var oldFilePath = fileInfo.FullName;
+                    if (!File.Exists(oldFilePath)) throw new Exception("选中的文件不存在或已被删除");
+                    var fileContent = File.ReadAllText(oldFilePath);
+                    var oldData = (FileExtractorDataCache)null;
+                    try
+                    {
+                        oldData = JsonConvert.DeserializeObject<FileExtractorDataCache>(fileContent);
+                    }
+                    catch (Exception exp)
+                    {
+                        throw new Exception("不是有效的旧版配置文件");
+                    }
+                    //转化成新类型
+                    var newData = new ConfigData();
+                    newData.PackageDir = oldData.DestDirPath.Replace("/", "\\");
+                    newData.PackageName = oldData.DestFolderName;
+                    newData.EnabledCompress = oldData.EnableCompress;
+                    newData.EnabledDateTimeExpression = oldData.EnableHandleTimeExpression;
+                    newData.DirMappingList = new BindingList<DirMapping>(oldData.ExtractedDirInfoList.Select(item => new DirMapping()
+                    {
+                        SrcPath = item.SrcPath,
+                        DestPath = item.DestPath
+                    }).ToList());
+                    newData.FileMappingList = new BindingList<FileMapping>(oldData.ExtractedFileInfoList.Select(item => new FileMapping()
+                    {
+                        SrcPath = item.SrcPath,
+                        DestPath = item.DestPath
+                    }).ToList());
+
+                    FileDialogUtils.SelectSaveFile(saveDialog =>
+                    {
+                        saveDialog.Title = "选择新生成的配置文件的保存位置";
+                        saveDialog.FileName = fileInfo.Name.Substring(0, fileInfo.Name.Length - fileInfo.Extension.Length);
+                        saveDialog.Filter = "配置文件|*" + App.ConfigNameExtName;
+                        saveDialog.AddExtension = true;
+                    }, saveDialog =>
+                    {
+                        var saveConfigPath = saveDialog.FileName;
+                        var configContent2Save = JsonConvert.SerializeObject(newData, Formatting.Indented);
+                        using (var textWriter = File.CreateText(saveConfigPath))
+                        {
+                            textWriter.Write(configContent2Save);
+                            textWriter.Close();
+                        }
+                        HandleOpenConfig(saveConfigPath);
+                    });
+                });
+            }
+            catch (Exception convertExp)
+            {
+                MessageBox.Show(convertExp.Message);
             }
         }
     }

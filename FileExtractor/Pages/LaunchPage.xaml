@@ -84,9 +84,11 @@
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <wpfcontrols:MyButton2 x:Name="btn_openConfig" Click="btn_openConfig_Click" Height="77" Margin="0,2,0,2" Grid.Row="0" Content="打开现有配置"></wpfcontrols:MyButton2>
-                <wpfcontrols:MyButton2 x:Name="btn_createConfig" Click="btn_createConfig_Click" Height="77" Margin="0,2,0,2" Grid.Row="1" Content="创建新配置"></wpfcontrols:MyButton2>
+                <wpfcontrols:MyButton2 x:Name="btn_convertByObsoleteConfig" Click="btn_convertByObsoleteConfig_Click" Height="77" Margin="0,2,0,2" Grid.Row="1" Content="从旧配置导入"></wpfcontrols:MyButton2>
+                <wpfcontrols:MyButton2 x:Name="btn_createConfig" Click="btn_createConfig_Click" Height="77" Margin="0,2,0,2" Grid.Row="2" Content="创建新配置"></wpfcontrols:MyButton2>
             </Grid>
             <TextBlock HorizontalAlignment="Left" Foreground="#f1f1f1" Margin="21,120,0,0" TextWrapping="Wrap" Text="开始使用" VerticalAlignment="Top" FontSize="20"/>
         </Grid>

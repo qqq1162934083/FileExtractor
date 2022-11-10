@@ -103,6 +103,7 @@
       <DependentUpon>VariableBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Libs\Components\ViewCacheMgr.cs" />
+    <Compile Include="Models\ObsoleteVersion\FileExtractorDataCache.cs" />
     <Compile Include="Models\StartWorkCache.cs" />
     <Compile Include="Models\WorkData.cs" />
     <Compile Include="Pages\LaunchPage.xaml.cs">
