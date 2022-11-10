@@ -208,74 +208,81 @@ namespace FileExtractor
 
         private void btn_pack_Click(object sender, RoutedEventArgs e)
         {
-            HandleConfigDataIfNotNull(configData =>
+            try
             {
-                var enableTimeExp = configData.EnabledDateTimeExpression;
-                var enableCompress = configData.EnabledCompress;
-                var enableFtp = configData.EnabledPackageDirFtpSupport;
-
-                var packageName = configData.PackageName;
-                var packageDir = configData.PackageDir;
-                if (string.IsNullOrEmpty(packageName)) throw new Exception("设置的包名为空");
-                if (string.IsNullOrEmpty(packageDir)) throw new Exception("设置的打包目录为空");
-                packageName = enableTimeExp ? ParseTimeExp(packageName) : packageName;
-
-                var tmpCompressFileRandomCode = Guid.NewGuid().ToString("N");//临时压缩文件guid
-
-                #region 判断原路径是否存在，如果存在询问删除以继续
-                var packageInfo = new DirectoryInfo(Path.Combine(packageDir, packageName));
-                if (packageInfo.Exists)
+                HandleConfigDataIfNotNull(configData =>
                 {
-                    if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"该目录下文件夹 [ {packageName} ] 已经存在，继续操作会删除原文件夹(移入回收站)然后重新生成，是否要继续操作？", "重要提示", MessageBoxButton.OKCancel))) return;
-                    FileSystem.DeleteDirectory(packageInfo.FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-                }
-                #endregion
+                    var enableTimeExp = configData.EnabledDateTimeExpression;
+                    var enableCompress = configData.EnabledCompress;
+                    var enableFtp = configData.EnabledPackageDirFtpSupport;
 
-                //临时打包目录，如果启用压缩，则为压缩临时文件夹
-                var tmpPackageInfo = new DirectoryInfo(enableCompress ? Path.Combine(GlobalConfig.AppTmpDir, GetType().Name, tmpCompressFileRandomCode) : packageInfo.FullName);
-                tmpPackageInfo.Create();//创建临时打包的目录
+                    var packageName = configData.PackageName;
+                    var packageDir = configData.PackageDir;
+                    if (string.IsNullOrEmpty(packageName)) throw new Exception("设置的包名为空");
+                    if (string.IsNullOrEmpty(packageDir)) throw new Exception("设置的打包目录为空");
+                    packageName = enableTimeExp ? ParseTimeExp(packageName) : packageName;
 
-                //映射处理
-                configData.FileMappingList.ToList().ForEach(fileMapping =>
-                {
-                    if (!File.Exists(fileMapping.SrcPath)) throw new Exception($"文件[{fileMapping.SrcPath}]不存在");
-                    var destFilePath = ParseDestPathByMapping(tmpPackageInfo.FullName, fileMapping, configData.ValueMappingList);
-                    var destFileInfo = new FileInfo(destFilePath);
-                    if (!destFileInfo.Directory.Exists) Directory.CreateDirectory(destFileInfo.Directory.FullName);
-                    File.Copy(fileMapping.SrcPath, destFilePath);
-                });
-                configData.DirMappingList.ToList().ForEach(dirMapping =>
-                {
-                    if (!Directory.Exists(dirMapping.SrcPath)) throw new Exception($"文件夹[{dirMapping.SrcPath}]不存在");
-                    var destDirPath = ParseDestPathByMapping(tmpPackageInfo.FullName, dirMapping, configData.ValueMappingList);
-                    //Directory.CreateDirectory(destDirPath);
-                    FileUtils.CopyDirRecursively(dirMapping.SrcPath, destDirPath);
-                });
+                    var tmpCompressFileRandomCode = Guid.NewGuid().ToString("N");//临时压缩文件guid
 
-                //如果启用压缩移动到真实位置
-                if (enableCompress)
-                {
-                    //压缩
-                    var zipPath = packageInfo.FullName + ".zip";
-                    ZipFile.CreateFromDirectory(packageInfo.FullName, packageInfo.FullName + ".zip");
-                    //移动
-                    var destZipPath = Path.Combine(packageDir, packageName + ".zip");
-                    try
+                    #region 判断原路径是否存在，如果存在询问删除以继续
+                    var packageInfo = new DirectoryInfo(Path.Combine(packageDir, packageName));
+                    if (packageInfo.Exists)
                     {
-                        File.Move(zipPath, destZipPath);
+                        if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"该目录下文件夹 [ {packageName} ] 已经存在，继续操作会删除原文件夹(移入回收站)然后重新生成，是否要继续操作？", "重要提示", MessageBoxButton.OKCancel))) return;
+                        FileSystem.DeleteDirectory(packageInfo.FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                     }
-                    finally
+                    #endregion
+
+                    //临时打包目录，如果启用压缩，则为压缩临时文件夹
+                    var tmpPackageInfo = new DirectoryInfo(enableCompress ? Path.Combine(GlobalConfig.AppTmpDir, GetType().Name, tmpCompressFileRandomCode) : packageInfo.FullName);
+                    tmpPackageInfo.Create();//创建临时打包的目录
+
+                    //映射处理
+                    configData.FileMappingList.ToList().ForEach(fileMapping =>
                     {
+                        if (!File.Exists(fileMapping.SrcPath)) throw new Exception($"文件[{fileMapping.SrcPath}]不存在");
+                        var destFilePath = ParseDestPathByMapping(tmpPackageInfo.FullName, fileMapping, configData.ValueMappingList);
+                        var destFileInfo = new FileInfo(destFilePath);
+                        if (!destFileInfo.Directory.Exists) Directory.CreateDirectory(destFileInfo.Directory.FullName);
+                        File.Copy(fileMapping.SrcPath, destFilePath);
+                    });
+                    configData.DirMappingList.ToList().ForEach(dirMapping =>
+                    {
+                        if (!Directory.Exists(dirMapping.SrcPath)) throw new Exception($"文件夹[{dirMapping.SrcPath}]不存在");
+                        var destDirPath = ParseDestPathByMapping(tmpPackageInfo.FullName, dirMapping, configData.ValueMappingList);
+                        //Directory.CreateDirectory(destDirPath);
+                        FileUtils.CopyDirRecursively(dirMapping.SrcPath, destDirPath);
+                    });
+
+                    //如果启用压缩移动到真实位置
+                    if (enableCompress)
+                    {
+                        //压缩
+                        var zipPath = packageInfo.FullName + ".zip";
+                        ZipFile.CreateFromDirectory(packageInfo.FullName, packageInfo.FullName + ".zip");
+                        //移动
+                        var destZipPath = Path.Combine(packageDir, packageName + ".zip");
                         try
                         {
-                            //删除临时
-                            Directory.Delete(packageInfo.Parent.FullName, true);
+                            File.Move(zipPath, destZipPath);
                         }
-                        catch { }
+                        finally
+                        {
+                            try
+                            {
+                                //删除临时
+                                Directory.Delete(packageInfo.Parent.FullName, true);
+                            }
+                            catch { }
+                        }
                     }
-                }
-                MessageBox.Show("ok");
-            });
+                    MessageBox.Show("ok");
+                });
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show(exp.Message);
+            }
         }
         private T GetAncestor<T>(Visual v) where T : DependencyObject
         {
