@@ -228,16 +228,16 @@ namespace FileExtractor
 
                     var compressedFileName = (string)null;//压缩文件名称，如果启用了压缩
                     var tmpPackageInfo = (DirectoryInfo)null; //临时打包文件夹信息，启用压缩则打包在temp目录，不启用则为打包的目的路径
-                    var compressedFilePackagePath = (string)null;//压缩文件最终上传路径，如果启用了压缩
+                    var compressedFilePackagePath = (FileInfo)null;//压缩文件最终上传路径，如果启用了压缩
                     #region 判断原路径对象(文件夹或者压缩包)是否存在，如果存在询问删除以继续
                     if (enableCompress)
                     {
                         compressedFileName = packageName + ".zip";
-                        compressedFilePackagePath = Path.Combine(packageDir, compressedFileName);
-                        if (File.Exists(compressedFilePackagePath))
+                        compressedFilePackagePath = new FileInfo(Path.Combine(packageDir, compressedFileName));
+                        if (compressedFilePackagePath.Exists)
                         {
                             if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"指定的包目录下压缩文件 [ {compressedFileName} ] 已经存在，继续操作会删除原文件夹(移入回收站)然后重新生成，是否要继续操作？", "重要提示", MessageBoxButton.OKCancel))) return;
-                            FileSystem.DeleteFile(compressedFilePackagePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                            FileSystem.DeleteFile(compressedFilePackagePath.FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                         }
                         tmpPackageInfo = new DirectoryInfo(Path.Combine(GlobalConfig.AppTmpDir, GetType().Name, tmpCompressFileRandomCode, packageName));
                     }
@@ -281,7 +281,8 @@ namespace FileExtractor
                         ZipFile.CreateFromDirectory(tmpPackageInfo.FullName, tmpZipPath);
                         try
                         {
-                            File.Copy(tmpZipPath, compressedFilePackagePath);
+                            if (!compressedFilePackagePath.Directory.Exists) compressedFilePackagePath.Directory.Create();
+                            File.Copy(tmpZipPath, compressedFilePackagePath.FullName);
                         }
                         finally
                         {
