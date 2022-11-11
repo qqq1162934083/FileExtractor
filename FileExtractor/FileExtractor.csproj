@@ -72,6 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\ReplaceItemValueDialog.xaml.cs">
+      <DependentUpon>ReplaceItemValueDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ValueBox.xaml.cs">
       <DependentUpon>ValueBox.xaml</DependentUpon>
     </Compile>
@@ -135,6 +138,10 @@
     <Compile Include="WorkWindow.xaml.cs">
       <DependentUpon>WorkWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Dialogs\ReplaceItemValueDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\ValueBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
