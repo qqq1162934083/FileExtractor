@@ -87,10 +87,25 @@ namespace FileExtractor
                 result += fileName.Substring(match.Index + match.Length);
                 return result;
             }
-            else
-            {
-                throw new Exception("时间表达式有误");
-            }
+            return fileName;
+        }
+
+        /// <summary>
+        /// 解析路径中的变量
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="valueMappingList"></param>
+        /// <returns></returns>
+        private string ParsePathByVarValue(string path, IList<ValueMapping> valueMappingList)
+        {
+            return Regex.Replace(path, "\\$\\{[^\\$\\\\/\\{\\}\\s]+?\\}", m =>
+             {
+                 var varName = m.Value.Substring(2, m.Value.Length - 3);
+                 if (string.IsNullOrWhiteSpace(varName)) throw new Exception($"路径[{path}]中出现空变量名变量");
+                 var valueMapping = valueMappingList.FirstOrDefault(x => x.VarName == varName);
+                 if (valueMapping == null) throw new Exception($"没有配置变量名为[{varName}]的环境变量");
+                 return valueMapping.VarValue;
+             });
         }
 
         /// <summary>
@@ -102,7 +117,7 @@ namespace FileExtractor
         /// <param name="mapping"></param>
         /// <param name="valueMappingList"></param>
         /// <returns></returns>
-        private string ParseDestPathByMapping(string baseDir, object mapping, IList<ValueMapping> valueMappingList)
+        private string ParseDestPathByMapping(string baseDir, object mapping)
         {
             var fileName = (string)null;
             var dirPath = (string)null;
@@ -135,19 +150,18 @@ namespace FileExtractor
                 }
             }
             else throw new Exception("不在预期范围的类型");
-            return ParseDestPath(baseDir, dirPath, fileName, valueMappingList);
+            return ParseDestPath(baseDir, dirPath, fileName);
         }
 
         /// <summary>
         /// 解析目的地路径
-        /// 从相对路径且可能含有环境变量的路径解析得到真实路径
+        /// 从相对路径解析得到真实路径
         /// </summary>
         /// <param name="baseDir">基础目录，相对路径将以此为出发点</param>
         /// <param name="dirPath">路径中的目录部分 可以以"\"结尾</param>
         /// <param name="fileName">路径中的文件名部分 不能带有"\"</param>
-        /// <param name="valueMappingList"></param>
         /// <returns></returns>
-        private string ParseDestPath(string baseDir, string dirPath, string fileName, IList<ValueMapping> valueMappingList)
+        private string ParseDestPath(string baseDir, string dirPath, string fileName)
         {
             baseDir = baseDir.Trim();
             dirPath = dirPath.Trim();
@@ -188,18 +202,6 @@ namespace FileExtractor
                 indexOfPathItemList--;
             }
             pathItemList.Add(fileName);//拼接结果
-            if (valueMappingList != null)
-            {
-                //解析变量
-                pathItemList.ForEach(pathItem =>
-                {
-                    foreach (var valueMapping in valueMappingList)
-                    {
-                        var varTag = "${" + valueMapping.VarName + "}";
-                        pathItem.Replace(varTag, valueMapping.VarValue);
-                    }
-                });
-            }
             var destPath = string.Join("\\", pathItemList);
             destPath = diskNo + "\\" + destPath;
 
@@ -224,54 +226,69 @@ namespace FileExtractor
 
                     var tmpCompressFileRandomCode = Guid.NewGuid().ToString("N");//临时压缩文件guid
 
-                    #region 判断原路径是否存在，如果存在询问删除以继续
-                    var packageInfo = new DirectoryInfo(Path.Combine(packageDir, packageName));
-                    if (packageInfo.Exists)
+                    var compressedFileName = (string)null;//压缩文件名称，如果启用了压缩
+                    var tmpPackageInfo = (DirectoryInfo)null; //临时打包文件夹信息，启用压缩则打包在temp目录，不启用则为打包的目的路径
+                    var compressedFilePackagePath = (string)null;//压缩文件最终上传路径，如果启用了压缩
+                    #region 判断原路径对象(文件夹或者压缩包)是否存在，如果存在询问删除以继续
+                    if (enableCompress)
                     {
-                        if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"该目录下文件夹 [ {packageName} ] 已经存在，继续操作会删除原文件夹(移入回收站)然后重新生成，是否要继续操作？", "重要提示", MessageBoxButton.OKCancel))) return;
-                        FileSystem.DeleteDirectory(packageInfo.FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                        compressedFileName = packageName + ".zip";
+                        compressedFilePackagePath = Path.Combine(packageDir, compressedFileName);
+                        if (File.Exists(compressedFilePackagePath))
+                        {
+                            if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"指定的包目录下压缩文件 [ {compressedFileName} ] 已经存在，继续操作会删除原文件夹(移入回收站)然后重新生成，是否要继续操作？", "重要提示", MessageBoxButton.OKCancel))) return;
+                            FileSystem.DeleteFile(compressedFilePackagePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                        }
+                        tmpPackageInfo = new DirectoryInfo(Path.Combine(GlobalConfig.AppTmpDir, GetType().Name, tmpCompressFileRandomCode, packageName));
+                    }
+                    else
+                    {
+                        tmpPackageInfo = new DirectoryInfo(Path.Combine(packageDir, packageName));
+                        if (tmpPackageInfo.Exists)
+                        {
+                            if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"指定的包目录下文件夹 [ {packageName} ] 已经存在，继续操作会删除原文件夹(移入回收站)然后重新生成，是否要继续操作？", "重要提示", MessageBoxButton.OKCancel))) return;
+                            FileSystem.DeleteDirectory(tmpPackageInfo.FullName, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                        }
                     }
                     #endregion
 
                     //临时打包目录，如果启用压缩，则为压缩临时文件夹
-                    var tmpPackageInfo = new DirectoryInfo(enableCompress ? Path.Combine(GlobalConfig.AppTmpDir, GetType().Name, tmpCompressFileRandomCode) : packageInfo.FullName);
                     tmpPackageInfo.Create();//创建临时打包的目录
 
                     //映射处理
                     configData.FileMappingList.ToList().ForEach(fileMapping =>
                     {
-                        if (!File.Exists(fileMapping.SrcPath)) throw new Exception($"文件[{fileMapping.SrcPath}]不存在");
-                        var destFilePath = ParseDestPathByMapping(tmpPackageInfo.FullName, fileMapping, configData.ValueMappingList);
+                        var srcPath = ParsePathByVarValue(fileMapping.SrcPath, configData.ValueMappingList);
+                        if (!File.Exists(srcPath)) throw new Exception($"文件[{fileMapping.SrcPath}=>{srcPath}]不存在");
+                        var destFilePath = ParseDestPathByMapping(tmpPackageInfo.FullName, fileMapping);
                         var destFileInfo = new FileInfo(destFilePath);
                         if (!destFileInfo.Directory.Exists) Directory.CreateDirectory(destFileInfo.Directory.FullName);
-                        File.Copy(fileMapping.SrcPath, destFilePath);
+                        File.Copy(srcPath, destFilePath);
                     });
                     configData.DirMappingList.ToList().ForEach(dirMapping =>
                     {
-                        if (!Directory.Exists(dirMapping.SrcPath)) throw new Exception($"文件夹[{dirMapping.SrcPath}]不存在");
-                        var destDirPath = ParseDestPathByMapping(tmpPackageInfo.FullName, dirMapping, configData.ValueMappingList);
-                        //Directory.CreateDirectory(destDirPath);
-                        FileUtils.CopyDirRecursively(dirMapping.SrcPath, destDirPath);
+                        var srcPath = ParsePathByVarValue(dirMapping.SrcPath, configData.ValueMappingList);
+                        if (!Directory.Exists(srcPath)) throw new Exception($"文件夹[{dirMapping.SrcPath}=>{srcPath}]不存在");
+                        var destDirPath = ParseDestPathByMapping(tmpPackageInfo.FullName, dirMapping);
+                        FileUtils.CopyDirRecursively(srcPath, destDirPath);
                     });
 
                     //如果启用压缩移动到真实位置
                     if (enableCompress)
                     {
                         //压缩
-                        var zipPath = packageInfo.FullName + ".zip";
-                        ZipFile.CreateFromDirectory(packageInfo.FullName, packageInfo.FullName + ".zip");
-                        //移动
-                        var destZipPath = Path.Combine(packageDir, packageName + ".zip");
+                        var tmpZipPath = Path.Combine(tmpPackageInfo.Parent.FullName, compressedFileName);
+                        ZipFile.CreateFromDirectory(tmpPackageInfo.FullName, tmpZipPath);
                         try
                         {
-                            File.Move(zipPath, destZipPath);
+                            File.Copy(tmpZipPath, compressedFilePackagePath);
                         }
                         finally
                         {
                             try
                             {
                                 //删除临时
-                                Directory.Delete(packageInfo.Parent.FullName, true);
+                                Directory.Delete(tmpPackageInfo.Parent.FullName, true);
                             }
                             catch { }
                         }
@@ -437,7 +454,6 @@ namespace FileExtractor
                 default:
                     throw new Exception("选中的数据类型异常");
             }
-            WorkData.SaveConfigData();
 
             ItemInfoDialog.ShowDialog(funcIndex, dialog =>
             {
@@ -476,10 +492,14 @@ namespace FileExtractor
                         dirMappingData.DestPath = dialog.tbx_dirMapping_dest.Text;
                         break;
                     case 2:
+                        var valueMappingData = (ValueMapping)data;
+                        valueMappingData.VarName = dialog.tbx_varName.Text;
+                        valueMappingData.VarValue = dialog.tbx_varValue.Text;
                         break;
                     default:
                         throw new Exception("超出预期范围");
                 }
+                WorkData.SaveConfigData();
             });
         }
 
@@ -563,6 +583,15 @@ namespace FileExtractor
             Hide();
             new LaunchWindow().Show();
             Close();
+        }
+
+        private void menuItem_bulkReplace_Click(object sender, RoutedEventArgs e)
+        {
+            int funcIndex = tabControl_itemList.SelectedIndex;
+            switch (funcIndex)
+            {
+
+            }
         }
     }
 }

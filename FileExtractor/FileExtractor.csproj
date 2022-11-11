@@ -96,9 +96,6 @@
     <Compile Include="Libs\Ui\MsgBox.xaml.cs">
       <DependentUpon>MsgBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Libs\Ui\ReplaceBox.xaml.cs">
-      <DependentUpon>ReplaceBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Libs\Ui\VariableBox.xaml.cs">
       <DependentUpon>VariableBox.xaml</DependentUpon>
     </Compile>
@@ -151,10 +148,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Libs\Ui\MsgBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Libs\Ui\ReplaceBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
