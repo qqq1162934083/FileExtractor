@@ -245,7 +245,8 @@
                                                 </Setter.Value>
                                             </Setter>
                                         </Style>
-                                    </ListBox.ItemContainerStyle></ListBox>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -306,6 +307,10 @@
                         </StackPanel>
                     </Border>
                 </Popup>
+                <RichTextBox x:Name="rtbx_consoleInfo" IsReadOnly="True" BorderThickness="0" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" Height="117" Width="358">
+                    <FlowDocument LineHeight="2">
+                    </FlowDocument>
+                </RichTextBox>
             </Grid>
             <GridSplitter Grid.Column="1" Width="1" Opacity="0.2" HorizontalAlignment="Left"/>
         </Grid>

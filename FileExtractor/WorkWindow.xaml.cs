@@ -208,12 +208,14 @@ namespace FileExtractor
             return destPath;
         }
 
-        private void btn_pack_Click(object sender, RoutedEventArgs e)
+        private async void btn_pack_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                HandleConfigDataIfNotNull(configData =>
+                btn_pack.IsEnabled = false;
+                await Task.Run(() => HandleConfigDataIfNotNull(configData =>
                 {
+                    AppendConsoleMessage("正在打包...");
                     var enableTimeExp = configData.EnabledDateTimeExpression;
                     var enableCompress = configData.EnabledCompress;
                     var enableFtp = configData.EnabledPackageDirFtpSupport;
@@ -294,32 +296,39 @@ namespace FileExtractor
                             catch { }
                         }
                     }
-                    MessageBox.Show("ok");
-                });
+                    AppendConsoleMessage("打包完成", 1);
+                }));
             }
             catch (Exception exp)
             {
                 MessageBox.Show(exp.Message);
             }
-        }
-        private T GetAncestor<T>(Visual v) where T : DependencyObject
-        {
-            var a = VisualTreeHelper.GetParent(v);
-            while (a != null)
+            finally
             {
-                if (a is T)
-                    return (T)a;
-                a = VisualTreeHelper.GetParent(a);
+                btn_pack.IsEnabled = true;
             }
-            return null;
         }
-        private void TextBlock_Loaded(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// 显示状态信息
+        /// </summary>
+        /// <param name="message"></param>
+        private void AppendConsoleMessage(string message, int type = 0)
         {
-            TextBlock tb = sender as TextBlock;
-            var lb = GetAncestor<ListBox>(tb);
-            if (lb == null)
-                return;
-            tb.Text = (lb.Items.IndexOf(tb.DataContext) + 1).ToString();
+            var nowTime = DateTime.Now;
+            message = "[" + nowTime.ToString("HH:mm:ss fff") + "]# " + message;
+            var colorStr = nameof(Colors.White);
+            switch (type)
+            {
+                case -1: colorStr = nameof(Colors.Red); break;
+                case 1: colorStr = nameof(Colors.LightGreen); break;
+            }
+            Dispatcher.Invoke(() =>
+            {
+                var para = new Paragraph(new Run(message) { Foreground = (Brush)new BrushConverter().ConvertFromString(colorStr) });
+                rtbx_consoleInfo.Document.Blocks.Add(para);
+                rtbx_consoleInfo.ScrollToEnd();
+            });
         }
 
         private void btn_packedDestNameOptions_Click(object sender, RoutedEventArgs e)
