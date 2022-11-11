@@ -362,9 +362,15 @@ namespace FileExtractor
                     case 0:
                         FileDialogUtils.SelectOpenFile(x => x.Filter = "文件|*", x =>
                         {
-                            //此处还需要添加验证
-                            configData.FileMappingList.Add(new FileMapping() { DestPath = "\\", SrcPath = x.FileName });
-                        });
+                            var filePathList = new List<string>();
+                            if (x.FileNames != null) filePathList.AddRange(x.FileNames);
+                            else filePathList.Add(x.FileName);
+                            foreach (var filePath in filePathList)
+                            {
+                                //此处还需要添加验证
+                                configData.FileMappingList.Add(new FileMapping() { DestPath = "\\", SrcPath = filePath });
+                            }
+                        }, true);
                         break;
                     case 1:
                         FileDialogUtils.SelectFolder(x =>
