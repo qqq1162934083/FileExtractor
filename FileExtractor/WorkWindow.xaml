@@ -301,6 +301,7 @@
                             <Grid Height="5"></Grid>
                             <wpfcontrols:MyButton x:Name="btn_setPackedDestDirByTyping" Margin="0,5,0,5" Width="120" Height="30" Content="通过键盘输入设置值" Click="btn_setPackedDestDirByTyping_Click"/>
                             <wpfcontrols:MyButton x:Name="btn_setPackedDestDirByChoose" Margin="0,5,0,5" Width="120" Height="30" Content="通过目录选择设置值" Click="btn_setPackedDestDirByChoose_Click"/>
+                            <wpfcontrols:MyButton x:Name="btn_setPackedDestDirByChoose2" Margin="0,5,0,5" Width="120" Height="30" Content="通过文件选择设置值" Click="btn_setPackedDestDirByChoose_Click2"/>
                             <wpfcontrols:MyButton x:Name="btn_openPackedDestDir" Margin="0,5,0,5" Width="120" Height="30" Content="打开设置的目录" Click="btn_openPackedDestDir_Click"/>
                             <wpfcontrols:MyCheckBox x:Name="cb_enabledPackageDirFtpSupport" Margin="0,5,0,5" TextFontSize="12" Padding="20,0,20,0" Content="FTP目录模式" Unchecked="cb_enabledPackageDirFtpSupport_CheckedChanged" Checked="cb_enabledPackageDirFtpSupport_CheckedChanged"/>
                             <Grid Height="5"></Grid>

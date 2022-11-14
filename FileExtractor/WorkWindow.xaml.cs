@@ -557,6 +557,20 @@ namespace FileExtractor
             });
         }
 
+
+        private void btn_setPackedDestDirByChoose_Click2(object sender, RoutedEventArgs e)
+        {
+            FileDialogUtils.SelectFolderByFileDialog(x =>
+            {
+                //此处还需要添加验证
+                HandleConfigDataIfNotNull(configData =>
+                {
+                    configData.PackageDir = x.FileName;
+                    WorkData.SaveConfigData();
+                });
+            });
+        }
+
         private void btn_openPackedDestDir_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("Explorer.exe", tbx_packageDir.Text);
