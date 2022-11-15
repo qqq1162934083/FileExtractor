@@ -96,7 +96,7 @@ namespace FileExtractor
         /// <param name="path"></param>
         /// <param name="valueMappingList"></param>
         /// <returns></returns>
-        private string ParsePathByVarValue(string path, IList<ValueMapping> valueMappingList)
+        private string ParseValueByVarValue(string path, IList<ValueMapping> valueMappingList)
         {
             return Regex.Replace(path, "\\$\\{[^\\$\\\\/\\{\\}\\s]+?\\}", m =>
              {
@@ -109,79 +109,35 @@ namespace FileExtractor
         }
 
         /// <summary>
-        /// 解析目的地路径
-        /// 从相对路径且可能含有环境变量的路径解析得到真实路径
-        /// 相对于方法增加 fileName 和 dirPath 两个参数的获取逻辑
+        /// 获取目的地路径
         /// </summary>
-        /// <param name="baseDir"></param>
         /// <param name="mapping"></param>
-        /// <param name="valueMappingList"></param>
         /// <returns></returns>
-        private string ParseDestPathByMapping(string baseDir, object mapping)
+        private string GetDestPath(string srcPath, string destPath)
         {
-            var fileName = (string)null;
-            var dirPath = (string)null;
-            if (mapping is FileMapping)
-            {
-                var fileMapping = (FileMapping)mapping;
-                if (fileMapping.DestPath.EndsWith("\\"))
-                {
-                    fileName = fileMapping.SrcPath.Substring(fileMapping.SrcPath.LastIndexOf("\\") + 1);
-                    dirPath = fileMapping.DestPath;
-                }
-                else
-                {
-                    fileName = fileMapping.DestPath.Substring(fileMapping.DestPath.LastIndexOf("\\") + 1);
-                    dirPath = fileMapping.DestPath.Substring(0, fileMapping.DestPath.Length - fileName.Length);
-                }
-            }
-            else if (mapping is DirMapping)
-            {
-                var dirMapping = (DirMapping)mapping;
-                if (dirMapping.DestPath.EndsWith("\\"))
-                {
-                    fileName = dirMapping.SrcPath.Substring(dirMapping.SrcPath.LastIndexOf("\\") + 1);
-                    dirPath = dirMapping.DestPath;
-                }
-                else
-                {
-                    fileName = dirMapping.DestPath.Substring(dirMapping.DestPath.LastIndexOf("\\") + 1);
-                    dirPath = dirMapping.DestPath.Substring(0, dirMapping.DestPath.Length - fileName.Length);
-                }
-            }
-            else throw new Exception("不在预期范围的类型");
-            return ParseDestPath(baseDir, dirPath, fileName);
+            if (destPath.EndsWith("\\")) return destPath.TrimEnd('\\') + "\\" + srcPath.Substring(srcPath.LastIndexOf("\\") + 1).TrimStart('\\');
+            return destPath;
         }
 
         /// <summary>
-        /// 解析目的地路径
+        /// 解析相对路径
         /// 从相对路径解析得到真实路径
         /// </summary>
-        /// <param name="baseDir">基础目录，相对路径将以此为出发点</param>
-        /// <param name="dirPath">路径中的目录部分 可以以"\"结尾</param>
-        /// <param name="fileName">路径中的文件名部分 不能带有"\"</param>
         /// <returns></returns>
-        private string ParseDestPath(string baseDir, string dirPath, string fileName)
+        private string ParseRelativePath(string relativePath)
         {
-            baseDir = baseDir.Trim();
-            dirPath = dirPath.Trim();
-            fileName = fileName.Trim();
+            relativePath.Trim();
 
-            //统一路径分隔符
-            baseDir = baseDir.Replace("/", "\\");
-            dirPath = dirPath.Replace("/", "\\");
-            fileName = fileName.Replace("/", "\\");
-
-            //移除文件名
-            if (!dirPath.EndsWith("\\")) dirPath = Regex.Replace(dirPath, "[^\\\\]*$", x => string.Empty);
+            var targetName = relativePath.Substring(relativePath.LastIndexOf("\\") + 1);
+            var dirPath = relativePath.Substring(0, relativePath.Length - targetName.Length - 1);
 
             //解析相对目录
-            var pathItemList = baseDir.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var pathItemList = dirPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
             //驱动盘
             var diskNo = pathItemList.First();
             pathItemList.RemoveAt(0);
-            pathItemList.AddRange(dirPath.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries));
+
             var upCount = 0;
             var indexOfPathItemList = pathItemList.Count - 1;
             while (indexOfPathItemList >= 0)
@@ -201,7 +157,7 @@ namespace FileExtractor
                 }
                 indexOfPathItemList--;
             }
-            pathItemList.Add(fileName);//拼接结果
+            pathItemList.Add(targetName);//拼接结果
             var destPath = string.Join("\\", pathItemList);
             destPath = diskNo + "\\" + destPath;
 
@@ -220,11 +176,16 @@ namespace FileExtractor
                     var enableCompress = configData.EnabledCompress;
                     var enableFtp = configData.EnabledPackageDirFtpSupport;
 
-                    var packageName = configData.PackageName;
-                    var packageDir = configData.PackageDir;
-                    if (string.IsNullOrEmpty(packageName)) throw new Exception("设置的包名为空");
-                    if (string.IsNullOrEmpty(packageDir)) throw new Exception("设置的打包目录为空");
+                    var o_packageName = configData.PackageName;
+                    var o_packageDir = configData.PackageDir;
+                    if (string.IsNullOrEmpty(o_packageName)) throw new Exception("设置的包名为空");
+                    if (string.IsNullOrEmpty(o_packageDir)) throw new Exception("设置的打包目录为空");
+                    var packageName = o_packageName;
                     packageName = enableTimeExp ? ParseTimeExp(packageName) : packageName;
+                    packageName = ParseValueByVarValue(packageName, configData.ValueMappingList);
+                    var packageDir = ParseValueByVarValue(o_packageDir, configData.ValueMappingList);
+                    if (string.IsNullOrEmpty(packageName)) throw new Exception("解析的包名结果为空");
+                    if (string.IsNullOrEmpty(packageDir)) throw new Exception("解析的打包目录结果为空");
 
                     var tmpCompressFileRandomCode = Guid.NewGuid().ToString("N");//临时压缩文件guid
 
@@ -245,6 +206,7 @@ namespace FileExtractor
                     }
                     else
                     {
+
                         tmpPackageInfo = new DirectoryInfo(Path.Combine(packageDir, packageName));
                         if (tmpPackageInfo.Exists)
                         {
@@ -258,21 +220,37 @@ namespace FileExtractor
                     tmpPackageInfo.Create();//创建临时打包的目录
 
                     //映射处理
-                    configData.FileMappingList.ToList().ForEach(fileMapping =>
+                    configData.FileMappingList.ToList().ForEach(mapping =>
                     {
-                        var srcPath = ParsePathByVarValue(fileMapping.SrcPath, configData.ValueMappingList);
-                        if (!File.Exists(srcPath)) throw new Exception($"文件[{fileMapping.SrcPath}=>{srcPath}]不存在");
-                        var destFilePath = ParseDestPathByMapping(tmpPackageInfo.FullName, fileMapping);
-                        var destFileInfo = new FileInfo(destFilePath);
+                        var o_srcPath = mapping.SrcPath;
+                        var srcPath = ParseValueByVarValue(o_srcPath, configData.ValueMappingList);
+                        srcPath = ParseRelativePath(srcPath);
+
+                        if (!File.Exists(srcPath)) throw new Exception($"文件[{o_srcPath}=>{srcPath}]不存在");
+
+                        var o_destPath = mapping.DestPath;
+                        var destPath = tmpPackageInfo.FullName.TrimEnd('\\') + "\\" + o_destPath.TrimStart('\\');
+                        destPath = GetDestPath(srcPath, destPath);
+                        destPath = ParseValueByVarValue(destPath, configData.ValueMappingList);
+
+                        var destFileInfo = new FileInfo(destPath);
                         if (!destFileInfo.Directory.Exists) Directory.CreateDirectory(destFileInfo.Directory.FullName);
-                        File.Copy(srcPath, destFilePath);
+                        File.Copy(srcPath, destPath);
                     });
-                    configData.DirMappingList.ToList().ForEach(dirMapping =>
+                    configData.DirMappingList.ToList().ForEach(mapping =>
                     {
-                        var srcPath = ParsePathByVarValue(dirMapping.SrcPath, configData.ValueMappingList);
-                        if (!Directory.Exists(srcPath)) throw new Exception($"文件夹[{dirMapping.SrcPath}=>{srcPath}]不存在");
-                        var destDirPath = ParseDestPathByMapping(tmpPackageInfo.FullName, dirMapping);
-                        FileUtils.CopyDirRecursively(srcPath, destDirPath);
+                        var o_srcPath = mapping.SrcPath;
+                        var srcPath = ParseValueByVarValue(o_srcPath, configData.ValueMappingList);
+                        srcPath = ParseRelativePath(srcPath);
+
+                        if (!Directory.Exists(srcPath)) throw new Exception($"文件夹[{o_srcPath}=>{srcPath}]不存在");
+
+                        var o_destPath = mapping.DestPath;
+                        var destPath = tmpPackageInfo.FullName.TrimEnd('\\') + "\\" + o_destPath.TrimStart('\\');
+                        destPath = GetDestPath(srcPath, destPath);
+                        destPath = ParseValueByVarValue(destPath, configData.ValueMappingList);
+
+                        FileUtils.CopyDirRecursively(srcPath, destPath);
                     });
 
                     //如果启用压缩移动到真实位置
@@ -573,7 +551,12 @@ namespace FileExtractor
 
         private void btn_openPackedDestDir_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("Explorer.exe", tbx_packageDir.Text);
+            HandleConfigDataIfNotNull(configData =>
+            {
+                var path = tbx_packageDir.Text;
+                path = ParseValueByVarValue(path, configData.ValueMappingList);
+                Process.Start("Explorer.exe", path);
+            });
         }
 
         /// <summary>
