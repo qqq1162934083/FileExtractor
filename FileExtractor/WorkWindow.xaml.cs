@@ -600,5 +600,10 @@ namespace FileExtractor
 
             }
         }
+
+        private void menuItem_aboutInfo_Click(object sender, RoutedEventArgs e)
+        {
+            new AboutInfoDialog().ShowDialog();
+        }
     }
 }

@@ -43,6 +43,9 @@
                     <wpfcontrols:MyMenuItem Text="工具" Width="60" TextAlignment="Center" SubmenuPlacement="Bottom">
                         <wpfcontrols:MyMenuItem x:Name="menuItem_bulkReplace" Click="menuItem_bulkReplace_Click" Text="  批量替换" Width="100"/>
                     </wpfcontrols:MyMenuItem>
+                    <wpfcontrols:MyMenuItem Text="帮助" SubmenuPlacement="Bottom">
+                        <wpfcontrols:MyMenuItem x:Name="menuItem_aboutInfo" Text="  关于FileExtrator" Click="menuItem_aboutInfo_Click"/>
+                    </wpfcontrols:MyMenuItem>
                 </Menu>
             </Border>
             <Grid Width="45"></Grid>
