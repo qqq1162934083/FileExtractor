@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppUpdater.cs" />
     <Compile Include="Dialogs\AboutInfoDialog.xaml.cs">
       <DependentUpon>AboutInfoDialog.xaml</DependentUpon>
     </Compile>
