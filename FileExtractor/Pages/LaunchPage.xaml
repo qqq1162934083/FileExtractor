@@ -45,9 +45,10 @@
                                                             </Setter>
                                                         </Style>
                                                     </ContextMenu.Style>
-                                                    <wpfcontrols:MyMenuItem x:Name="menuItem_removeItem" Width="110" TextAlignment="Center" Text="从列表中删除" Click="menuItem_removeItem_Click"/>
-                                                    <wpfcontrols:MyMenuItem x:Name="menuItem_copyDirPath" Width="110" TextAlignment="Center" Text="复制目录路径" Click="menuItem_copyDirPath_Click"/>
-                                                    <wpfcontrols:MyMenuItem x:Name="menuItem_copyFilePath" Width="110" TextAlignment="Center" Text="复制文件路径" Click="menuItem_copyFilePath_Click"/>
+                                                    <wpfcontrols:MyMenuItem x:Name="menuItem_removeItem" Width="160" TextAlignment="Left" Text="  从列表中删除" Click="menuItem_removeItem_Click"/>
+                                                    <wpfcontrols:MyMenuItem x:Name="menuItem_copyDirPath" Width="160" TextAlignment="Left" Text="  复制目录路径" Click="menuItem_copyDirPath_Click"/>
+                                                    <wpfcontrols:MyMenuItem x:Name="menuItem_copyFilePath" Width="160" TextAlignment="Left" Text="  复制文件路径" Click="menuItem_copyFilePath_Click"/>
+                                                    <wpfcontrols:MyMenuItem x:Name="menuItem_showInExplorer" Width="160" TextAlignment="Left" Text="  在文件资源管理器中打开" Click="menuItem_showInExplorer_Click"/>
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
                                             <Grid.RowDefinitions>

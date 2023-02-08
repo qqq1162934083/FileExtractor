@@ -611,5 +611,13 @@ namespace FileExtractor
         {
             new AboutInfoDialog().ShowDialog();
         }
+
+        private void menuItem_showInExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            HandleConfigDataIfNotNull(x =>
+            {
+                Process.Start("Explorer.exe", "/select," + WorkData.AccessItemInfo.FilePath);
+            });
+        }
     }
 }

@@ -17,8 +17,17 @@ namespace FileExtractor
     /// </summary>
     public partial class App : Application
     {
-        public static StartupEventArgs StartupEventArgs;
+        /// <summary>
+        /// 启用参数
+        /// </summary>
+        public static StartupEventArgs StartupEventArgs = null;
+        /// <summary>
+        /// 打开的文件路径
+        /// </summary>
+        public static string OpenFilePath = null;
+
         public const string ConfigNameExtName = ".fecfg";
+
         public class Cache
         {
             public static StartWorkCache StartWorkCache => StartWorkCacheMgr.DataCache;
@@ -50,6 +59,13 @@ namespace FileExtractor
         {
             base.OnStartup(e);
             StartupEventArgs = e;
+
+            //加载参数
+            var startupArgs = e.Args;
+            if (startupArgs.Length > 0)
+            {
+                OpenFilePath = startupArgs[0];
+            }
         }
 
         private static void CurrentDomainOnProcessExit(object sender, EventArgs e)

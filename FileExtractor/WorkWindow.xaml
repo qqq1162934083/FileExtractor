@@ -38,7 +38,8 @@
             <Border Padding="5,0,5,5">
                 <Menu VerticalAlignment="Center" Background="Transparent" Height="auto" Width="auto">
                     <wpfcontrols:MyMenuItem Text="文件" Width="60" TextAlignment="Center" SubmenuPlacement="Bottom">
-                        <wpfcontrols:MyMenuItem x:Name="menuItem_closeCurrConfig" Click="menuItem_closeCurrConfig_Click" Text="  关闭当前配置" Width="100"/>
+                        <wpfcontrols:MyMenuItem x:Name="menuItem_closeCurrConfig" Click="menuItem_closeCurrConfig_Click" Text="  关闭当前配置" Width="155"/>
+                        <wpfcontrols:MyMenuItem x:Name="menuItem_showInExplorer" Click="menuItem_showInExplorer_Click" Text="  在文件资源管理器中打开" Width="155"/>
                     </wpfcontrols:MyMenuItem>
                     <wpfcontrols:MyMenuItem Text="工具" Width="60" TextAlignment="Center" SubmenuPlacement="Bottom">
                         <wpfcontrols:MyMenuItem x:Name="menuItem_bulkReplace" Click="menuItem_bulkReplace_Click" Text="  批量替换" Width="100"/>

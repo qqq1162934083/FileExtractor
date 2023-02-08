@@ -22,6 +22,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace FileExtractor.Pages
 {
@@ -40,11 +41,11 @@ namespace FileExtractor.Pages
                 ParentWindow = (LaunchWindow)Window.GetWindow(this);
 
                 //检查是否通过配置文件打开
-                var startupArgs = App.StartupEventArgs.Args;
-                if (startupArgs.Length > 0)
+                var openFilePath = App.OpenFilePath;
+                if (!string.IsNullOrWhiteSpace(openFilePath))
                 {
-                    var filePath = startupArgs[0];
-                    var file = new FileInfo(filePath);
+                    var file = new FileInfo(openFilePath);
+                    App.OpenFilePath = null;
                     if (file.Exists) HandleOpenConfig(file.FullName);
                 }
             };
@@ -237,6 +238,26 @@ namespace FileExtractor.Pages
             catch (Exception convertExp)
             {
                 MessageBox.Show(convertExp.Message);
+            }
+        }
+
+        private void menuItem_showInExplorer_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var accessItem = (RecentAccessItem)menuItem.DataContext;
+            if (!File.Exists(accessItem.FilePath))
+            {
+                var msgBoxResult = MessageBox.Show("该文件已经不存在，是否移除该项引用?", "警告", MessageBoxButton.YesNo);
+                if (msgBoxResult == MessageBoxResult.Yes)
+                {
+                    //删除引用
+                    App.Cache.StartWorkCache.RemoveRecentAccessItem(accessItem);
+                }
+                return;
+            }
+            else
+            {
+                Process.Start("Explorer.exe", "/select," + accessItem.FilePath);
             }
         }
     }
