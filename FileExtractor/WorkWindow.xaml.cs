@@ -555,6 +555,12 @@ namespace FileExtractor
             {
                 var path = tbx_packageDir.Text;
                 path = ParseValueByVarValue(path, configData.ValueMappingList);
+                var dir = new DirectoryInfo(path);
+                if (!dir.Exists)
+                {
+                    if (MessageBoxResult.OK != Dispatcher.Invoke(() => MessageBox.Show($"目录信息：\r\n{tbx_packageDir.Text}\r\n\t↓↓解析结果↓↓\r\n{path}\r\n\r\n您要打开的目录尚不存在，若要继续打开此目录则会自动创建该目录，是否创建并打开？", "重要提示", MessageBoxButton.OKCancel))) return;
+                    dir.Create();
+                }
                 Process.Start("Explorer.exe", path);
             });
         }
