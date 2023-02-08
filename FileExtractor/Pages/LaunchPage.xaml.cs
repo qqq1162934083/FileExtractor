@@ -35,7 +35,19 @@ namespace FileExtractor.Pages
         {
             App.Cache.StartWorkCacheMgr = new ViewCacheMgr<LaunchPage, StartWorkCache, object>(this); Loaded += (s, e) => App.Cache.StartWorkCacheMgr.NotifyLoad();
             InitializeComponent();
-            Loaded += (s, e) => ParentWindow = (LaunchWindow)Window.GetWindow(this);
+            Loaded += (s, e) =>
+            {
+                ParentWindow = (LaunchWindow)Window.GetWindow(this);
+
+                //检查是否通过配置文件打开
+                var startupArgs = App.StartupEventArgs.Args;
+                if (startupArgs.Length > 0)
+                {
+                    var filePath = startupArgs[0];
+                    var file = new FileInfo(filePath);
+                    if (file.Exists) HandleOpenConfig(file.FullName);
+                }
+            };
         }
 
         private void btn_openConfig_Click(object sender, RoutedEventArgs e)

@@ -17,6 +17,7 @@ namespace FileExtractor
     /// </summary>
     public partial class App : Application
     {
+        public static StartupEventArgs StartupEventArgs;
         public const string ConfigNameExtName = ".fecfg";
         public class Cache
         {
@@ -43,6 +44,12 @@ namespace FileExtractor
 
             //程序退出事件
             AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnProcessExit;
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            StartupEventArgs = e;
         }
 
         private static void CurrentDomainOnProcessExit(object sender, EventArgs e)
