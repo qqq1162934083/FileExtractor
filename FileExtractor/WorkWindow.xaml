@@ -26,8 +26,8 @@
                     </Setter>
                 </Style>
             </ContextMenu.Style>
-            <wpfcontrols:MyMenuItem x:Name="menuItem_editItem" Width="60" Text="修 改" TextAlignment="Center" Click="menuItem_editItem_Click"/>
-            <wpfcontrols:MyMenuItem x:Name="menuItem_removeItem" Width="60" Text="移 除" TextAlignment="Center" Click="menuItem_removeItem_Click"/>
+            <wpfcontrols:MyMenuItem x:Name="menuItem_editItem" Width="90" Text="  修改该项" TextAlignment="Left" Click="menuItem_editItem_Click"/>
+            <wpfcontrols:MyMenuItem x:Name="menuItem_removeItem" Width="90" Text="  移除该项" TextAlignment="Left" Click="menuItem_removeItem_Click"/>
         </ContextMenu>
     </Window.Resources>
     <Grid>
