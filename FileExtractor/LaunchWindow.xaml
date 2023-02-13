@@ -8,5 +8,5 @@
         WindowStartupLocation="CenterScreen"
         Style="{StaticResource style_myWindow}"
         Source="pack://application:,,,/Pages/LaunchPage.xaml"
-        Height="699" Width="1039">
+        Title="选择配置以打开" Height="699" Width="1039">
 </NavigationWindow>

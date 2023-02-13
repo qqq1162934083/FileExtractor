@@ -34,6 +34,7 @@ namespace FileExtractor
         {
             Hide();
             var mainWindow = new WorkWindow(data);
+            mainWindow.Title = data.AccessItemInfo.FileName;
             mainWindow.Show();
             Close();
         }
