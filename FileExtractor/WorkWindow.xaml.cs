@@ -250,6 +250,7 @@ namespace FileExtractor
                         destPath = GetDestPath(srcPath, destPath);
                         destPath = ParseValueByVarValue(destPath, configData.ValueMappingList);
 
+                        if (!Directory.Exists(destPath)) Directory.CreateDirectory(destPath);
                         FileUtils.CopyDirRecursively(srcPath, destPath);
                     });
 
